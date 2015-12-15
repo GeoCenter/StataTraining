@@ -2,25 +2,28 @@
 title: "Import and clean Foreign Assistance"
 author: "Laura Hughes"
 date: "December 14, 2015"
-output: html_document
-toc: true
+output: 
+  html_document:
+    toc: true
+
 ---
 
 ## Overview
 
 **In this module, we'll import in the data and start to check that it looks properly.**
 
-The 
+This module is a running commentary of what I encountered along the ways-- so a real-life depiction of running into problems and troubleshooting them.
 
 ### The data
 
 
 ### Functions we'll cover in this module
 * library
-* read_csv
+* [http://blog.rstudio.org/2015/04/09/readr-0-1-0/](readr::read_csv)
 * head
-* kable
-* 
+* [http://yihui.name/knitr/](knitr::kable)
+* summary
+* [https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html](dplyr::glimpse)
 
 ## Import in helper functions to make R more powerful
 R out of the box (called 'base R') is great. But the really, really powerful thing about R is that they have a community of people helping write other functions to expand R's toolkit and make it better, faster, and more powerful. Before we start playing with data, we'll import some of the most useful functions to import, clean, manipulate, and visualize data.
@@ -38,7 +41,7 @@ library(ggplot2)
 library(haven) # Imports in files from Stata, SAS, and SPSS
 library(readr) # An advanced form of the base 'read.csv' file with some added functionality.
 
-library(knitr) # Helper function to produce this 
+library(knitr) # Helper function to produce this RMarkdown document.
 ```
 
 ## Let's get started and get data into R!
@@ -53,23 +56,24 @@ spent = read_csv(fileName)
 
 # There's also a function called 'head' which allows you to look at a little bit of the data so you don't have to see the full thing.  It'll show you the first 6 rows of any dataset.
 
-# 'kable' is a function which formats info into a neat table which 
+# 'kable' is a function which formats info into a neat table which can be 
 kable(head(spent))
 ```
 
+Everything looks good -- the column names look normal, and the data look more or less right.
 
-```{r fix import}
-# Read the help documentation to figure out where the arguments going.
+That's not always the case... this time, we got lucky.  Within `read_csv`, there's an argument called `col_names` boolean (true/false) argument to make sure that the top row is interpreted as being the header (column names).
+
+```{r help}
+# Read the help documentation to figure out where the arguments go.
 help("read_csv")
 
-spent2 = read_csv(fileName,
-                 col_names = TRUE, skip = 2)
+spent2 = read_csv(fileName, col_names = TRUE)
 
-# Check that this looks better
+# Check that this looks the same
 kable(head(spent2))
 ```
 
-Excellent!  That looks a lot better.
 
 ---
 
@@ -152,8 +156,8 @@ str_replace_all(c('$3'), '3', '')
 # Hmm.  That does.  
 
 # !! Moment of clarity-- I remember $ are special in regex expressions.  Normally, you fix this by adding \ before the special character.
-
-str_replace_all(c('$3'), '\$', '')
+#! Note: throws an error.
+# str_replace_all(c('$3'), '\$', '')
 
 # Gives error message: Error: '\$' is an unrecognized escape in character string starting "'\$"
 # Ugh.  Time to turn to StackExchange --> R uses double escape sequences.  Problem solved!
