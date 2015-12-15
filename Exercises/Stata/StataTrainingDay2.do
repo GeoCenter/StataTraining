@@ -31,7 +31,7 @@ foreach x of varlist _all {
 	display "Renaming `x' to `varname'"
 	rename `x' `varname'
 }
-*/
+
 
 * Now use the rename command to remove underscores (some bugginess here)
 rename *_* **
@@ -165,12 +165,13 @@ codebook Amount Spent Spent2
  
 * Spent - don't want to tabulate -- too many observations, many outliers
 summarize Spent, detail
-histobram Spent 
-histogram Spent if inrange(Spent, -466299.9, 6943984)
+histogram Spent 
+histogram Spent if inrange(Spent, -466299.9, 1000000)
 * Notice the outliers
-scatter Spent FiscalYear, jitter(10)
 scatter Spent FiscalYear
+scatter Spent FiscalYear, jitter(10)
 
+export delimited "StataTraining.csv", replace
 
 
 * Check how many DC offices are represented in data
