@@ -1,8 +1,13 @@
 clear
 capture log close
 *import delimited C:\Users\Tim\Downloads\Full_ForeignAssistanceData.csv, rowrange(3) 
-import delimited "C:\Users\t\Downloads\Full_ForeignAssistanceData.csv", rowrange(3) 
+*import delimited "C:\Users\t\Downloads\Full_ForeignAssistanceData.csv", rowrange(3) 
 
+global pathin "C:\Users\Tim\Documents\GitHub\StataTraining\Exercises\Stata"
+cd $pathin
+import delimited "Full_ForeignAssistanceData.csv", rowrange(3)
+
+/* Another way of renaming
 ren v1 FiscalYear
 ren v2 QTR
 ren v3 FiscalYearType
@@ -13,6 +18,27 @@ ren v7 BenefitingCountry
 ren v8 Category
 ren v9 Sector
 ren v10 Amount
+*/
+
+rename (v1 v2 v3 v4 v5 v6 v7 v8 v9 v10)(FiscalYear QTR FiscalYearType Account /*
+*/ Agency OperatingUnit BenefitingCountry Category Sector Amount)
+drop in 1
+
+/* Another way to grab 1st record of each entry
+foreach x of varlist _all {
+	local newname = `x'[1]
+	local varname = strtoname("`newname'")
+	display "Renaming `x' to `varname'"
+	rename `x' `varname'
+}
+*/
+
+* Now use the rename command to remove underscores (some bugginess here)
+rename *_* **
+rename _* *
+rename *_ *
+rename *_* **
+*/
 
 set seed 012016
 sample 2.5
@@ -57,6 +83,7 @@ replace Agency = "Department of Stata" if Agency == "DOS"
 replace Agency = lower(Agency) if Agency == "USAID"
 replace Agency = upper(Agency) if Agency == "Peace Corps"
 replace Agency = " USAID " if Agency == "usaid" & FiscalYear == 2009
+replace Agency = " MCC " if Agency == "MCC"
 
 * Scramble up the Categories a bit
 replace Category = upper(Category) if Category == "Environment"
@@ -77,30 +104,37 @@ replace FiscalYearType = "Disbsmnt." if FiscalYearType == "Disbursements" & Fisc
 replace BenefitingCountry = "I.wonder.if.Laura.will.find.this" if BenefitingCountry == "N/A"
 
 * Export a cut of data for Laura and Aaron
-export delimited "StataTraining.csv", replace
+export delimited "StataTrainingMessy.csv", replace
 
 
 * Now fix all the errors going through each variable to check plausible values
 tab FiscalYear, mi
 recode FiscalYear (213 = 2013) (20014 = 2014)
+tab FiscalYear, mi
 
 * Show how you can also use recode to do many recodings at once
 tab QTR, mi
 recode QTR (40 = 4) (0 = .)
+tab QTR, mi
 
 tab FiscalYearType, mi
 replace FiscalYearType = "Disbursements" if FiscalYearType == "Disbsmnt."
 replace FiscalYearType = "Obligations" if FiscalYearType == "Obgl."
+tab FiscalYearType, mi
 
-* Seems ok
-tab Account
+* Seems ok except for the many N/A
+tab Account, mi sort
+replace Account = "Unknown" if Account == "N/A"
+tab Account, mi sort
 
-* What are the problems with the Agency name?
+* What are the problems with the Agency name? (Fix them all at once? or let them try trim?)
 tab Agency, mi
-replace Agency = "USAID" if regexm(Agency, "(U.S.A.I.D|usaid)") == 1
+replace Agency = "USAID" if regexm(Agency, "(U.S.A.I.D|usaid|USAID )") == 1
 
 * Fix the errors created by leading spaces
 replace Agency = trim(Agency)
+tab Agency /// What changed?
+
 replace Agency = "DOS" if Agency == "Department of Stata"
 replace Agency = "DOD" if Agency == "DoD"
 replace Agency = proper(Agency) if Agency == "PEACE CORPS"
@@ -109,15 +143,33 @@ tab Agency, mi
 * Operating Unit
 tab OperatingUnit, mi 
 tab BenefitingCountry, mi
-replace BenefitingCountry ="N/A" if BenefitingCountry =="I.wonder.if.Laura.will.find.this"
+replace BenefitingCountry = "N/A" if BenefitingCountry =="I.wonder.if.Laura.will.find.this"
+
+* For later, let's tag all Benefiting countries that have region in their name
+g byte notCountry = regexm(BenefitingCountry, "(USAID|Region|WorldWide|Office)") == 1
 
 * Category
 tab Category, mi
+replace Category = proper(Category)
+replace Category = "Democracy, Human Rights, And Governance" if Category == "Drg"
+replace Category = "Economic Development" if Category == "Econ. Dev."
+replace Category = "Missing" if Category == ""
+tab Category, mi
 
+* Sector
+tab Sector, mi sort
 
-
-
-
+* Describe the amounts
+describe Amount Spent Spent2
+codebook Amount Spent Spent2
+ 
+* Spent - don't want to tabulate -- too many observations, many outliers
+summarize Spent, detail
+histobram Spent 
+histogram Spent if inrange(Spent, -466299.9, 6943984)
+* Notice the outliers
+scatter Spent FiscalYear, jitter(10)
+scatter Spent FiscalYear
 
 
 
