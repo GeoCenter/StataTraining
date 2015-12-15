@@ -94,6 +94,9 @@ img {
 <li>tidyr::left_join</li>
 <li>colnames</li>
 <li>c</li>
+<li>ifelse</li>
+<li>%in%</li>
+<li>data.table::%like%</li>
 </ul>
 </div>
 </div>
@@ -102,6 +105,7 @@ img {
 <pre class="r"><code># Workhorse libraries for data science: data cleanup, summaries, merging, etc.
 library(dplyr) # Filter, create new variables, summarise, ... Basically, anything you can think to do to a dataset
 library(tidyr) # Reshape and merge datasets
+library(data.table)
 library(stringr) # String manipulation
 
 # Incredibly powerful plotting library built off of the &quot;Grammer of Graphics&quot;
@@ -341,11 +345,12 @@ summary(mergedData$fragileIdx)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 ##   24.80   79.20   88.30   86.79   94.50  112.30    1100</code></pre>
 <pre class="r"><code># Method 2: count the numbers of NAs
-# is.na will return a vector of booleans (true/falses).  We can then count how many rows are true -- missing data.
+# is.na will return a vector of booleans (true/falses).  We can then count how many rows are true (as in, the number of rows missing data).
 isMissing = is.na(mergedData$fragileIdx)
 numNAs = sum(isMissing) # Since booleans are essentially 0's and 1's, if you sum up the vector, you'll get the number of NAs within fragileIdx
-
-# Method 3: count NAs using dplyr.
+print(numNAs)</code></pre>
+<pre><code>## [1] 1100</code></pre>
+<pre class="r"><code># Method 3: count NAs using dplyr.
 mergedData %&gt;% 
   count(fragileIdx, sort = TRUE) # counts each number per group, sorted descendingly</code></pre>
 <pre><code>## Source: local data frame [69 x 2]
@@ -363,6 +368,152 @@ mergedData %&gt;%
 ## 9        78.3    34
 ## 10      104.6    34
 ## ..        ...   ...</code></pre>
+<pre class="r"><code># As an aside... this method shows every value for the fragileIdx, which is cool, but overkill for what we want.  We can add in logic to count only the values that are NAs.
+
+# It'll give us the same answer, but focusing only on what's important.
+mergedData %&gt;% 
+  count(is.na(fragileIdx), sort = TRUE) # counts each number per group, sorted descendingly</code></pre>
+<pre><code>## Source: local data frame [2 x 2]
+## 
+##   is.na(fragileIdx)     n
+##               (lgl) (int)
+## 1             FALSE  1317
+## 2              TRUE  1100</code></pre>
+<p><em>(sigh)</em> As expected, whenever you’re trying to merge things together, things are rarely standardized and works straight out of the box. This is another reason why <strong>unique ids</strong> are so useful. We’ll have to fix the country names so they merge in together. First, let’s see where the problem(s) is.</p>
+</div>
+<div id="what-are-the-countries-that-are-making-things-annoying" class="section level4">
+<h4>3. What are the countries that are making things annoying?</h4>
+<pre class="r"><code># Let's filter out the rows that are missing fragile state data, group by the number of countries, and count how many rows there are.
+
+mergedData %&gt;% 
+  filter(is.na(fragileIdx)) %&gt;% 
+  count(BenefitingCountry, sort = TRUE)</code></pre>
+<pre><code>## Source: local data frame [81 x 2]
+## 
+##           BenefitingCountry     n
+##                       (chr) (int)
+## 1                 Worldwide   208
+## 2                     Ghana    44
+## 3          East Asia Region    41
+## 4  Sudan, Pre-2011 Election    40
+## 5                   Senegal    38
+## 6                    Kosovo    35
+## 7                   Georgia    32
+## 8                      Mali    29
+## 9                 Nicaragua    28
+## 10            Africa Region    27
+## ..                      ...   ...</code></pre>
+<pre class="r"><code># How many different countries are potentially screwed up?
+missingCountries = mergedData %&gt;% 
+  filter(is.na(fragileIdx)) %&gt;% 
+  count(BenefitingCountry, sort = TRUE)
+
+nrow(missingCountries)</code></pre>
+<pre><code>## [1] 81</code></pre>
+<p>From looking at the data, we can see that there are some things that really shouldn’t have a fragile index (so the merge worked properly).</p>
+<ul>
+<li>The most commonly missing Benefiting “Country” is “Worldwide.” That makes sense– there’s no Fragile Index for the whole world.</li>
+<li>Similarly, there are entries from USAID’s regions, like “East Asia Region”. Since the money didn’t go to a single country, again, we can’t merge in country-level data.</li>
+</ul>
+<p>But there’s also some things that we’ll clearly need to fix.</p>
+<ul>
+<li>Sudan is listed in the FAD dataset as “Sudan, Pre-2011 Election”</li>
+</ul>
+<p>And then there’s some baffling ones.</p>
+<ul>
+<li>Ghana seems pretty normal for a name. Why isn’t it merging propely?</li>
+</ul>
+</div>
+<div id="lets-check-what-those-look-like-in-the-fragile-index-dataset.-do-those-countries-exist-do-they-have-different-names" class="section level4">
+<h4>4. Let’s check what those look like in the Fragile Index dataset. Do those countries exist? Do they have different names?</h4>
+<p>First, let’s get rid of those entries that pretty clearly aren’t a problem.</p>
+<pre class="r"><code># We know regions and Worldwide are clearly a problem.
+
+# Identify all the Benefitting countries with &quot;Region&quot; or &quot;Worldwide&quot; in their title.
+
+# Filter Benefitting Countries with 'Region' in their title
+regionNames = mergedData %&gt;% 
+  filter(BenefitingCountry %like% 'Region' |
+           BenefitingCountry == 'Worldwide') %&gt;% 
+  select(BenefitingCountry) 
+
+# Pull out only the unique names.
+notCountry = unique(regionNames)
+
+
+# Create a tag called isCountry to indicate whether a dispersement went to a single country or a region.
+mergedData2 = mergedData %&gt;% 
+  mutate(isCountry = ifelse(BenefitingCountry %in% notCountry$BenefitingCountry, 
+                FALSE, TRUE))
+
+# Okay, cool.  Now let's see how many problems we still have:
+mergedData2 %&gt;% 
+  filter(is.na(fragileIdx),
+         isCountry == TRUE) %&gt;% 
+  count(BenefitingCountry, sort = TRUE)</code></pre>
+<pre><code>## Source: local data frame [59 x 2]
+## 
+##                BenefitingCountry     n
+##                            (chr) (int)
+## 1                          Ghana    44
+## 2       Sudan, Pre-2011 Election    40
+## 3                        Senegal    38
+## 4                         Kosovo    35
+## 5                        Georgia    32
+## 6                           Mali    29
+## 7                      Nicaragua    28
+## 8                       Cambodia    26
+## 9                        Armenia    25
+## 10 Congo, Democratic Republic of    25
+## ..                           ...   ...</code></pre>
+<p>Better. But still problems. Let’s look at a couple countries we know have problems merging, like Ghana.</p>
+<pre class="r"><code># Print out the name for Ghana.  This will search for any country containing &quot;Ghana&quot; somewhere in it.
+ghana = fragile2006 %&gt;% 
+  filter(country %like% 'Ghana') %&gt;% 
+  select(country)
+
+print(ghana)</code></pre>
+<pre><code>## Source: local data frame [1 x 1]
+## 
+##   country
+##     (chr)
+## 1  Ghana</code></pre>
+<pre class="r"><code># So Ghana exists.  It's spelled correctly... what's the deal?  Maybe there are extra spaces in the name.
+# Let's check the number of characters in that answer.
+nchar(ghana)</code></pre>
+<pre><code>## country 
+##       6</code></pre>
+<pre class="r"><code># AHA!  Ghana only has 5 letters.  So at least part of the problem is that we have extra spaces.  Let's strip those out of fragile2006, remerge, and check.
+
+# Down with spaces.
+fragile2006 = fragile2006 %&gt;% 
+  mutate(country_cleaned = str_trim(country))
+
+mergedData3 = left_join(fad, fragile2006, by = c('BenefitingCountry' = 'country_cleaned')) %&gt;% # merge
+  # add in our tag for whether it's a country or region
+  mutate(isCountry = ifelse(BenefitingCountry %in% notCountry$BenefitingCountry, 
+                FALSE, TRUE))
+
+mergedData3 %&gt;% 
+  filter(is.na(fragileIdx),
+         isCountry == TRUE) %&gt;% 
+  count(BenefitingCountry, sort = TRUE)</code></pre>
+<pre><code>## Source: local data frame [36 x 2]
+## 
+##                BenefitingCountry     n
+##                            (chr) (int)
+## 1       Sudan, Pre-2011 Election    40
+## 2                         Kosovo    35
+## 3  Congo, Democratic Republic of    25
+## 4                     Madagascar    25
+## 5                        Lesotho    17
+## 6                    Timor-Leste    17
+## 7             West Bank and Gaza    17
+## 8                     Cape Verde    13
+## 9                       Djibouti     9
+## 10                        Guyana     7
+## ..                           ...   ...</code></pre>
+<p>Getting better. Sadly, I think we’ve reached the end of what can be done by computer, and now we have to match more or less by hand.</p>
 </div>
 </div>
 </div>

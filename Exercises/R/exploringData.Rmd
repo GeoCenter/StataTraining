@@ -20,13 +20,16 @@ In previous modules, we imported in part of [U.S. Foreign Assistance Disbursemen
 * tidyr::left_join
 * colnames
 * c
-
+* ifelse
+* %in%
+* data.table::%like%
 
 ## Import the data
 ```{r import functions, message = FALSE}
 # Workhorse libraries for data science: data cleanup, summaries, merging, etc.
 library(dplyr) # Filter, create new variables, summarise, ... Basically, anything you can think to do to a dataset
 library(tidyr) # Reshape and merge datasets
+library(data.table)
 library(stringr) # String manipulation
 
 # Incredibly powerful plotting library built off of the "Grammer of Graphics"
@@ -146,17 +149,112 @@ if (mergedCols == fadCols + fragileCols - 1 &
 summary(mergedData$fragileIdx)
 
 # Method 2: count the numbers of NAs
-# is.na will return a vector of booleans (true/falses).  We can then count how many rows are true -- missing data.
+# is.na will return a vector of booleans (true/falses).  We can then count how many rows are true (as in, the number of rows missing data).
 isMissing = is.na(mergedData$fragileIdx)
 numNAs = sum(isMissing) # Since booleans are essentially 0's and 1's, if you sum up the vector, you'll get the number of NAs within fragileIdx
+print(numNAs)
 
 # Method 3: count NAs using dplyr.
 mergedData %>% 
   count(fragileIdx, sort = TRUE) # counts each number per group, sorted descendingly
 
-# As an aside... this method shows every value for the fragileIdx, which is cool, but overkill for what we want.  We can add in 
+# As an aside... this method shows every value for the fragileIdx, which is cool, but overkill for what we want.  We can add in logic to count only the values that are NAs.
+
+# It'll give us the same answer, but focusing only on what's important.
+mergedData %>% 
+  count(is.na(fragileIdx), sort = TRUE) # counts each number per group, sorted descendingly
   
 ```
-(sigh) As expected, whenever you're trying to merge things together, things are rarely standardized and works straight out of the box.  This is another reason why **unique ids** are so useful.  We'll have to fix the country names so they merge in together.  First, let's see where the problem(s) is.
+*(sigh)* As expected, whenever you're trying to merge things together, things are rarely standardized and works straight out of the box.  This is another reason why **unique ids** are so useful.  We'll have to fix the country names so they merge in together.  First, let's see where the problem(s) is.
 
 #### 3. What are the countries that are making things annoying?
+```{r badCountries}
+# Let's filter out the rows that are missing fragile state data, group by the number of countries, and count how many rows there are.
+
+mergedData %>% 
+  filter(is.na(fragileIdx)) %>% 
+  count(BenefitingCountry, sort = TRUE)
+
+# How many different countries are potentially screwed up?
+missingCountries = mergedData %>% 
+  filter(is.na(fragileIdx)) %>% 
+  count(BenefitingCountry, sort = TRUE)
+
+nrow(missingCountries)
+```
+From looking at the data, we can see that there are some things that really shouldn't have a fragile index (so the merge worked properly).
+
+* The most commonly missing Benefiting "Country" is "Worldwide."  That makes sense-- there's no Fragile Index for the whole world.
+* Similarly, there are entries from USAID's regions, like "East Asia Region".  Since the money didn't go to a single country, again, we can't merge in country-level data.
+
+But there's also some things that we'll clearly need to fix.
+
+* Sudan is listed in the FAD dataset as "Sudan, Pre-2011 Election"
+
+And then there's some baffling ones.
+
+* Ghana seems pretty normal for a name.  Why isn't it merging propely?
+
+#### 4.  Let's check what those look like in the Fragile Index dataset.  Do those countries exist?  Do they have different names?
+
+First, let's get rid of those entries that pretty clearly aren't a problem.
+```{r createCountryTag}
+# We know regions and Worldwide are clearly a problem.
+
+# Identify all the Benefitting countries with "Region" or "Worldwide" in their title.
+
+# Filter Benefitting Countries with 'Region' in their title
+regionNames = mergedData %>% 
+  filter(BenefitingCountry %like% 'Region' |
+           BenefitingCountry == 'Worldwide') %>% 
+  select(BenefitingCountry) 
+
+# Pull out only the unique names.
+notCountry = unique(regionNames)
+
+
+# Create a tag called isCountry to indicate whether a dispersement went to a single country or a region.
+mergedData2 = mergedData %>% 
+  mutate(isCountry = ifelse(BenefitingCountry %in% notCountry$BenefitingCountry, 
+                FALSE, TRUE))
+
+# Okay, cool.  Now let's see how many problems we still have:
+mergedData2 %>% 
+  filter(is.na(fragileIdx),
+         isCountry == TRUE) %>% 
+  count(BenefitingCountry, sort = TRUE)
+```
+
+Better.  But still problems.  Let's look at a couple countries we know have problems merging, like Ghana.
+
+```{r fragileCountries}
+# Print out the name for Ghana.  This will search for any country containing "Ghana" somewhere in it.
+ghana = fragile2006 %>% 
+  filter(country %like% 'Ghana') %>% 
+  select(country)
+
+print(ghana)
+
+# So Ghana exists.  It's spelled correctly... what's the deal?  Maybe there are extra spaces in the name.
+# Let's check the number of characters in that answer.
+nchar(ghana)
+
+# AHA!  Ghana only has 5 letters.  So at least part of the problem is that we have extra spaces.  Let's strip those out of fragile2006, remerge, and check.
+
+# Down with spaces.
+fragile2006 = fragile2006 %>% 
+  mutate(country_cleaned = str_trim(country))
+
+mergedData3 = left_join(fad, fragile2006, by = c('BenefitingCountry' = 'country_cleaned')) %>% # merge
+  # add in our tag for whether it's a country or region
+  mutate(isCountry = ifelse(BenefitingCountry %in% notCountry$BenefitingCountry, 
+                FALSE, TRUE))
+
+mergedData3 %>% 
+  filter(is.na(fragileIdx),
+         isCountry == TRUE) %>% 
+  count(BenefitingCountry, sort = TRUE)
+```
+
+
+Getting better.  Sadly, I think we've reached the end of what can be done by computer, and now we have to match more or less by hand.
