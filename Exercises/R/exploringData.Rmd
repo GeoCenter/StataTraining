@@ -1,30 +1,162 @@
 ---
-title: "exploring data"
+title: "Merging clean FAD data with Fragile States Indices"
 author: "Laura Hughes"
 date: "December 14, 2015"
-output: html_document
+output: 
+  html_document:
+    toc: true
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+## Overview
+In previous modules, we imported in part of [U.S. Foreign Assistance Disbursements data](http://beta.foreignassistance.gov/) and whipped it into shape for data analysis. **Here, we'll merge this data with other data to explore relationships: the country GDP, and the Fragile States Index.**
+
+### The data
+**[Foreign Assistance Disbursements](http://beta.foreignassistance.gov/)**: data on where the U.S. 
+**[Fragile States Index](http://fsi.fundforpeace.org/)** Fund for Peace's indicators for the stability of countries
+**[GDP]**
+
+### New functions we'll cover in this module
+* readxl::read_excel
+* tidyr::left_join
+* colnames
+* c
+
+
+## Import the data
+```{r import functions, message = FALSE}
+# Workhorse libraries for data science: data cleanup, summaries, merging, etc.
+library(dplyr) # Filter, create new variables, summarise, ... Basically, anything you can think to do to a dataset
+library(tidyr) # Reshape and merge datasets
+library(stringr) # String manipulation
+
+# Incredibly powerful plotting library built off of the "Grammer of Graphics"
+library(ggplot2)
+
+# Libraries to help import files
+library(haven) # Imports in files from Stata, SAS, and SPSS
+library(readr) # An advanced form of the base 'read.csv' file with some added functionality.
+library(readxl) # Function to import in multiple sheets from Excel
+
+library(knitr) # Helper function to produce this RMarkdown document.
 ```
 
-## R Markdown
+```{r importData}
+fileName = '~/GitHub/StataTraining/Exercises/Stata/StataTraining.csv'
+fad = read_csv(fileName)
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# Each year of data is located in a separate sheet within the Excel workbook.  To keep things simple, we'll download the data from 2006 and 2014.
+fragileFile = '~/GitHub/StataTraining/Data/fragilestatesindex-2006to2014.xlsx'
+fragile2014 = read_excel(fragileFile, sheet = 1)
+fragile2006 = read_excel(fragileFile, sheet = 9)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+# View the results
+# in browser: View(fragile2006)
+kable(head(fragile2006))
 ```
 
-## Including Plots
+Looks pretty good.  
 
-You can also embed plots, for example:
+####As a small thing, we'll change the column names to remove the spaces so it's somewhat less obnoxious.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+The function `colnames` has two purposes. If you just type `colnames(fragile2006)`, it'll return the name of the columns.  If you set that equal to a list (a series of strings using the function `c`), it'll replace the column names.
+```{r changeNames}
+
+colnames(fragile2006) = c('idx', 'country', 'fragileIdx', 'demographic', 'refugees',
+                          'grpGrievances', 'humanFlight', 'unevenDvpt', 'poverty', 
+                          'stateLegit', 'publicServices', 'humanRights', 'securityApparatus', 
+                          'factionalizedElites', 'ExtIntervention')
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Cool.  Let's try to merge those together.
+We'll use what's called a 'left join' -- basically, we'll keep all the rows in the data frame that is the first (left) argument to the function, and for every matching country within the second data frame (`fragile2006`), it'll copy those rows.
+
+So if you have two instances of Bangladesh as the benefitting country, it'll copy whatever value for Bangladesh is in `fragile2006` twice, one for each row.
+
+The **key** -- where we specify which column to use as the index to match between the two data frames -- is given by the `by` argument.
+```{r mergeFragile}
+# We have to specify what's the common variable between the two data frames using the parameter 'by'.
+mergedData = left_join(fad, fragile2006, by = c('BenefitingCountry' = 'country'))
+
+```
+
+### Did the merge work properly?
+* If it did, the number of rows of the resulting data frame should be the same, but the number of columns increased by the fragile2006 columns.  
+* Each of the rows within `mergedData` should have a value for the categories we added.  If the merge didn't work, the variables we added (like `fragileIdx`) will be filled with `NA`.
+    * If everything within `fragileIndex` has `NA`s, something went really, really wrong
+    * If a few rows have NAs, that means either the country from `fad` isn't located in `fragile2006`, or it's named something different in the two (sigh).
+
+#### So how do we check that?
+1. Check the dimensions (number of rows and columns) of the datasets before and after the merge.
+2. See if there are any NAs within `fragileIndex`.
+3. If there are `NA`s, filter them and see which countries they correspond to.
+4. Then we'll check if there's something similar within `fragile2006`, or if it doesn't exist.
+
+####1. Check the dimensions
+```{r checkDim}
+# R has three functions to check dimensions: dim, nrow, ncol.
+# As you can maybe guess, dim returns a vector containing the number of rows and then number of columns.  
+# nrow returns a single value (the number of rows) in the data frame
+# and ncol returns the number of columns.
+
+# Note: if you're using RStudio, you can also see the dimensions of the data frame in the 'Environment' tab
+dim(fad)
+dim(fragile2006)
+dim(mergedData)
+
+# If we want to get a little fancy, we can work in some basic logic to test if we're getting the right result.
+# We'd expect the number of rows to be equal to the fad since we're doing a left join-- it'll only save the rows (and ALL the rows) from the first argument, which is the fad.
+fadRows = nrow(fad)
+mergedRows = nrow(mergedData)
+
+if (mergedRows == fadRows) {
+  print('Woo hoo!  We have the right number of rows.')
+} else {
+  print(':(  Incorrect number of rows')
+}
+
+# For the number of columns, we'd expect it to be the sum of the columns in both data frames - 1.
+# Where does the -1 come from?  Remember that you're merging the data sets together, so the two 
+fadCols = ncol(fad)
+fragileCols = ncol(fragile2006)
+mergedCols = ncol(mergedData)
+
+
+if (mergedCols == fadCols + fragileCols - 1) {
+  print('Woo hoo!  We have the right number of columns.')
+} else {
+  print(':(  Weird number of columns')
+}
+
+# And if you want to be SUPER fancy, you can combine the logic of those two together using the logic operator AND, given by the '&'.
+if (mergedCols == fadCols + fragileCols - 1 &
+    mergedRows == fadRows) {
+  print('Woo hoo!  Dimensions look right.')
+} else {
+  print(':(  Wrong dimensions')
+}
+
+```
+
+#### 2. Are there any NAs?
+```{r checkNAs}
+# Like most things in R, there are many ways to do this.
+
+# Method 1: look at a summary of the data.
+summary(mergedData$fragileIdx)
+
+# Method 2: count the numbers of NAs
+# is.na will return a vector of booleans (true/falses).  We can then count how many rows are true -- missing data.
+isMissing = is.na(mergedData$fragileIdx)
+numNAs = sum(isMissing) # Since booleans are essentially 0's and 1's, if you sum up the vector, you'll get the number of NAs within fragileIdx
+
+# Method 3: count NAs using dplyr.
+mergedData %>% 
+  count(fragileIdx, sort = TRUE) # counts each number per group, sorted descendingly
+
+# As an aside... this method shows every value for the fragileIdx, which is cool, but overkill for what we want.  We can add in 
+  
+```
+(sigh) As expected, whenever you're trying to merge things together, things are rarely standardized and works straight out of the box.  This is another reason why **unique ids** are so useful.  We'll have to fix the country names so they merge in together.  First, let's see where the problem(s) is.
+
+#### 3. What are the countries that are making things annoying?

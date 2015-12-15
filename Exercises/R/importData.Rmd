@@ -28,7 +28,9 @@ This module is a running commentary of what I encountered along the ways-- so a 
 ## Import in helper functions to make R more powerful
 R out of the box (called 'base R') is great. But the really, really powerful thing about R is that they have a community of people helping write other functions to expand R's toolkit and make it better, faster, and more powerful. Before we start playing with data, we'll import some of the most useful functions to import, clean, manipulate, and visualize data.
 
-```{r import fucntions}
+*Note: if you haven't installed the packages (groups of functions), you'll get an error if you try to load them with `library`.  To install `dplyr`, for instance, you should first run `install.packages('dplyr')`.*
+
+```{r import functions}
 # Workhorse libraries for data science: data cleanup, summaries, merging, etc.
 library(dplyr) # Filter, create new variables, summarise, ... Basically, anything you can think to do to a dataset
 library(tidyr) # Reshape and merge datasets
@@ -47,7 +49,7 @@ library(knitr) # Helper function to produce this RMarkdown document.
 ## Let's get started and get data into R!
 
 ```{r importData}
-fileName = '~/GitHub/StataTraining/Data/StataTraining.csv'
+fileName = '~/GitHub/StataTraining/Exercises/Stata/StataTraining.csv'
 spent = read_csv(fileName)
 
 # Print out a table of what the data looks like.
