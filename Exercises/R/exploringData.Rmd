@@ -239,7 +239,7 @@ print(ghana)
 # Let's check the number of characters in that answer.
 nchar(ghana)
 
-# AHA!  Ghana only has 5 letters.  So at least part of the problem is that we have extra spaces.  Let's strip those out of fragile2006, remerge, and check.
+# AHA!  Ghana only has 5 letters... but it has 6 within the Fragile States dataset.  So at least part of the problem is that we have extra spaces.  Let's strip those out of fragile2006, remerge, and check.
 
 # Down with spaces.
 fragile2006 = fragile2006 %>% 

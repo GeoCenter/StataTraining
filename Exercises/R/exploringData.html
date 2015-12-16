@@ -483,7 +483,7 @@ print(ghana)</code></pre>
 nchar(ghana)</code></pre>
 <pre><code>## country 
 ##       6</code></pre>
-<pre class="r"><code># AHA!  Ghana only has 5 letters.  So at least part of the problem is that we have extra spaces.  Let's strip those out of fragile2006, remerge, and check.
+<pre class="r"><code># AHA!  Ghana only has 5 letters... but it has 6 within the Fragile States dataset.  So at least part of the problem is that we have extra spaces.  Let's strip those out of fragile2006, remerge, and check.
 
 # Down with spaces.
 fragile2006 = fragile2006 %&gt;% 
