@@ -10,7 +10,7 @@ permalink: /about/
 <h4> Aaron Chafetz</h4> is a trained economist and self-taught data wizard. He currently writes visual basic scripts to process and manage HIV / AIDS data for PEPFAR. Aaron was a caddie at a country club in highschool. He is also an avid runner, biker and fledgling swimmer. 
 
 <img class="col one right" src="/img/prof_pic.jpg">
-Dr. Tim Essam is an trained agricultural economist who somehow escaped the county seat of Gage County, Nebraska. He enjoys placing Easter Eggs in co-worker’s presentations when offering suggestions. He also eats approximately every 45 minutes, and may have a tapeworm.
+Dr. Tim Essam is an trained agricultural economist who somehow escaped the county seat of Gage County, Nebraska. He enjoys placing Easter eggs in co-worker’s presentations when offering suggestions. He also eats approximately every 45 minutes, and may have a tapeworm.
 
 <img class="col one right" src="/img/prof_pic.jpg">
 Dr. Laura Hughes is a trained biophysical chemist who spent hours staring through a microscope at stains. We have no idea whether or not she can provide laundering tips on removing actual stains from clothing. She enjoys creating her own color schemes and custom plot functions in R. She is passionate about inculcating others with proper data visualization methods, color schemes, and occasional ballet moves.
