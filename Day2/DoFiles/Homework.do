@@ -1,3 +1,17 @@
+/*-------------------------------------------------------------------------------
+# Name:		StataTrainingDay2
+# Purpose:	Day two homework solution
+# Author:	Tim Essam, Ph.D.
+# Created:	2015/12/28
+# Owner:	Tim Essam - USAID GeoCenter | OakStream Systems, LLC
+# License:	MIT License
+# Ado(s):	see below
+#-------------------------------------------------------------------------------
+*/
+
+cd "C:/Users/t/Documents/Github/StataTraining/Day2/Data"
+log using "Day2Homework.log", replace
+
 /* --- Homweork Exercise --- *
 Import the World Bank Indicator data and discuss how you would reshape it
 Write psuedocode for each modification you'd make to the data.
@@ -9,17 +23,20 @@ import delimited "wb_indicators.csv", clear
 * http://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG
 * http://data.worldbank.org/indicator/GC.TAX.TOTL.GD.ZS
 
-br
+*br
 describe
 * How many instances of missing data do we have to fix?
 count if inlist("..", yr2007, yr2008, yr2013, yr2014)==1
 
 * Loop over each variable with missing and create a new variable
+* Want to replace missing with blanks for coercion to strings
 foreach x of varlist yr2007 yr2008 yr2013 yr2014 {
 	replace `x' = "" if inlist("..", `x')
 	destring `x', replace 
 }
 *end
+
+* (Could also use destring, force options + mvencode)
 
 * relabel the series names to valid names
 drop seriescode
@@ -56,5 +73,19 @@ scatter ag_gdp gdp_growth tax_gdp year, by(countryname) scheme(s1color)
 table countryname year, c(mean gdp_growth) f(%9.2fc) row col
 encode countryname, gen(country_id)
 
+* Create a unique id for merging with subset FAD data
+sort countryname year
+gen loc_time_id = real( string(country_id) + string(year) )
 
 save "wb_indicators_long.dta", replace
+
+
+cls
+use "FA_merge.dta", clear
+
+* Merge with WB data so we can look at indicators alongside foreign assistance data
+merge m:1 loc_time_id using "wb_indicators_long.dta"
+
+capture log close
+
+
