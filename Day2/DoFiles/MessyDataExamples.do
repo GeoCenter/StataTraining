@@ -12,7 +12,7 @@ clear
 capture log close
 
 * Path to be determined based on where users install zip
-cd "C:/Users/Tim/Documents/GitHub/StataTraining/Day2/Data"
+cd "$pathin/Day2/Data"
 
 
 capture log close
@@ -256,40 +256,96 @@ clear
 * -------------------------------------------------- *
 * ### Summarizing Data ###
 * Review previous commands introduced to students
+use "StataTrainingClean.dta", clear
 
-* Summarise - summary stats for all variables
+* === Summarise ===*
+* - summary stats for all variables
 sum
 sum spent, detail 
 
-* tabulate - create one or two-way cross tabs
+* Conduct operation by each fiscal year
+bysort fiscalyear: sum spent
+bysort fiscalyear: sum spent if inlist("USAID", agency), d
+
+* === tabulate ===
+* - create one or two-way cross tabs
 tab fiscalyear agency, mi
-tabsort fiscalyear agency
 
 * tabulate fiscal year account and summarize spending
+tab fiscalyear, sum(spent) means
 tab fiscalyear, sum(spent)
-tab category, sum(spent)
 
-* tabstat - create tabulations with selected statistics
-tabstat fiscalyear category, stat(mean median sd n)
+* tab + gen to create dummy variables
+tab agency, gen(agency_flag)
+
+* === tab_chi === *
+* Install tabsort to get sorted two-way tables (ssc install tab_chi)
+tabsort agency, sum(spent) so(mean)
+tab agency, sum(spent)
+
+tabsort agency fiscalyear
+tabsort category, sum(spent) sort (spent)
+
+
+* === tabstat === *
+* - create tabulations with selected statistics
+tabstat spent, by(fiscalyear) stat(mean median sd n)
+tabstat spent, by(agency_flag8) stat(mean median sd n) nototal col(stat)
+tabstat spent, by(agency_flag8) stat(mean median sd n)
+
+* === table === *
+* Flexible table of summary statistics 
+table fiscalyear qtr if inlist("USAID", agency), /*
+*/ c(mean spent sum spent sd spent) f(%9.2fc) 
+
+* What's going on with quarterly spending? Is it always higher in the fourth quarter?
+bysort agency: table fiscalyear qtr, c(sum spent) f(%9.2fc)
+
+egen tot_spent = total(spent), by(qtr fiscalyear agency fiscalyeartype)
+twoway(connected tot_spent qtr, sort) if agency == "USAID", by(fiscalyear) scheme(s1color)
+twoway(connected tot_spent qtr, sort) if agency == "USAID" & fiscalyeartype == "Obligations" /*
+*/, by(fiscalyear) scheme(s1color)
+
+twoway(connected tot_spent qtr, sort) if agency == "USAID" & fiscalyeartype == "Disbursements" /*
+*/, by(fiscalyear) scheme(s1color)
+
+table agency fiscalyear, /*
+*/ c(mean spent count spent) f(%9.2fc) row col
+
 
 * ### Collapsing ###
 use "StataTrainingClean.dta", clear 
+order agency fiscalyear category spent
 
 * Task: Create table showing aggregate category spending for each agency by year
-bys fiscalyear: table agency category, c(sum spent) f(%12.2fc)
+bys fiscalyear: table agency category, c(sum spent count spent mean spent) f(%12.2fc)
 
 * Hard to do, let's try to collapse the data
 collapse (sum) spent (count) count = spent (mean) ave_spent = spent /*
 */, by(agency category fiscalyear)
 
+* Can you plot or summarize aggregate spending now?
 local labopts "ylabel(, labsize(small) angle(horizontal)) xlabel(, labsize(vsmall))"
 local layout "by(category, rows(2)) subtitle(, size(tiny) fcolor("245 245 245") bexpand)"
 local lineopt "lcolor("210 210 210") mcolor("215 215 215")"
 local gopts "graphregion(fcolor(none) ifcolor(none))"
 
-
 twoway(connected spent fiscalyear, `lineopt')/*
 */if agency == "USAID", by(category) yscale(noline) `labopts' `layout' scheme(s1mono) `gopts'
+
+* === Collapsing Solution === *
+* Load data
+use "StataTrainingClean.dta", clear
+
+* Keep only observations from agency == USAID
+keep if inlist(agency, "USAID")
+
+FINISH WRITING!
+
+
+
+
+
 
 
 * Exploring and plotting data
@@ -314,14 +370,6 @@ scatter spent qtr if inrange(spent, lowerb, upperb), by(fiscalyear) jitter(10)
 * Let's plot the data overtime using a combination of qtr + fiscal year to create a time var
 sort fiscalyear qtr
 egen timevar = group(fiscalyear qtr)
-
-
-
-
-
-
-
-
 
 
 
