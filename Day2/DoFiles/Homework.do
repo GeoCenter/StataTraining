@@ -9,14 +9,19 @@
 #-------------------------------------------------------------------------------
 */
 
-cd "C:/Users/t/Documents/Github/StataTraining/Day2/Data"
-log using "Day2Homework.log", replace
+global pathdata "C:\Users\Tim\Documents\Github\StataTraining\Day2\Data"
+global pathlog "C:\Users\Tim\Documents\Github\StataTraining\Day2"
+global path "C:\Users\Tim\Documents\Github\StataTraining\Day2\"
+
+cd $path
+capture log close
+log using "$pathlog\Day2Homework.log", replace
 
 /* --- Homweork Exercise --- *
 Import the World Bank Indicator data and discuss how you would reshape it
 Write psuedocode for each modification you'd make to the data.
 */
-import delimited "wb_indicators.csv", clear
+import delimited "$pathdata\wb_indicators.csv", clear
 
 * What are these variables?
 * http://data.worldbank.org/indicator/NV.AGR.TOTL.ZS
@@ -32,9 +37,15 @@ count if inlist("..", yr2007, yr2008, yr2013, yr2014)==1
 * Want to replace missing with blanks for coercion to strings
 foreach x of varlist yr2007 yr2008 yr2013 yr2014 {
 	replace `x' = "" if inlist("..", `x')
-	destring `x', replace 
+	
+	* Check that you are destrining the right things
+	destring `x', gen(`x'_ds) 
 }
 *end
+
+* Drop string variables, rename years for reshaping below
+drop yr2007 yr2008 yr2013 yr2014
+rename *_ds* **
 
 * (Could also use destring, force options + mvencode)
 
@@ -77,7 +88,7 @@ encode countryname, gen(country_id)
 sort countryname year
 gen loc_time_id = real( string(country_id) + string(year) )
 
-save "wb_indicators_long.dta", replace
+saveold "wb_indicators_long.dta", replace  version(12)
 
 
 cls

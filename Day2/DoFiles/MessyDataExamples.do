@@ -12,11 +12,11 @@ clear
 capture log close
 
 * Path to be determined based on where users install zip
-cd "$pathin/Day2/Data"
-
-
 capture log close
-log using "MessyDataExamples.log", replace
+log using "$pathlog\MessyDataExamples.log", replace
+
+cd "$pathdata"
+
 * ### Column headers are numbers, not names ###
 clear all
 input str19 agency _1st _2nd _3rd _4th
@@ -27,7 +27,7 @@ input str19 agency _1st _2nd _3rd _4th
 "USDA" 1	0	1	0
 end
 
-save "column_numbers.dta", replace
+saveold "column_numbers.dta", replace version(12)
 
 * How easily can I summarize this data?
 
@@ -54,7 +54,7 @@ input str3 country str5 agency q1FY2009 q2FY2009 q3FY2009 q4FY2009 q1FY2010 q2FY
 "ARM"	"USAID"	86	89	127	212	394	255	141	74
 "AZE"	"USAID"	116	239	330	34	92	315	312	220
 end
-save "mVars_column.dta", replace
+saveold "mVars_column.dta", replace version(12)
 
 * Melt data based on the time variable, country is the unique identifier
 reshape long q@, i(country) j(time, string)
@@ -103,7 +103,7 @@ input str6 stringid	str6 good year2011 year2012
 "Rwanda" "coffee"	7.35	3.23
 "Rwanda" "maize"	4.78	6.46
 end
-save "vars_row_columns.dta", replace
+saveold "vars_row_columns.dta", replace version(12)
 
 * Goal: Transform data so each good is organized as a panel, by country
 * Country will be the unique identifier, and the suffix of the year variable is 
@@ -138,7 +138,7 @@ input id gdp2014 gdp2015 cpc2014 cpc2015
 1 8.28 9.99 1 1
 2 9.10 4.05 0 0
 end
-save "gdp_cpd.dta", replace
+saveold "gdp_cpd.dta", replace version(12)
 
 clist, noo
 * Looks as if a variable (year) is stored in the name
@@ -186,21 +186,21 @@ input id age hid
 1 23 102
 2 20 102
 end
-save "ind.dta", replace
+saveold "ind.dta", replace version(12)
 
 clear
 input id cows value
 1 2 2000
 2 1 500
 end
-save "ind_ag.dta", replace
+saveold "ind_ag.dta", replace version(12)
 
 clear
 input hid str4 income
 101 "$100"
 102 "$250"
 end
-save "hh.dta", replace
+saveold "hh.dta", replace version(12)
 
 clear
 input hid str4 income
@@ -208,7 +208,7 @@ input hid str4 income
 102 "$250"
 104 "$500"
 end
-save "hh2.dta", replace
+saveold "hh2.dta", replace version(12)
 
 clear
 input id age hid
@@ -219,7 +219,7 @@ input id age hid
 1 43 103
 2 5  103
 end
-save "ind2.dta", replace
+saveold "ind2.dta", replace version(12)
 
 * Messy data for merge exercise
 clear
@@ -230,17 +230,23 @@ input hid str4 income
 104 "$500"
 104 ""
 end
-save "hh3.dta", replace
+saveold "hh3.dta", replace version(12)
 
 
 
 * -------------------------------------------------- *
 /* --- Appending ---*
-Stacking two datasets with common variables. Could be used to update a dataset. */
+Stacking two datasets with common variables. Could be used to update a dataset. 
+Use scalars to keep track of total expected observations, after append */
 use "disbursements.dta", clear
-br
+count
+scalar disb_N = r(N)
+
 use "obligations.dta", clear
 count
+scalar ob_N = r(N)
+scalar dir
+display ob_N + disb_N
 
 * Append two datasets together
 append using "disbursements.dta", gen(data_source)
@@ -303,15 +309,12 @@ bysort agency: table fiscalyear qtr, c(sum spent) f(%9.2fc)
 
 egen tot_spent = total(spent), by(qtr fiscalyear agency fiscalyeartype)
 twoway(connected tot_spent qtr, sort) if agency == "USAID", by(fiscalyear) scheme(s1color)
-twoway(connected tot_spent qtr, sort) if agency == "USAID" & fiscalyeartype == "Obligations" /*
-*/, by(fiscalyear) scheme(s1color)
-
-twoway(connected tot_spent qtr, sort) if agency == "USAID" & fiscalyeartype == "Disbursements" /*
-*/, by(fiscalyear) scheme(s1color)
+twoway(connected tot_spent qtr if agency == "USAID" & fiscalyeartype == "Obligations", sort)/*
+*/ (connected tot_spent qtr if agency == "USAID" & fiscalyeartype == "Disbursements", sort) /*
+*/, by(fiscalyear) scheme(s1color) legend(order(1 "Obligations" 2 "Disbursements"))
 
 table agency fiscalyear, /*
 */ c(mean spent count spent) f(%9.2fc) row col
-
 
 * ### Collapsing ###
 use "StataTrainingClean.dta", clear 

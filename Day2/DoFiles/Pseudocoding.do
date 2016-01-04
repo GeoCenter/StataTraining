@@ -1,5 +1,5 @@
-global pathin "C:\Users\Tim\Documents\GitHub\StataTraining\Exercises\Stata"
-cd $pathin
+
+cd $pathdata
 
 * --- 10 min Exercise --- * 
 * 1) load the StataTrainingMessy.csv
@@ -100,4 +100,15 @@ compare spent2 amount
 charlist amount
 
 replace spent = spent / 1000000
-save "StataTrainingClean.dta", replace
+
+preserve
+keep if fiscalyeartype == "Obligations"
+saveold "obligations.dta" , replace version(12)
+restore
+
+preserve
+keep if fiscalyeartype == "Disbursements"
+saveold "disbursements.dta" , replace version(12)
+restore
+
+saveold "StataTrainingClean.dta", replace version(12)
