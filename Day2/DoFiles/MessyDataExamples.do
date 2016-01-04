@@ -346,6 +346,21 @@ FINISH WRITING!
 
 
 
+* === Loops === *
+* foreach and forvalues
+
+
+
+* Show how loops can be combine with macros
+levelsof fiscalyear, local(levels)
+foreach x of local levels {
+	
+	
+	display "`x'"
+	}
+*end
+
+
 
 
 * Exploring and plotting data
