@@ -12,7 +12,7 @@ permalink: /about/
 <img class="col one right" src="/img/prof_pic.jpg">
 <h4>Dr. Tim Essam</h4> is an trained agricultural economist who somehow escaped the county seat of Gage County, Nebraska. He enjoys placing Easter eggs in co-worker’s presentations when offering suggestions. He also eats approximately every 45 minutes, and may have a tapeworm.
 
-<img class="col one right" src="/img/laura.png">
+<img class="col one right" src="/img/laura.jpg">
 <h4>Dr. Laura Hughes</h4> is a trained biophysical chemist who spent hours staring through a microscope at stains. We have no idea whether or not she can provide laundering tips on removing actual stains from clothing. She enjoys creating her own color schemes and custom plot functions in R. She is passionate about inculcating others with proper data visualization methods, color schemes, and occasional ballet moves.
 
 <img class="col one right" src="/img/doug.png">
