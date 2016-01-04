@@ -1,8 +1,36 @@
 ---
 layout: page
-title: About the instructors
+title: about
 permalink: /about/
 ---
+
+### background on the project
+<br>
+
+
+We're a group of data practitioners, and in the past few months, we've been asked by friends and colleagues to help them learn or brush up on data analysis and visualization. As a result, we've put together this series of presentations, exercises, and resources to help understand what goes into transforming data into objective, evidence-based decisions.  
+
+The title (Fundamentals of Data Analysis and Visualization) is admittedly a bit grandiose, and there's no way that you'll be a data expert after working through these materials. We hope, though, to provide enough of a foundation to be able to learn the art and science of extracting actionable insights and developing visually appealing communications materials from varied data sets.  
+
+The materials cover:
+
+- an introduction to statistical software, coding, and reproducible analysis in Stata 
+- the fundamentals of data processing and management, 
+- exploratory data analysis and visualization
+- basic statistical and regression analysis
+- data visualization and data analysis communication.
+
+<br>
+<hr>
+<br>
+
+###the data
+
+<br>
+<hr>
+<br>
+
+### instructors
 
 <img class="col one right" src="/StataTraining/img/aaron.png">
 
