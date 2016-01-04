@@ -532,4 +532,4 @@ not found
 {txt}   3.2k  12/31/15 13:21  {res}vars_row_columns.dta
 {txt}   5.8k  12/30/15 12:46  {res}wb_gdp_wide.dta   
 
-{com}. 
+{com}. exit, clear
