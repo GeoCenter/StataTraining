@@ -1,4 +1,4 @@
-cd "C:\Users\t\Documents\Github\StataTraining\Day2\Data"
+cd "C:\Users\Tim\Documents\Github\StataTraining\Day2\Data"
 
 * Create a merge dataset for the homework
 use StataTrainingClean.dta, clear
@@ -35,4 +35,4 @@ la var count "number of records"
 sort country_id category year
 gen loc_time_id = real( string(country_id) + string(year) )
 
-save "FA_merge.dta", replace
+saveold "FA_merge.dta", replace version(12)

@@ -316,8 +316,10 @@ twoway(connected tot_spent qtr if agency == "USAID" & fiscalyeartype == "Obligat
 table agency fiscalyear, /*
 */ c(mean spent count spent) f(%9.2fc) row col
 
+* -------------------------------------------------- *
 * ### Collapsing ###
 use "StataTrainingClean.dta", clear 
+keep if fiscalyeartype == "Disbursements"
 order agency fiscalyear category spent
 
 * Task: Create table showing aggregate category spending for each agency by year
@@ -326,69 +328,90 @@ bys fiscalyear: table agency category, c(sum spent count spent mean spent) f(%12
 * Hard to do, let's try to collapse the data
 collapse (sum) spent (count) count = spent (mean) ave_spent = spent /*
 */, by(agency category fiscalyear)
+label variable spent "Total disbursements (M USD)"
 
 * Can you plot or summarize aggregate spending now?
-local labopts "ylabel(, labsize(small) angle(horizontal)) xlabel(, labsize(vsmall))"
+local labopts "ylabel(, labsize(small) angle(horizontal)) xlabel(, labsize(vsmall)) ytitle(, size(vsmall)) xtitle(, size(vsmall))"
 local layout "by(category, rows(2)) subtitle(, size(tiny) fcolor("245 245 245") bexpand)"
-local lineopt "lcolor("210 210 210") mcolor("215 215 215")"
+local lineopt "lcolor("102 194 165") mcolor("102 194 165")"
 local gopts "graphregion(fcolor(none) ifcolor(none))"
 
 twoway(connected spent fiscalyear, `lineopt')/*
-*/if agency == "USAID", by(category) yscale(noline) `labopts' `layout' scheme(s1mono) `gopts'
+*/if agency == "USAID", by(category,  note("")) yscale(noline) `labopts' `layout' scheme(s1mono) `gopts'
 
+
+
+
+* --------------------------------------------
 * === Collapsing Solution === *
 * Load data
 use "StataTrainingClean.dta", clear
 
 * Keep only observations from agency == USAID
-keep if inlist(agency, "USAID")
+keep if inlist(agency, "USAID") & fiscalyeartype == "Disbursements"
 
-FINISH WRITING!
+* Collapse data down, summing total price by fiscalyear and category
+collapse (sum) spent, by(fiscalyear category)
+la var spent "aggregate disbursements"
+
+* Tabulate results
+table category fiscalyear, c(mean spent) format(%9.2fc)
+
+* Plot results
+twoway(connected spent fiscalyear, sort), by(category) ///
+scheme(s1color) subtitle(, size(vsmall))
+
+* === Extra Credit === *
+use "StataTrainingClean.dta", clear
+collapse (sum) spent, by(fiscalyear fiscalyeartype qtr agency)
+
+* Look at patterns
+bysort fiscalyeartype: table fiscalyear qtr if inlist(agency, "USAID") & ///
+inrange(fiscalyear, 2009, 2013), c(mean spent) format(%9.2fc)
+
+* Let's plot the patterns for USAID
+twoway(connected spent qtr if fiscalyeartype == "Disbursements", sort) ///
+(connected spent qtr if fiscalyeartype == "Obligations", sort) ///
+if inlist(agency, "USAID"), by(fiscalyear) ///
+legend(order(1 "Obligations" 2 "Disbursements")) subtitle(, size(vsmall)) ///
+scheme(s1color) ylabel(, labsize(vsmall)) xlabel(, labsize(vsmall))
+
+* -------------------------------------------------- *
+* === Estout ===*
+cls
+use "StataTrainingClean.dta", clear
+
+* Post results from the summary command to e(class) format
+estpost sum spent2 if inlist(fiscalyeartype, "Disbursements"), detail
+*ereturn list
+
+* Write selected statistics to a text file
+esttab . using "disbursement_means1.txt", cells("mean p50 sd min max count") noobs replace
+
+*
+*
+*
+*
+*
+
+* Fix formatting and rewrite, saving over existing text file
+local fmt1 "mean (fmt(%12.2fc)) p50(fmt(%12.2fc)) sd(fmt(%12.2fc))"
+local fmt2 "min(fmt(%12.0fc)) max(fmt(%12.0fc)) count(fmt(%12.0fc))"
+esttab . using "disbursement_means2.txt", cells("`fmt1' `fmt2'") ///
+	noobs replace nomtitles nonum
 
 
 
+* -------------------------------------------------- *
+* === Estout Exercise === *
+cls
+use "StataTrainingClean.dta", clear
+estpost tabulate category fiscalyear if inrange(fiscalyear, 2009, 2013), nototal
 
-
-* === Loops === *
-* foreach and forvalues
-
-
-
-* Show how loops can be combine with macros
-levelsof fiscalyear, local(levels)
-foreach x of local levels {
-	
-	
-	display "`x'"
-	}
-*end
+esttab using test.rtf, cell(b(fmt(0))) unstack noobs collabels(none) modelwidth(5) ///
+	nonumber varlabels(`e(labels)') eqlabels(`e(eqlabels)') ///
+	title({\b Table 1. }{\i Program management entries have increased sharply since 2009}) ///
+	replace 
 
 
 
-
-* Exploring and plotting data
-
-summarize spent, detail
-histogram spent 
-
-* Define two scalars that will represent the lower and upper bound filters
-scalar lowerb = -466299.9
-scalar upperb = 1000000
-
-histogram spent if inrange(spent, lowerb, upperb)
-
-* Notice the outliers
-scatter spent fiscalyear
-scatter spent fiscalyear if inrange(fiscalyear, 2010, 2014), jitter(10)
-scatter spent fiscalyear if inrange(spent, lowerb, upperb) & fiscalyear > 2009, jitter(10)
-
-* Let's look at the scatter plot by quarter, by fiscal year
-scatter spent qtr if inrange(spent, lowerb, upperb), by(fiscalyear) jitter(10) 
-
-* Let's plot the data overtime using a combination of qtr + fiscal year to create a time var
-sort fiscalyear qtr
-egen timevar = group(fiscalyear qtr)
-
-
-
-log close
