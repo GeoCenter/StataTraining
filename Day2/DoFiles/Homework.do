@@ -92,11 +92,11 @@ saveold "wb_indicators_long.dta", replace  version(12)
 
 
 cls
-use "FA_merge.dta", clear
+use "$pathdata/FA_merge.dta", clear
 
 * Merge with WB data so we can look at indicators alongside foreign assistance data
 merge m:1 loc_time_id using "wb_indicators_long.dta"
 
-capture log close
+log close
 
 
