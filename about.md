@@ -40,8 +40,10 @@ The materials cover:
 <br/>
 
 <img class="col one right" src="/StataTraining/img/tim.png">
-<h4>Dr. Tim Essam</h4> is an trained agricultural economist who somehow escaped the county seat of Gage County, Nebraska. He enjoys placing Easter eggs in co-worker’s presentations when offering suggestions. He also eats approximately every 45 minutes, and may have a tapeworm.
+<h4>Dr. Tim Essam</h4> is an trained agricultural economist who somehow escaped the county seat of Gage County, Nebraska. He enjoys placing Easter eggs in co-worker’s presentations when offering suggestions. He also eats approximately every 45 minutes, and may have a tapeworm.  
 
+<br/>
+<br/>
 <br/>
 
 <img class="col one right" src="/StataTraining/img/laura.png">
