@@ -8,7 +8,8 @@ permalink: /part2/
 <br>
 
 ### Introduction
-Unfortunately, most of the time spent doing 'data science' are  mundane, boring, and occasionally frustrating known as data wrangling.  
+Unfortunately, most of the time spent doing 'data science' are the mundane, boring, and occasionally frustrating bits known as data wrangling.  
+
 
 ###  Part 2 Goals
 
