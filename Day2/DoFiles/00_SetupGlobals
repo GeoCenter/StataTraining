@@ -1,0 +1,17 @@
+/*-------------------------------------------------------------------------------
+# Name:		StataTrainingDay2
+# Purpose:	Set global paths for use in do files
+# Author:	Tim Essam, Ph.D.
+# Created:	2015/12/28
+# Owner:	Tim Essam - USAID GeoCenter | OakStream Systems, LLC
+# License:	MIT License
+# Ado(s):	see below
+#-------------------------------------------------------------------------------
+*/
+
+* Fix these to reflect your actual working directories
+global pathdata "C:\Users\Tim\Documents\Github\StataTraining\Day2\Data"
+global path "C:\Users\Tim\Documents\Github\StataTraining\Day2"
+global pathdo "C:\Users\Tim\Documents\Github\StataTraining\Day2\DoFiles"
+
+clear

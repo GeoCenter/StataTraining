@@ -1,0 +1,535 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\Tim\Documents\GitHub\StataTraining\Day2\Data\MessyDataExamples.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}31 Dec 2015, 13:21:03
+{txt}
+{com}. * ### Column headers are numbers, not names ###
+. clear all
+{txt}
+{com}. input str19 agency _1st _2nd _3rd _4th
+
+     {txt}             agency       _1st       _2nd       _3rd       _4th
+  1{com}. "DOS"   4       4       4       4
+{txt}  2{com}. "MCC" 36        29      41      35
+{txt}  3{com}. "Peace Corps"   73      8       0       0
+{txt}  4{com}. "USAID" 428     559 429 667
+{txt}  5{com}. "USDA" 1        0       1       0
+{txt}  6{com}. end
+{txt}
+{com}. 
+. save "column_numbers.dta", replace
+{txt}file column_numbers.dta saved
+
+{com}. 
+. * How easily can I summarize this data?
+. 
+. * Rename the variables to real names
+. rename (_1st _2nd _3rd _4th) (qtr1 qtr2 qtr3 qtr4)
+{res}{txt}
+{com}. 
+. * Melt the data so that each row is an entry for each agency, by quarter
+. reshape long qtr, i(agency) j(quarter)
+{txt}(note: j = 1 2 3 4)
+
+Data{col 36}wide{col 43}->{col 48}long
+{hline 77}
+Number of obs.                 {res}       5   {txt}->{res}      20
+{txt}Number of variables            {res}       5   {txt}->{res}       3
+{txt}j variable (4 values)                     ->   {res}quarter
+{txt}xij variables:
+                     {res}qtr1 qtr2 ... qtr4   {txt}->   {res}qtr
+{txt}{hline 77}
+
+{com}. rename qtr freq
+{res}{txt}
+{com}. 
+. * Free axis versus fixed. 
+. graph bar (mean) freq, over(quarter) by(agency, style(compact) rows(1)) scheme(s1color)
+{res}{txt}
+{com}. graph bar (mean) freq, over(quarter) by(agency, yrescale style(compact) rows(1))
+{res}{txt}
+{com}. 
+. 
+{txt}end of do-file
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. * ### Multiple variables are stored in 1 column ###
+. clear all
+{txt}
+{com}. input str3 country str5 agency q1FY2009 q2FY2009 q3FY2009 q4FY2009 q1FY2010 q2FY2010 q3FY2010 q4FY2010
+
+     {txt}  country     agency   q1FY2009   q2FY2009   q3FY2009   q4FY2009   q1FY2010   q2FY2010   q3FY2010   q4FY2010
+  1{com}. "AFG"   "USAID" 399     361     254     71      378     398     85      39
+{txt}  2{com}. "ALB"   "USAID" 45      282     40      285     306     230     398     216
+{txt}  3{com}. "ANG"   "USAID" 354     24      19      252     146     123     369     376
+{txt}  4{com}. "ARM"   "USAID" 86      89      127     212     394     255     141     74
+{txt}  5{com}. "AZE"   "USAID" 116     239     330     34      92      315     312     220
+{txt}  6{com}. end
+{txt}
+{com}. save "mVars_column.dta", replace
+{txt}file mVars_column.dta saved
+
+{com}. 
+. * Melt data based on the time variable, country is the unique identifier
+. reshape long q@, i(country) j(time, string)
+{txt}(note: j = 1FY2009 1FY2010 2FY2009 2FY2010 3FY2009 3FY2010 4FY2009 4FY2010)
+
+Data{col 36}wide{col 43}->{col 48}long
+{hline 77}
+Number of obs.                 {res}       5   {txt}->{res}      40
+{txt}Number of variables            {res}      10   {txt}->{res}       4
+{txt}j variable (8 values)                     ->   {res}time
+{txt}xij variables:
+         {res}q1FY2009 q1FY2010 ... q4FY2010   {txt}->   {res}q
+{txt}{hline 77}
+
+{com}. 
+. * Grab the 1st value of each observations in the time variable
+. generate qtr = real(substr(time, 1, 1))
+{txt}
+{com}. 
+. * Create a time variable using a similar approach. The real() function returns 
+. * a numeric when a number is coded as a string. Returns missing if no numbers are found.
+. generate year = real(substr(time, 4, 7))
+{txt}
+{com}. sort country  year qtr
+{txt}
+{com}. order country agency qtr year q
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. * --- Alternative method: using reshape twice --- *
+. clear all
+{txt}
+{com}. input str3 country str5 agency q1FY2009 q2FY2009 q3FY2009 q4FY2009 q1FY2010 q2FY2010 q3FY2010 q4FY2010
+
+     {txt}  country     agency   q1FY2009   q2FY2009   q3FY2009   q4FY2009   q1FY2010   q2FY2010   q3FY2010   q4FY2010
+  1{com}. "AFG"   "USAID" 399     361     254     71      378     398     85      39
+{txt}  2{com}. "ALB"   "USAID" 45      282     40      285     306     230     398     216
+{txt}  3{com}. "ANG"   "USAID" 354     24      19      252     146     123     369     376
+{txt}  4{com}. "ARM"   "USAID" 86      89      127     212     394     255     141     74
+{txt}  5{com}. "AZE"   "USAID" 116     239     330     34      92      315     312     220
+{txt}  6{com}. end
+{txt}
+{com}. 
+. * First, reshape based on the year values
+. reshape long q1FY@ q2FY@ q3FY@ q4FY@, i(country) j(year)
+{txt}(note: j = 2009 2010)
+
+Data{col 36}wide{col 43}->{col 48}long
+{hline 77}
+Number of obs.                 {res}       5   {txt}->{res}      10
+{txt}Number of variables            {res}      10   {txt}->{res}       7
+{txt}j variable (2 values)                     ->   {res}year
+{txt}xij variables:
+                      {res}q1FY2009 q1FY2010   {txt}->   {res}q1FY
+                      q2FY2009 q2FY2010   {txt}->   {res}q2FY
+                      q3FY2009 q3FY2010   {txt}->   {res}q3FY
+                      q4FY2009 q4FY2010   {txt}->   {res}q4FY
+{txt}{hline 77}
+
+{com}. sort country year
+{txt}
+{com}. 
+. * Remove the FY part from each variables
+. rename *FY *
+{res}{txt}
+{com}. * Reshape again, based on the qtr values
+. reshape long q@, i(country year) j(qtr)
+{txt}(note: j = 1 2 3 4)
+
+Data{col 36}wide{col 43}->{col 48}long
+{hline 77}
+Number of obs.                 {res}      10   {txt}->{res}      40
+{txt}Number of variables            {res}       7   {txt}->{res}       5
+{txt}j variable (4 values)                     ->   {res}qtr
+{txt}xij variables:
+                           {res}q1 q2 ... q4   {txt}->   {res}q
+{txt}{hline 77}
+
+{com}. rename q freq 
+{res}{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. clear all
+{txt}
+{com}. input str6 stringid     str6 good year2011 year2012
+
+     {txt} stringid       good   year2011   year2012
+  1{com}. "Malawi" "coffee"       5.93    2.40
+{txt}  2{com}. "Malawi" "maize"        1.23    0.56
+{txt}  3{com}. "Uganda" "coffee"       3.09    4.26
+{txt}  4{com}. "Uganda" "maize"        9.17    7.51
+{txt}  5{com}. "Rwanda" "coffee"       7.35    3.23
+{txt}  6{com}. "Rwanda" "maize"        4.78    6.46
+{txt}  7{com}. end
+{txt}
+{com}. save "vars_row_columns.dta", replace
+{txt}file vars_row_columns.dta saved
+
+{com}. 
+. * Goal: Transform data so each good is organized as a panel, by country
+. * Country will be the unique identifier, and the suffix of the year variable is 
+. * the name of each good.
+. reshape wide year*, i(stringid) j(good, string)
+{txt}(note: j = coffee maize)
+
+Data{col 36}long{col 43}->{col 48}wide
+{hline 77}
+Number of obs.                 {res}       6   {txt}->{res}       3
+{txt}Number of variables            {res}       4   {txt}->{res}       5
+{txt}j variable (2 values)              {res}good   {txt}->   (dropped)
+xij variables:
+                               {res}year2011   {txt}->   {res}year2011coffee year2011maize
+                               year2012   {txt}->   {res}year2012coffee year2012maize
+{txt}{hline 77}
+
+{com}. 
+. * Why doesn't the following work? 
+. cap reshape long year2011coffee year2012coffee year2011maize year2012maize, i(stringid) j(year)
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. rename (year2011coffee year2012coffee year2011maize year2012maize) /*
+> */ (coffee2011 coffee2012 maize2011 maize2012)
+{res}{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. reshape long coffee@ maize@, i(stringid) j(year)
+{txt}(note: j = 2011 2012)
+
+Data{col 36}wide{col 43}->{col 48}long
+{hline 77}
+Number of obs.                 {res}       3   {txt}->{res}       6
+{txt}Number of variables            {res}       5   {txt}->{res}       4
+{txt}j variable (2 values)                     ->   {res}year
+{txt}xij variables:
+                  {res}coffee2011 coffee2012   {txt}->   {res}coffee
+                    maize2011 maize2012   {txt}->   {res}maize
+{txt}{hline 77}
+
+{com}. list, clean noo
+{txt}
+    {res}stringid   year   coffee   maize {txt} 
+    {res}  Malawi   2011     5.93    1.23 {txt} 
+    {res}  Malawi   2012      2.4     .56 {txt} 
+    {res}  Rwanda   2011     7.35    4.78 {txt} 
+    {res}  Rwanda   2012     3.23    6.46 {txt} 
+    {res}  Uganda   2011     3.09    9.17 {txt} 
+    {res}  Uganda   2012     4.26    7.51 {txt} 
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. clear
+{txt}
+{com}. input id gdp2014 gdp2015 cpc2014 cpc2015
+
+     {txt}       id    gdp2014    gdp2015    cpc2014    cpc2015
+  1{com}. 1 8.28 9.99 1 1
+{txt}  2{com}. 2 9.10 4.05 0 0
+{txt}  3{com}. end
+{txt}
+{com}. save "gdp_cpd.dta", replace
+{txt}(note: file gdp_cpd.dta not found)
+file gdp_cpd.dta saved
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. use "wb_gdp_wide.dta", clear
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. reshape long yr@, i(countryname) j(year)
+{txt}(note: j = 2009 2010 2011 2012)
+
+Data{col 36}wide{col 43}->{col 48}long
+{hline 77}
+Number of obs.                 {res}       5   {txt}->{res}      20
+{txt}Number of variables            {res}       8   {txt}->{res}       6
+{txt}j variable (4 values)                     ->   {res}year
+{txt}xij variables:
+               {res}yr2009 yr2010 ... yr2012   {txt}->   {res}yr
+{txt}{hline 77}
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. rename (countryname countrycode yr) (country ISO3 gdp)
+{res}{txt}
+{com}. drop seriesname seriescode
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. twoway(connected gdp year), by(country) scheme(s1color)
+{res}{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. table country year, c(mean gdp) f(%9.2f) col
+
+{txt}{hline 12}{c TT}{hline 34}
+            {c |}               year               
+    country {c |}  2009   2010   2011   2012  Total
+{hline 12}{c +}{hline 34}
+Afghanistan {c |} {res}21.02   8.43   6.11  14.43  12.50
+    {txt}Georgia {c |} {res}-3.78   6.25   7.20   6.18   3.96
+      {txt}Kenya {c |}  {res}3.31   8.40   6.11   4.55   5.59
+   {txt}Pakistan {c |}  {res}2.83   1.61   2.75   3.51   2.67
+    {txt}Senegal {c |}  {res}2.42   4.18   1.76   4.36   3.18
+{txt}{hline 12}{c BT}{hline 34}
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. egen gdp_ave = mean(gdp), by(country)
+{txt}
+{com}. mean gdp_ave, over(country)
+{err}no observations
+{txt}{search r(2000), local:r(2000);}
+
+end of do-file
+
+{search r(2000), local:r(2000);}
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. tab country, sum(gdp_ave)
+
+            {txt}{c |}         Summary of gdp_ave
+    country {c |}        Mean   Std. Dev.       Freq.
+{hline 12}{c +}{hline 36}
+Afghanistan {c |}  {res} 12.500591           0           4
+{txt}    Georgia {c |}  {res} 3.9648423           0           4
+{txt}      Kenya {c |}  {res}  5.593936           0           4
+{txt}   Pakistan {c |}  {res} 2.6734469           0           4
+{txt}    Senegal {c |}  {res} 3.1817145           0           4
+{txt}{hline 12}{c +}{hline 36}
+      Total {c |}  {res} 5.5829062    3.690765          20
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. table country year, c(mean gdp) f(%9.2f) col
+
+{txt}{hline 12}{c TT}{hline 34}
+            {c |}               year               
+    country {c |}  2009   2010   2011   2012  Total
+{hline 12}{c +}{hline 34}
+Afghanistan {c |} {res}21.02   8.43   6.11  14.43  12.50
+    {txt}Georgia {c |} {res}-3.78   6.25   7.20   6.18   3.96
+      {txt}Kenya {c |}  {res}3.31   8.40   6.11   4.55   5.59
+   {txt}Pakistan {c |}  {res}2.83   1.61   2.75   3.51   2.67
+    {txt}Senegal {c |}  {res}2.42   4.18   1.76   4.36   3.18
+{txt}{hline 12}{c BT}{hline 34}
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. clear
+{txt}
+{com}. input hid str4 income
+
+     {txt}      hid     income
+  1{com}. 101 "$100"
+{txt}  2{com}. 101 "$100"
+{txt}  3{com}. 102 "$250"
+{txt}  4{com}. 104 "$500"
+{txt}  5{com}. end
+{txt}
+{com}. save "hh3.dta", replace
+{txt}(note: file hh3.dta not found)
+file hh3.dta saved
+
+{com}. 
+{txt}end of do-file
+
+{com}. use ind2.dta
+
+. merge m:1 using "hh3.dta"
+{res}{err}{it:varlist} must be specified after {bf:merge m:1}
+{p 4 4 2}
+you must specify the key variables
+after {bf:merge m:1}
+{p_end}
+{txt}{search r(198), local:r(198);}
+
+{com}. merge m:1 hid using "hh3.dta"
+{res}{err}{p 0 4 2}
+variable{err} hid
+does not uniquely identify observations in the
+using data
+{p_end}
+{txt}{search r(459), local:r(459);}
+
+{com}. clear
+
+. use hh3.dta
+
+. br
+
+. drop in 1
+{txt}(1 observation deleted)
+
+{com}. save
+{err}invalid file specification
+{txt}{search r(198), local:r(198);}
+
+{com}. save hh3.dta, replace
+{txt}file hh3.dta saved
+
+{com}. use ind_ag.dta
+
+. use ind2.dta
+
+. merge m:1 hid using hh3.dta
+{res}
+{txt}{col 5}Result{col 38}# of obs.
+{col 5}{hline 41}
+{col 5}not matched{col 30}{res}               3
+{txt}{col 9}from master{col 30}{res}               2{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               1{txt}  (_merge==2)
+
+{col 5}matched{col 30}{res}               4{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. br
+
+. dir
+{txt}  <dir>  12/31/15 13:32  {res}.                 
+{txt}  <dir>  12/31/15 13:32  {res}..                
+{txt}   3.8k  12/31/15 13:21  {res}column_numbers.dta
+{txt}   3.7k  12/31/15 13:22  {res}gdp_cpd.dta       
+{txt}   1.8k  12/30/15 15:17  {res}hh.dta            
+{txt}   1.8k  12/30/15 15:31  {res}hh2.dta           
+{txt}   1.8k  12/31/15 13:32  {res}hh3.dta           
+{txt}   2.5k  12/30/15 15:16  {res}ind.dta           
+{txt}   2.5k  12/30/15 15:23  {res}ind2.dta          
+{txt}   2.4k  12/30/15 15:43  {res}ind_ag.dta        
+{txt}   2.4k  12/30/15 15:42  {res}ind_age.dta       
+{txt}  13.2k  12/31/15 13:29  {res}MessyDataExamples.smcl
+{txt}   7.0k  12/31/15 13:21  {res}mVars_column.dta  
+{txt}  13.5M  12/31/15 13:06  {res}StataTraining     
+{txt}   3.2k  12/31/15 13:21  {res}vars_row_columns.dta
+{txt}   5.8k  12/30/15 12:46  {res}wb_gdp_wide.dta   
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. clear
+{txt}
+{com}. input hid str4 income
+
+     {txt}      hid     income
+  1{com}. 101 "$100"
+{txt}  2{com}. 101 "$100"
+{txt}  3{com}. 102 "$250"
+{txt}  4{com}. 104 "$500"
+{txt}  5{com}. end
+{txt}
+{com}. save "hh3.dta", replace
+{txt}file hh3.dta saved
+
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\Tim\AppData\Local\Temp\STD0d000000.tmp"
+{txt}
+{com}. clear
+{txt}
+{com}. input hid str4 income
+
+     {txt}      hid     income
+  1{com}. 101 "$100"
+{txt}  2{com}. 101 "$100"
+{txt}  3{com}. 102 "$250"
+{txt}  4{com}. 104 "$500"
+{txt}  5{com}. 104 ""
+{txt}  6{com}. end
+{txt}
+{com}. save "hh3.dta", replace
+{txt}file hh3.dta saved
+
+{com}. 
+{txt}end of do-file
+
+{com}. use StataTrainingClean.dta
+{err}{p 0 4 2}
+file StataTrainingClean.dta
+not found
+{p_end}
+{txt}{search r(601), local:r(601);}
+
+{com}. dir
+{txt}  <dir>  12/31/15 13:35  {res}.                 
+{txt}  <dir>  12/31/15 13:35  {res}..                
+{txt}   3.8k  12/31/15 13:21  {res}column_numbers.dta
+{txt}   3.7k  12/31/15 13:22  {res}gdp_cpd.dta       
+{txt}   1.8k  12/30/15 15:17  {res}hh.dta            
+{txt}   1.8k  12/30/15 15:31  {res}hh2.dta           
+{txt}   1.8k  12/31/15 13:35  {res}hh3.dta           
+{txt}   2.5k  12/30/15 15:16  {res}ind.dta           
+{txt}   2.5k  12/30/15 15:23  {res}ind2.dta          
+{txt}   2.4k  12/30/15 15:43  {res}ind_ag.dta        
+{txt}   2.4k  12/30/15 15:42  {res}ind_age.dta       
+{txt}  15.4k  12/31/15 13:35  {res}MessyDataExamples.smcl
+{txt}   7.0k  12/31/15 13:21  {res}mVars_column.dta  
+{txt}  13.5M  12/31/15 13:06  {res}StataTraining     
+{txt}   3.2k  12/31/15 13:21  {res}vars_row_columns.dta
+{txt}   5.8k  12/30/15 12:46  {res}wb_gdp_wide.dta   
+
+{com}. erase StataTraining
+
+. dir
+{txt}  <dir>  12/31/15 13:37  {res}.                 
+{txt}  <dir>  12/31/15 13:37  {res}..                
+{txt}   3.8k  12/31/15 13:21  {res}column_numbers.dta
+{txt}   3.7k  12/31/15 13:22  {res}gdp_cpd.dta       
+{txt}   1.8k  12/30/15 15:17  {res}hh.dta            
+{txt}   1.8k  12/30/15 15:31  {res}hh2.dta           
+{txt}   1.8k  12/31/15 13:35  {res}hh3.dta           
+{txt}   2.5k  12/30/15 15:16  {res}ind.dta           
+{txt}   2.5k  12/30/15 15:23  {res}ind2.dta          
+{txt}   2.4k  12/30/15 15:43  {res}ind_ag.dta        
+{txt}   2.4k  12/30/15 15:42  {res}ind_age.dta       
+{txt}  15.4k  12/31/15 13:35  {res}MessyDataExamples.smcl
+{txt}   7.0k  12/31/15 13:21  {res}mVars_column.dta  
+{txt}   3.2k  12/31/15 13:21  {res}vars_row_columns.dta
+{txt}   5.8k  12/30/15 12:46  {res}wb_gdp_wide.dta   
+
+{com}. exit, clear

@@ -1,0 +1,206 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\t\Documents\Github\StataTraining\Day2\Data\Day2Homework.log
+  log type:  text
+ opened on:   1 Jan 2016, 00:53:33
+
+. 
+. /* --- Homweork Exercise --- *
+> Import the World Bank Indicator data and discuss how you would reshape it
+> Write psuedocode for each modification you'd make to the data.
+> */
+. import delimited "wb_indicators.csv", clear
+(12 vars, 15 obs)
+
+. 
+. * What are these variables?
+. * http://data.worldbank.org/indicator/NV.AGR.TOTL.ZS
+. * http://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG
+. * http://data.worldbank.org/indicator/GC.TAX.TOTL.GD.ZS
+. 
+. br
+
+. describe
+
+Contains data
+  obs:            15                          
+ vars:            12                          
+ size:         1,890                          
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+countryname     str11   %11s                  Country Name
+countrycode     str3    %9s                   Country Code
+seriesname      str35   %35s                  Series Name
+seriescode      str17   %17s                  Series Code
+yr2007          str11   %11s                  2007 [YR2007]
+yr2008          str11   %11s                  2008 [YR2008]
+yr2009          float   %9.0g                 2009 [YR2009]
+yr2010          float   %9.0g                 2010 [YR2010]
+yr2011          float   %9.0g                 2011 [YR2011]
+yr2012          float   %9.0g                 2012 [YR2012]
+yr2013          str11   %11s                  2013 [YR2013]
+yr2014          str11   %11s                  2014 [YR2014]
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by:  
+     Note:  dataset has changed since last saved
+
+. * How many instances of missing data do we have to fix?
+. count if inlist("..", yr2007, yr2008, yr2013, yr2014)==1
+    5
+
+. 
+. * Loop over each variable with missing and create a new variable
+. * Want to replace missing with blanks for coercion to strings
+. foreach x of varlist yr2007 yr2008 yr2013 yr2014 {
+  2.         replace `x' = "" if inlist("..", `x')
+  3.         destring `x', replace 
+  4. }
+(1 real change made)
+yr2007 has all characters numeric; replaced as double
+(1 missing value generated)
+(1 real change made)
+yr2008 has all characters numeric; replaced as double
+(1 missing value generated)
+(4 real changes made)
+yr2013 has all characters numeric; replaced as double
+(4 missing values generated)
+(5 real changes made)
+yr2014 has all characters numeric; replaced as double
+(5 missing values generated)
+
+. *end
+. 
+. * (Could also use destring, force options + mvencode)
+. 
+. * relabel the series names to valid names
+. drop seriescode
+
+. replace seriesname = "gdp_growth" if seriesname == "GDP growth (annual %)"
+(5 real changes made)
+
+. replace seriesname = "ag_gdp" if seriesname == "Agriculture, value added (% of GDP)"
+(5 real changes made)
+
+. replace seriesname = "tax_gdp" if seriesname == "Tax revenue (% of GDP)"
+(5 real changes made)
+
+. 
+. * reshape the data to wide format (swings seriesname variables wide)
+. reshape wide yr*, i(countryname) j(seriesname, string)
+(note: j = ag_gdp gdp_growth tax_gdp)
+
+Data                               long   ->   wide
+-----------------------------------------------------------------------------
+Number of obs.                       15   ->       5
+Number of variables                  11   ->      26
+j variable (3 values)        seriesname   ->   (dropped)
+xij variables:
+                                 yr2007   ->   yr2007ag_gdp yr2007gdp_growth yr2007tax_gdp
+                                 yr2008   ->   yr2008ag_gdp yr2008gdp_growth yr2008tax_gdp
+                                 yr2009   ->   yr2009ag_gdp yr2009gdp_growth yr2009tax_gdp
+                                 yr2010   ->   yr2010ag_gdp yr2010gdp_growth yr2010tax_gdp
+                                 yr2011   ->   yr2011ag_gdp yr2011gdp_growth yr2011tax_gdp
+                                 yr2012   ->   yr2012ag_gdp yr2012gdp_growth yr2012tax_gdp
+                                 yr2013   ->   yr2013ag_gdp yr2013gdp_growth yr2013tax_gdp
+                                 yr2014   ->   yr2014ag_gdp yr2014gdp_growth yr2014tax_gdp
+-----------------------------------------------------------------------------
+
+. 
+. *replace the variable names w/ the variable labels
+. ds, not(type string)
+yr2007ag_gdp  yr2009ag_gdp  yr2011ag_gdp  yr2013ag_gdp  yr2007gdp_~h  yr2009gdp_~h  yr2011gdp_~h  yr2013gdp_~h  yr2007tax_~p  yr2009tax_~p  yr2011tax_~p  yr2013tax_~p
+yr2008ag_gdp  yr2010ag_gdp  yr2012ag_gdp  yr2014ag_gdp  yr2008gdp_~h  yr2010gdp_~h  yr2012gdp_~h  yr2014gdp_~h  yr2008tax_~p  yr2010tax_~p  yr2012tax_~p  yr2014tax_~p
+
+. local renlist = r(varlist)
+
+. 
+. foreach v of local renlist {
+  2.         local x : variable label `v'
+  3.         local y = strtoname("`x'")
+  4.         rename `v' `y' 
+  5.         }
+
+. *end loop
+. 
+. * Reshape one more time and things appear to be good
+. rename *_yr* **
+
+. reshape long ag_gdp@ gdp_growth@ tax_gdp@, i(countryname) j(year)
+(note: j = 2007 2008 2009 2010 2011 2012 2013 2014)
+
+Data                               wide   ->   long
+-----------------------------------------------------------------------------
+Number of obs.                        5   ->      40
+Number of variables                  26   ->       6
+j variable (8 values)                     ->   year
+xij variables:
+   ag_gdp2007 ag_gdp2008 ... ag_gdp2014   ->   ag_gdp
+gdp_growth2007 gdp_growth2008 ... gdp_growth2014->gdp_growth
+tax_gdp2007 tax_gdp2008 ... tax_gdp2014   ->   tax_gdp
+-----------------------------------------------------------------------------
+
+. 
+. *label a few variables and we are ready for merging
+. label var ag_gdp "agricultural sector (value added) as % of gdp"
+
+. label var gdp_growth "gdp growth rate"
+
+. label var tax_gdp "taxes collected as % of gdp"
+
+. 
+. * Plot the resulting data (all in percentages)
+. scatter ag_gdp gdp_growth tax_gdp year, by(countryname) scheme(s1color)
+
+. 
+. table countryname year, c(mean gdp_growth) f(%9.2fc) row col
+
+---------------------------------------------------------------------------
+Country     |                          Series Name                         
+Name        |  2007   2008   2009   2010   2011   2012   2013   2014  Total
+------------+--------------------------------------------------------------
+Afghanistan | 13.74   3.61  21.02   8.43   6.11  14.43   1.96   1.31   8.83
+    Georgia | 12.34   2.31  -3.78   6.25   7.20   6.18   3.32   4.77   4.83
+      Kenya |  6.85   0.23   3.31   8.40   6.11   4.55   5.69   5.33   5.06
+   Pakistan |  4.83   1.70   2.83   1.61   2.75   3.51   4.37   4.74   3.29
+    Senegal |  4.94   3.68   2.42   4.18   1.76   4.36   3.62   4.72   3.71
+            | 
+      Total |  8.54   2.31   5.16   5.77   4.79   6.61   3.79   4.17   5.14
+---------------------------------------------------------------------------
+
+. encode countryname, gen(country_id)
+
+. 
+. * Create a unique id for merging with subset FAD data
+. sort countryname year
+
+. gen loc_time_id = real( string(country_id) + string(year) )
+
+. 
+. save "wb_indicators_long.dta", replace
+file wb_indicators_long.dta saved
+
+. 
+. 
+. cls
+
+. use "FA_merge.dta", clear
+
+. 
+. * Merge with WB data so we can look at indicators alongside foreign assistance data
+. merge m:1 loc_time_id using "wb_indicators_long.dta"
+(note: variable country_id was byte, now long to accommodate using data's values)
+(label country_id already defined)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                            18
+        from master                         0  (_merge==1)
+        from using                         18  (_merge==2)
+
+    matched                                71  (_merge==3)
+    -----------------------------------------
+
+. 
+. capture log close

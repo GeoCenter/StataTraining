@@ -1,0 +1,3827 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\Tim\Documents\Github\StataTraining\Day2\MessyDataExamples.log
+  log type:  text
+ opened on:   4 Jan 2016, 13:11:26
+
+. 
+. cd "$pathdata"
+C:\Users\Tim\Documents\Github\StataTraining\Day2\Data
+
+. 
+. * ### Column headers are numbers, not names ###
+. clear all
+
+. input str19 agency _1st _2nd _3rd _4th
+
+                  agency       _1st       _2nd       _3rd       _4th
+  1. "DOS"   4       4       4       4
+  2. "MCC" 36        29      41      35
+  3. "Peace Corps"   73      8       0       0
+  4. "USAID" 428     559 429 667
+  5. "USDA" 1        0       1       0
+  6. end
+
+. 
+. saveold "column_numbers.dta", replace version(12)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file column_numbers.dta saved
+
+. 
+. * How easily can I summarize this data?
+. 
+. * Rename the variables to real names
+. rename (_1st _2nd _3rd _4th) (qtr1 qtr2 qtr3 qtr4)
+
+. 
+. * Melt the data so that each row is an entry for each agency, by quarter
+. reshape long qtr, i(agency) j(quarter)
+(note: j = 1 2 3 4)
+
+Data                               wide   ->   long
+-----------------------------------------------------------------------------
+Number of obs.                        5   ->      20
+Number of variables                   5   ->       3
+j variable (4 values)                     ->   quarter
+xij variables:
+                     qtr1 qtr2 ... qtr4   ->   qtr
+-----------------------------------------------------------------------------
+
+. rename qtr freq
+
+. 
+. * Free axis versus fixed. 
+. graph bar (mean) freq, over(quarter) by(agency, style(compact) rows(1)) scheme(s1color)
+
+. graph bar (mean) freq, over(quarter) by(agency, yrescale style(compact) rows(1))
+
+. 
+. 
+. 
+. * ------------------------------------------------- *
+. * ### Multiple variables are stored in 1 column ###
+. clear all
+
+. input str3 country str5 agency q1FY2009 q2FY2009 q3FY2009 q4FY2009 q1FY2010 q2FY2010 q3FY2010 q4FY2010
+
+       country     agency   q1FY2009   q2FY2009   q3FY2009   q4FY2009   q1FY2010   q2FY2010   q3FY2010   q4FY2010
+  1. "AFG"   "USAID" 399     361     254     71      378     398     85      39
+  2. "ALB"   "USAID" 45      282     40      285     306     230     398     216
+  3. "ANG"   "USAID" 354     24      19      252     146     123     369     376
+  4. "ARM"   "USAID" 86      89      127     212     394     255     141     74
+  5. "AZE"   "USAID" 116     239     330     34      92      315     312     220
+  6. end
+
+. saveold "mVars_column.dta", replace version(12)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file mVars_column.dta saved
+
+. 
+. * Melt data based on the time variable, country is the unique identifier
+. reshape long q@, i(country) j(time, string)
+(note: j = 1FY2009 1FY2010 2FY2009 2FY2010 3FY2009 3FY2010 4FY2009 4FY2010)
+
+Data                               wide   ->   long
+-----------------------------------------------------------------------------
+Number of obs.                        5   ->      40
+Number of variables                  10   ->       4
+j variable (8 values)                     ->   time
+xij variables:
+         q1FY2009 q1FY2010 ... q4FY2010   ->   q
+-----------------------------------------------------------------------------
+
+. 
+. * Grab the 1st value of each observations in the time variable
+. generate qtr = real(substr(time, 1, 1))
+
+. 
+. * Create a time variable using a similar approach. The real() function returns 
+. * a numeric when a number is coded as a string. Returns missing if no numbers are found.
+. generate year = real(substr(time, 4, 7))
+
+. sort country  year qtr
+
+. order country agency qtr year q
+
+. 
+. * --- Alternative method: using reshape twice --- *
+. clear all
+
+. input str3 country str5 agency q1FY2009 q2FY2009 q3FY2009 q4FY2009 q1FY2010 q2FY2010 q3FY2010 q4FY2010
+
+       country     agency   q1FY2009   q2FY2009   q3FY2009   q4FY2009   q1FY2010   q2FY2010   q3FY2010   q4FY2010
+  1. "AFG"   "USAID" 399     361     254     71      378     398     85      39
+  2. "ALB"   "USAID" 45      282     40      285     306     230     398     216
+  3. "ANG"   "USAID" 354     24      19      252     146     123     369     376
+  4. "ARM"   "USAID" 86      89      127     212     394     255     141     74
+  5. "AZE"   "USAID" 116     239     330     34      92      315     312     220
+  6. end
+
+. 
+. * First, reshape based on the year values
+. reshape long q1FY@ q2FY@ q3FY@ q4FY@, i(country) j(year)
+(note: j = 2009 2010)
+
+Data                               wide   ->   long
+-----------------------------------------------------------------------------
+Number of obs.                        5   ->      10
+Number of variables                  10   ->       7
+j variable (2 values)                     ->   year
+xij variables:
+                      q1FY2009 q1FY2010   ->   q1FY
+                      q2FY2009 q2FY2010   ->   q2FY
+                      q3FY2009 q3FY2010   ->   q3FY
+                      q4FY2009 q4FY2010   ->   q4FY
+-----------------------------------------------------------------------------
+
+. sort country year
+
+. 
+. * Remove the FY part from each variables
+. rename *FY *
+
+. 
+. * Reshape again, based on the qtr values
+. reshape long q@, i(country year) j(qtr)
+(note: j = 1 2 3 4)
+
+Data                               wide   ->   long
+-----------------------------------------------------------------------------
+Number of obs.                       10   ->      40
+Number of variables                   7   ->       5
+j variable (4 values)                     ->   qtr
+xij variables:
+                           q1 q2 ... q4   ->   q
+-----------------------------------------------------------------------------
+
+. rename q freq 
+
+. 
+. 
+. 
+. * ------------------------------------------------- *
+. * ### Variables stored in both rows and columns ### *
+. * More complicated example using mutiple reshapes
+. clear all
+
+. input str6 stringid     str6 good year2011 year2012
+
+      stringid       good   year2011   year2012
+  1. "Malawi" "coffee"       5.93    2.40
+  2. "Malawi" "maize"        1.23    0.56
+  3. "Uganda" "coffee"       3.09    4.26
+  4. "Uganda" "maize"        9.17    7.51
+  5. "Rwanda" "coffee"       7.35    3.23
+  6. "Rwanda" "maize"        4.78    6.46
+  7. end
+
+. saveold "vars_row_columns.dta", replace version(12)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file vars_row_columns.dta saved
+
+. 
+. * Goal: Transform data so each good is organized as a panel, by country
+. * Country will be the unique identifier, and the suffix of the year variable is 
+. * the name of each good.
+. reshape wide year*, i(stringid) j(good, string)
+(note: j = coffee maize)
+
+Data                               long   ->   wide
+-----------------------------------------------------------------------------
+Number of obs.                        6   ->       3
+Number of variables                   4   ->       5
+j variable (2 values)              good   ->   (dropped)
+xij variables:
+                               year2011   ->   year2011coffee year2011maize
+                               year2012   ->   year2012coffee year2012maize
+-----------------------------------------------------------------------------
+
+. 
+. * Why doesn't the following work? 
+. cap reshape long year2011coffee year2012coffee year2011maize year2012maize, i(stringid) j(year)
+
+. 
+. * Stata is looking for a variable named _gooda#_ _goodb#_
+. * What we provided is not sufficient for the function. Let's rename our variables and try again
+. rename (year2011coffee year2012coffee year2011maize year2012maize) /*
+> */ (coffee2011 coffee2012 maize2011 maize2012)
+
+. 
+. /* If you have numerous variables a general solution maybe more appropriate, such as:
+> foreach x of varlist year* {
+>         local n1: variable label `x'
+>         local n2 = strtoname("`n1'")
+>         rename `x' `n2'
+>         }
+> *end
+> rename *_year* **
+> */
+. reshape long coffee@ maize@, i(stringid) j(year)
+(note: j = 2011 2012)
+
+Data                               wide   ->   long
+-----------------------------------------------------------------------------
+Number of obs.                        3   ->       6
+Number of variables                   5   ->       4
+j variable (2 values)                     ->   year
+xij variables:
+                  coffee2011 coffee2012   ->   coffee
+                    maize2011 maize2012   ->   maize
+-----------------------------------------------------------------------------
+
+. list, clean noo
+
+    stringid   year   coffee   maize  
+      Malawi   2011     5.93    1.23  
+      Malawi   2012      2.4     .56  
+      Rwanda   2011     7.35    4.78  
+      Rwanda   2012     3.23    6.46  
+      Uganda   2011     3.09    9.17  
+      Uganda   2012     4.26    7.51  
+
+. 
+. 
+. * ------------------------------------------------- *
+. * ### Reshape examples ###
+. clear
+
+. input id gdp2014 gdp2015 cpc2014 cpc2015
+
+            id    gdp2014    gdp2015    cpc2014    cpc2015
+  1. 1 8.28 9.99 1 1
+  2. 2 9.10 4.05 0 0
+  3. end
+
+. saveold "gdp_cpd.dta", replace version(12)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file gdp_cpd.dta saved
+
+. 
+. clist, noo
+
+       id    gdp2014    gdp2015    cpc2014    cpc2015
+        1       8.28       9.99          1          1
+        2        9.1       4.05          0          0
+
+. * Looks as if a variable (year) is stored in the name
+. * Try to (melt) reshape the data from wide to long 
+. reshape long gdp@ cpc@, i(id) j(year)
+(note: j = 2014 2015)
+
+Data                               wide   ->   long
+-----------------------------------------------------------------------------
+Number of obs.                        2   ->       4
+Number of variables                   5   ->       4
+j variable (2 values)                     ->   year
+xij variables:
+                        gdp2014 gdp2015   ->   gdp
+                        cpc2014 cpc2015   ->   cpc
+-----------------------------------------------------------------------------
+
+. 
+. * Revert back to original data
+. reshape wide
+(note: j = 2014 2015)
+
+Data                               long   ->   wide
+-----------------------------------------------------------------------------
+Number of obs.                        4   ->       2
+Number of variables                   4   ->       5
+j variable (2 values)              year   ->   (dropped)
+xij variables:
+                                    gdp   ->   gdp2014 gdp2015
+                                    cpc   ->   cpc2014 cpc2015
+-----------------------------------------------------------------------------
+
+. 
+. 
+. 
+. * ------------------------------------------------- *
+. * ### Reshape Exercise  & Solution ###
+. use "wb_gdp_wide.dta", clear
+
+. 
+. /* How are data messy?
+> 1) Columns contain variables
+> 2) Series name is unclear
+> */
+. 
+. * Make the data tidy by using the reshape command.
+. reshape long yr@, i(countryname) j(year)
+(note: j = 2009 2010 2011 2012)
+
+Data                               wide   ->   long
+-----------------------------------------------------------------------------
+Number of obs.                        5   ->      20
+Number of variables                   8   ->       6
+j variable (4 values)                     ->   year
+xij variables:
+               yr2009 yr2010 ... yr2012   ->   yr
+-----------------------------------------------------------------------------
+
+. 
+. * Once reshaped, rename and label key variables. Drop uncessary variables.
+. rename (countryname countrycode yr) (country ISO3 gdp)
+
+. drop seriesname seriescode
+
+. 
+. * Which country grew the most from 2009-2012
+. * Visual answer
+. twoway(connected gdp year), by(country) scheme(s1color)
+
+. 
+. *Tabular answer
+. table country year, c(mean gdp) f(%9.2f) col
+
+-----------------------------------------------
+            |               year               
+    country |  2009   2010   2011   2012  Total
+------------+----------------------------------
+Afghanistan | 21.02   8.43   6.11  14.43  12.50
+    Georgia | -3.78   6.25   7.20   6.18   3.96
+      Kenya |  3.31   8.40   6.11   4.55   5.59
+   Pakistan |  2.83   1.61   2.75   3.51   2.67
+    Senegal |  2.42   4.18   1.76   4.36   3.18
+-----------------------------------------------
+
+. 
+. *egen way to create a variable of average growth
+. egen gdp_ave = mean(gdp), by(country)
+
+. tab country, sum(gdp_ave)
+
+            |         Summary of gdp_ave
+    country |        Mean   Std. Dev.       Freq.
+------------+------------------------------------
+Afghanistan |   12.500591           0           4
+    Georgia |   3.9648423           0           4
+      Kenya |    5.593936           0           4
+   Pakistan |   2.6734469           0           4
+    Senegal |   3.1817145           0           4
+------------+------------------------------------
+      Total |   5.5829062    3.690765          20
+
+. 
+. * -------------------------------------------------- *
+. * ### Merging Examples ###
+. clear
+
+. input id age hid
+
+            id        age        hid
+  1. 1 45 101
+  2. 2 20 101
+  3. 1 23 102
+  4. 2 20 102
+  5. end
+
+. saveold "ind.dta", replace version(12)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file ind.dta saved
+
+. 
+. clear
+
+. input id cows value
+
+            id       cows      value
+  1. 1 2 2000
+  2. 2 1 500
+  3. end
+
+. saveold "ind_ag.dta", replace version(12)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file ind_ag.dta saved
+
+. 
+. clear
+
+. input hid str4 income
+
+           hid     income
+  1. 101 "$100"
+  2. 102 "$250"
+  3. end
+
+. saveold "hh.dta", replace version(12)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file hh.dta saved
+
+. 
+. clear
+
+. input hid str4 income
+
+           hid     income
+  1. 101 "$100"
+  2. 102 "$250"
+  3. 104 "$500"
+  4. end
+
+. saveold "hh2.dta", replace version(12)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file hh2.dta saved
+
+. 
+. clear
+
+. input id age hid
+
+            id        age        hid
+  1. 1 45 101
+  2. 2 20 101
+  3. 1 23 102
+  4. 2 20 102
+  5. 1 43 103
+  6. 2 5  103
+  7. end
+
+. saveold "ind2.dta", replace version(12)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file ind2.dta saved
+
+. 
+. * Messy data for merge exercise
+. clear
+
+. input hid str4 income
+
+           hid     income
+  1. 101 "$100"
+  2. 101 "$100"
+  3. 102 "$250"
+  4. 104 "$500"
+  5. 104 ""
+  6. end
+
+. saveold "hh3.dta", replace version(12)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file hh3.dta saved
+
+. 
+. 
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. cd $pathdata
+C:\Users\Tim\Documents\Github\StataTraining\Day2\Data
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. import delimited "StataTrainingMessy.csv", clear
+(12 vars, 2417 obs)
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. br
+
+. codebook, p
+
+   Potential problems in dataset   [unnamed]
+
+               potential problem   variables
+-------------------------------------------------------------------------------------------------
+ string vars with leading blanks   agency amount
+  string vars with trailing blanks   agency sector amount
+  string vars with embedded blanks   account agency operatingunit benefitingcountry category sector
+-------------------------------------------------------------------------------------------------
+
+. codebook, c
+
+Variable       Obs Unique      Mean       Min       Max  Label
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+fiscalyear    2417     10  2085.057       213     20014  FiscalYear
+qtr           2352      6  3.081207         0        40  QTR
+fiscalyear~e  2417      4         .         .         .  FiscalYearType
+account       2417     30         .         .         .  Account
+agency        2417     11         .         .         .  Agency
+operatingu~t  2417    183         .         .         .  OperatingUnit
+benefiting~y  2417    158         .         .         .  BenefitingCountry
+category      2268     11         .         .         .  Category
+sector        2417     47         .         .         .  Sector
+amount        2417   2311         .         .         .  Amount
+spent         2407   2310   2171756  -7616900  5.02e+08  Spent
+spent2        2407   2310   2171756  -7616900  5.02e+08  Spent2
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+. describe
+
+Contains data
+  obs:         2,417                          
+ vars:            12                          
+ size:       894,290                          
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+fiscalyear      int     %8.0g                 FiscalYear
+qtr             byte    %8.0g                 QTR
+fiscalyeartype  str13   %13s                  FiscalYearType
+account         str47   %47s                  Account
+agency          str19   %19s                  Agency
+operatingunit   str114  %114s                 OperatingUnit
+benefitingcou~y str59   %59s                  BenefitingCountry
+category        str39   %39s                  Category
+sector          str51   %51s                  Sector
+amount          str17   %17s                  Amount
+spent           float   %9.0g                 Spent
+spent2          float   %9.0g                 Spent2
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: 
+     Note: Dataset has changed since last saved.
+
+. inspect
+
+fiscalyear:  FiscalYear                         Number of Observations
+-----------------------                ---------------------------------------
+                                             Total      Integers   Nonintegers
+|  #                         Negative            -             -             -
+|  #                         Zero                -             -             -
+|  #                         Positive        2,417         2,417             -
+|  #                                   -----------   -----------   -----------
+|  #                         Total           2,417         2,417             -
+|  #   .   .   .   .         Missing             -
++----------------------                -----------
+213               20014                      2,417
+  (10 unique values)
+
+qtr:  QTR                                       Number of Observations
+---------                              ---------------------------------------
+                                             Total      Integers   Nonintegers
+|  #                         Negative            -             -             -
+|  #                         Zero               30            30             -
+|  #                         Positive        2,322         2,322             -
+|  #                                   -----------   -----------   -----------
+|  #                         Total           2,352         2,352             -
+|  #   .   .   .   .         Missing            65
++----------------------                -----------
+0                    40                      2,417
+   (6 unique values)
+
+fiscalyeartype:  FiscalYearType                 Number of Observations
+-------------------------------        ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+account:  Account                               Number of Observations
+-----------------                      ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+agency:  Agency                                 Number of Observations
+---------------                        ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+operatingunit:  OperatingUnit                   Number of Observations
+-----------------------------          ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+benefitingcountry:  BenefitingCountry           Number of Observations
+-------------------------------------  ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+category:  Category                             Number of Observations
+-------------------                    ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+sector:  Sector                                 Number of Observations
+---------------                        ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+amount:  Amount                                 Number of Observations
+---------------                        ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+spent:  Spent                                   Number of Observations
+-------------                          ---------------------------------------
+                                             Total      Integers   Nonintegers
+|  #                         Negative          209            59           150
+|  #                         Zero                -             -             -
+|  #                         Positive        2,198           770         1,428
+|  #                                   -----------   -----------   -----------
+|  #                         Total           2,407           829         1,578
+|  #   .   .   .   .         Missing            10
++----------------------                -----------
+-7616900       5.02e+08                      2,417
+(More than 99 unique values)
+
+spent2:  Spent2                                 Number of Observations
+---------------                        ---------------------------------------
+                                             Total      Integers   Nonintegers
+|  #                         Negative          209            59           150
+|  #                         Zero                -             -             -
+|  #                         Positive        2,198           770         1,428
+|  #                                   -----------   -----------   -----------
+|  #                         Total           2,407           829         1,578
+|  #   .   .   .   .         Missing            10
++----------------------                -----------
+-7616900       5.02e+08                      2,417
+(More than 99 unique values)
+
+. mdesc
+
+    Variable    |     Missing          Total     Percent Missing
+----------------+-----------------------------------------------
+     fiscalyear |           0          2,417           0.00
+            qtr |          65          2,417           2.69
+   fiscalyear~e |           0          2,417           0.00
+        account |           0          2,417           0.00
+         agency |           0          2,417           0.00
+   operatingu~t |           0          2,417           0.00
+   benefiting~y |           0          2,417           0.00
+       category |         149          2,417           6.16
+         sector |           0          2,417           0.00
+         amount |           0          2,417           0.00
+          spent |          10          2,417           0.41
+         spent2 |          10          2,417           0.41
+----------------+-----------------------------------------------
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. sum
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+  fiscalyear |      2,417    2085.057    1844.668        213      20014
+         qtr |      2,352    3.081207    4.685221          0         40
+fiscalyear~e |          0
+     account |          0
+      agency |          0
+-------------+---------------------------------------------------------
+operatingu~t |          0
+benefiting~y |          0
+    category |          0
+      sector |          0
+      amount |          0
+-------------+---------------------------------------------------------
+       spent |      2,407     2171756    1.51e+07   -7616900   5.02e+08
+      spent2 |      2,407     2171756    1.51e+07   -7616900   5.02e+08
+
+. codebook, c
+
+Variable       Obs Unique      Mean       Min       Max  Label
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+fiscalyear    2417     10  2085.057       213     20014  FiscalYear
+qtr           2352      6  3.081207         0        40  QTR
+fiscalyear~e  2417      4         .         .         .  FiscalYearType
+account       2417     30         .         .         .  Account
+agency        2417     11         .         .         .  Agency
+operatingu~t  2417    183         .         .         .  OperatingUnit
+benefiting~y  2417    158         .         .         .  BenefitingCountry
+category      2268     11         .         .         .  Category
+sector        2417     47         .         .         .  Sector
+amount        2417   2311         .         .         .  Amount
+spent         2407   2310   2171756  -7616900  5.02e+08  Spent
+spent2        2407   2310   2171756  -7616900  5.02e+08  Spent2
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. tab fiscalyear, mi
+
+ FiscalYear |      Freq.     Percent        Cum.
+------------+-----------------------------------
+        213 |        141        5.83        5.83
+       2007 |          1        0.04        5.88
+       2008 |          1        0.04        5.92
+       2009 |        394       16.30       22.22
+       2010 |        403       16.67       38.89
+       2011 |        455       18.82       57.72
+       2012 |        465       19.24       76.95
+       2013 |        425       17.58       94.54
+       2014 |        108        4.47       99.01
+      20014 |         24        0.99      100.00
+------------+-----------------------------------
+      Total |      2,417      100.00
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. recode fiscalyear (213 = 2013) (20014 = 2014)
+(fiscalyear: 165 changes made)
+
+. tab fiscalyear, mi
+
+ FiscalYear |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       2007 |          1        0.04        0.04
+       2008 |          1        0.04        0.08
+       2009 |        394       16.30       16.38
+       2010 |        403       16.67       33.06
+       2011 |        455       18.82       51.88
+       2012 |        465       19.24       71.12
+       2013 |        566       23.42       94.54
+       2014 |        132        5.46      100.00
+------------+-----------------------------------
+      Total |      2,417      100.00
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. tab qtr, mi
+
+        QTR |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |         30        1.24        1.24
+          1 |        542       22.42       23.67
+          2 |        600       24.82       48.49
+          3 |        475       19.65       68.14
+          4 |        670       27.72       95.86
+         40 |         35        1.45       97.31
+          . |         65        2.69      100.00
+------------+-----------------------------------
+      Total |      2,417      100.00
+
+. recode qtr (40 = 4) (0 = .)
+(qtr: 65 changes made)
+
+. tab qtr, mi
+
+        QTR |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        542       22.42       22.42
+          2 |        600       24.82       47.25
+          3 |        475       19.65       66.90
+          4 |        705       29.17       96.07
+          . |         95        3.93      100.00
+------------+-----------------------------------
+      Total |      2,417      100.00
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. tab fiscalyeartype, mi
+
+FiscalYearTyp |
+            e |      Freq.     Percent        Cum.
+--------------+-----------------------------------
+    Disbsmnt. |        275       11.38       11.38
+Disbursements |      1,258       52.05       63.43
+        Obgl. |        128        5.30       68.72
+  Obligations |        756       31.28      100.00
+--------------+-----------------------------------
+        Total |      2,417      100.00
+
+. replace fiscalyeartype = "Disbursements" if fiscalyeartype == "Disbsmnt."
+(275 real changes made)
+
+. replace fiscalyeartype = "Obligations" if fiscalyeartype == "Obgl."
+(128 real changes made)
+
+. tab fiscalyeartype, mi
+
+FiscalYearTyp |
+            e |      Freq.     Percent        Cum.
+--------------+-----------------------------------
+Disbursements |      1,533       63.43       63.43
+  Obligations |        884       36.57      100.00
+--------------+-----------------------------------
+        Total |      2,417      100.00
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. tab account, mi sort
+
+                                Account |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                                    N/A |        544       22.51       22.51
+                 Development Assistance |        476       19.69       42.20
+                  Economic Support Fund |        371       15.35       57.55
+         Global Health & Child Survival |        306       12.66       70.21
+      International Disaster Assistance |        134        5.54       75.76
+Assistance for Europe, Eurasia and Ce.. |         95        3.93       79.69
+Child Survival and Health Programs Fund |         91        3.76       83.45
+Assist. For N.I.S Of Former Soviet Un.. |         80        3.31       86.76
+                     Operating Expenses |         73        3.02       89.78
+                 Transition Initiatives |         48        1.99       91.77
+ Commodity Credit Corp Title II and III |         42        1.74       93.50
+         Special Assistance Initiatives |         31        1.28       94.79
+             Global HIV/AIDS Initiative |         23        0.95       95.74
+                         Democracy Fund |         20        0.83       96.57
+           Development Credit Authority |         19        0.79       97.35
+                    Gifts and Donations |         19        0.79       98.14
+       Millennium Challenge Corporation |         10        0.41       98.55
+      Civilian Stabilization Initiative |          7        0.29       98.84
+           Commodity Credit Corporation |          6        0.25       99.09
+                Capital Investment Fund |          4        0.17       99.26
+                  IG Operating Expenses |          4        0.17       99.42
+     Housing Guaranty Financing Account |          3        0.12       99.54
+          Andean Counterdrug Initiative |          2        0.08       99.63
+                    Complex Crises Fund |          2        0.08       99.71
+Development Credit Authority-Financ A.. |          2        0.08       99.79
+Central America-Carib Emergency Dis Rec |          1        0.04       99.83
+            Development Fund for Africa |          1        0.04       99.88
+                           HIV/AIDS WCF |          1        0.04       99.92
+   Housing Guaranty Liquidating Account |          1        0.04       99.96
+                       Tech. Assistance |          1        0.04      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      2,417      100.00
+
+. replace account = "Unknown" if account == "N/A"
+(544 real changes made)
+
+. tab account, mi sort
+
+                                Account |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                                Unknown |        544       22.51       22.51
+                 Development Assistance |        476       19.69       42.20
+                  Economic Support Fund |        371       15.35       57.55
+         Global Health & Child Survival |        306       12.66       70.21
+      International Disaster Assistance |        134        5.54       75.76
+Assistance for Europe, Eurasia and Ce.. |         95        3.93       79.69
+Child Survival and Health Programs Fund |         91        3.76       83.45
+Assist. For N.I.S Of Former Soviet Un.. |         80        3.31       86.76
+                     Operating Expenses |         73        3.02       89.78
+                 Transition Initiatives |         48        1.99       91.77
+ Commodity Credit Corp Title II and III |         42        1.74       93.50
+         Special Assistance Initiatives |         31        1.28       94.79
+             Global HIV/AIDS Initiative |         23        0.95       95.74
+                         Democracy Fund |         20        0.83       96.57
+           Development Credit Authority |         19        0.79       97.35
+                    Gifts and Donations |         19        0.79       98.14
+       Millennium Challenge Corporation |         10        0.41       98.55
+      Civilian Stabilization Initiative |          7        0.29       98.84
+           Commodity Credit Corporation |          6        0.25       99.09
+                Capital Investment Fund |          4        0.17       99.26
+                  IG Operating Expenses |          4        0.17       99.42
+     Housing Guaranty Financing Account |          3        0.12       99.54
+          Andean Counterdrug Initiative |          2        0.08       99.63
+                    Complex Crises Fund |          2        0.08       99.71
+Development Credit Authority-Financ A.. |          2        0.08       99.79
+Central America-Carib Emergency Dis Rec |          1        0.04       99.83
+            Development Fund for Africa |          1        0.04       99.88
+                           HIV/AIDS WCF |          1        0.04       99.92
+   Housing Guaranty Liquidating Account |          1        0.04       99.96
+                       Tech. Assistance |          1        0.04      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      2,417      100.00
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. tab agency, mi
+
+             Agency |      Freq.     Percent        Cum.
+--------------------+-----------------------------------
+               MCC  |        141        5.83        5.83
+             USAID  |        286       11.83       17.67
+Department of Stata |         15        0.62       18.29
+                DoD |         24        0.99       19.28
+                IAF |         27        1.12       20.40
+        PEACE CORPS |         81        3.35       23.75
+           Treasury |         15        0.62       24.37
+          U.S.A.I.D |        463       19.16       43.53
+              USADF |         23        0.95       44.48
+               USDA |          2        0.08       44.56
+              usaid |      1,340       55.44      100.00
+--------------------+-----------------------------------
+              Total |      2,417      100.00
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. replace agency = "USAID" if regexm(agency, "(U.S.A.I.D|usaid|USAID )") == 1
+(2,089 real changes made)
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. replace agency = trim(agency)
+(141 real changes made)
+
+. tab agency, mi 
+
+             Agency |      Freq.     Percent        Cum.
+--------------------+-----------------------------------
+Department of Stata |         15        0.62        0.62
+                DoD |         24        0.99        1.61
+                IAF |         27        1.12        2.73
+                MCC |        141        5.83        8.56
+        PEACE CORPS |         81        3.35       11.92
+           Treasury |         15        0.62       12.54
+              USADF |         23        0.95       13.49
+              USAID |      2,089       86.43       99.92
+               USDA |          2        0.08      100.00
+--------------------+-----------------------------------
+              Total |      2,417      100.00
+
+. 
+. replace agency = "DOS" if agency == "Department of Stata"
+(15 real changes made)
+
+. replace agency = "DOD" if agency == "DoD"
+(24 real changes made)
+
+. replace agency = proper(agency) if agency == "PEACE CORPS"
+(81 real changes made)
+
+. tab agency, mi
+
+             Agency |      Freq.     Percent        Cum.
+--------------------+-----------------------------------
+                DOD |         24        0.99        0.99
+                DOS |         15        0.62        1.61
+                IAF |         27        1.12        2.73
+                MCC |        141        5.83        8.56
+        Peace Corps |         81        3.35       11.92
+           Treasury |         15        0.62       12.54
+              USADF |         23        0.95       13.49
+              USAID |      2,089       86.43       99.92
+               USDA |          2        0.08      100.00
+--------------------+-----------------------------------
+              Total |      2,417      100.00
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. tab operatingunit, mi 
+
+                          OperatingUnit |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                            Afghanistan |         36        1.49        1.49
+                          Africa Region |          9        0.37        1.86
+                                Albania |         14        0.58        2.44
+                                Algeria |          1        0.04        2.48
+                                 Angola |         22        0.91        3.39
+                              Argentina |          1        0.04        3.43
+                                Armenia |         24        0.99        4.43
+              Asia Middle East Regional |         18        0.74        5.17
+                            Asia Region |          1        0.04        5.21
+                                Austria |          1        0.04        5.25
+                             Azerbaijan |         14        0.58        5.83
+                             Bangladesh |         33        1.37        7.20
+                                Belarus |          6        0.25        7.45
+                                  Benin |         18        0.74        8.19
+                                Bolivia |         17        0.70        8.90
+                 Bosnia and Herzegovina |         17        0.70        9.60
+                               Botswana |          4        0.17        9.76
+                                 Brazil |         14        0.58       10.34
+                               Bulgaria |          4        0.17       10.51
+          Bureau for Management (USAID) |          3        0.12       10.63
+Bureau for Policy, Planning and Learn.. |          1        0.04       10.67
+                           Burkina Faso |         12        0.50       11.17
+                                  Burma |         13        0.54       11.71
+                                Burundi |         12        0.50       12.21
+                               Cambodia |         34        1.41       13.61
+                               Cameroon |          8        0.33       13.94
+                                 Canada |          1        0.04       13.98
+                             Cape Verde |         11        0.46       14.44
+                       Caribbean Region |          6        0.25       14.69
+               Central African Republic |          2        0.08       14.77
+                Central American Region |          2        0.08       14.85
+                    Central Asia Region |          5        0.21       15.06
+                                   Chad |          2        0.08       15.14
+                                  China |         17        0.70       15.85
+                               Colombia |         10        0.41       16.26
+          Congo, Democratic Republic of |         33        1.37       17.63
+                     Congo, Republic of |          1        0.04       17.67
+                             Costa Rica |          1        0.04       17.71
+                          Cote d'Ivoire |          7        0.29       18.00
+                                Croatia |          1        0.04       18.04
+                                   Cuba |          4        0.17       18.20
+                                 Cyprus |          2        0.08       18.29
+                               Djibouti |          8        0.33       18.62
+                     Dominican Republic |         22        0.91       19.53
+                     East Africa Region |          6        0.25       19.78
+                       East Asia Region |          7        0.29       20.07
+                Eastern European Region |          1        0.04       20.11
+                                Ecuador |          8        0.33       20.44
+                                  Egypt |         10        0.41       20.85
+                            El Salvador |         29        1.20       22.05
+                      Equatorial Guinea |          2        0.08       22.13
+                               Ethiopia |         27        1.12       23.25
+                         Eurasia Region |          2        0.08       23.33
+                                   Fiji |          1        0.04       23.38
+                  Food Security (USAID) |          4        0.17       23.54
+                                  Gabon |          1        0.04       23.58
+                            Gambia, The |          6        0.25       23.83
+                                Georgia |         41        1.70       25.53
+                                  Ghana |         35        1.45       26.98
+                                 Greece |          1        0.04       27.02
+                              Guatemala |         26        1.08       28.09
+                                 Guinea |         11        0.46       28.55
+                                 Guyana |          9        0.37       28.92
+                                  Haiti |         28        1.16       30.08
+                               Honduras |         26        1.08       31.15
+                                  India |         14        0.58       31.73
+                              Indonesia |         24        0.99       32.73
+International Organizations and Devel.. |          1        0.04       32.77
+International Organizations and Devel.. |          1        0.04       32.81
+International Organizations and Devel.. |          1        0.04       32.85
+International Organizations and Devel.. |          1        0.04       32.89
+                                   Iran |          1        0.04       32.93
+                                   Iraq |          5        0.21       33.14
+                                Ireland |          1        0.04       33.18
+                                 Israel |          1        0.04       33.22
+                                Jamaica |         20        0.83       34.05
+                 Joint Eurasia Regional |         25        1.03       35.08
+      Joint Europe and Eurasia Regional |          2        0.08       35.17
+                                 Jordan |         25        1.03       36.20
+                             Kazakhstan |         19        0.79       36.99
+                                  Kenya |         32        1.32       38.31
+                                 Kosovo |         10        0.41       38.73
+                        Kyrgyz Republic |         28        1.16       39.88
+                                   Laos |          3        0.12       40.01
+     Latin America and Caribbean Region |          4        0.17       40.17
+                                Lebanon |          9        0.37       40.55
+                                Lesotho |         15        0.62       41.17
+                                Liberia |         30        1.24       42.41
+                                  Libya |          2        0.08       42.49
+                              Macedonia |          9        0.37       42.86
+                             Madagascar |         21        0.87       43.73
+                                 Malawi |         26        1.08       44.81
+                                   Mali |         23        0.95       45.76
+                       Marshall Islands |          1        0.04       45.80
+                             Mauritania |          5        0.21       46.01
+                              Mauritius |          1        0.04       46.05
+                                 Mexico |         22        0.91       46.96
+                                Moldova |         11        0.46       47.41
+                               Mongolia |         12        0.50       47.91
+                             Montenegro |          4        0.17       48.08
+                                Morocco |         17        0.70       48.78
+                             Mozambique |         21        0.87       49.65
+                                Namibia |         12        0.50       50.14
+                       Near East Region |          3        0.12       50.27
+                     Near East Regional |          3        0.12       50.39
+                                  Nepal |         19        0.79       51.18
+                            New Zealand |          1        0.04       51.22
+                              Nicaragua |         34        1.41       52.63
+                                  Niger |          7        0.29       52.92
+                                Nigeria |         22        0.91       53.83
+Office of Afghanistan and Pakistan Af.. |          2        0.08       53.91
+Office of Innovation and Development .. |          3        0.12       54.03
+                               Pakistan |         30        1.24       55.28
+                                 Panama |         10        0.41       55.69
+                       Papua New Guinea |          3        0.12       55.81
+                               Paraguay |         12        0.50       56.31
+                                   Peru |         22        0.91       57.22
+                            Philippines |         27        1.12       58.34
+                                Romania |          2        0.08       58.42
+                                 Russia |         11        0.46       58.87
+                                 Rwanda |         30        1.24       60.12
+                                  Samoa |          1        0.04       60.16
+                                Senegal |         35        1.45       61.61
+                                 Serbia |         15        0.62       62.23
+                           Sierra Leone |         13        0.54       62.76
+                               Slovenia |          1        0.04       62.81
+                                Somalia |         11        0.46       63.26
+                           South Africa |         13        0.54       63.80
+                    South Africa Region |          3        0.12       63.92
+                   South America Region |          3        0.12       64.05
+                      South Asia Region |          2        0.08       64.13
+                            South Sudan |         10        0.41       64.54
+                                  Spain |          1        0.04       64.58
+                              Sri Lanka |         16        0.66       65.25
+                  State Africa Regional |          1        0.04       65.29
+State Near East Regional/Middle East .. |          1        0.04       65.33
+                                  Sudan |          2        0.08       65.41
+               Sudan, Pre-2011 Election |         21        0.87       66.28
+                               Suriname |          2        0.08       66.36
+                              Swaziland |          3        0.12       66.49
+                   Syrian Arab Republic |          2        0.08       66.57
+                             Tajikistan |         20        0.83       67.40
+                               Tanzania |         31        1.28       68.68
+                               Thailand |          9        0.37       69.05
+                            Timor-Leste |         12        0.50       69.55
+                                   Togo |          1        0.04       69.59
+                           Turkmenistan |         15        0.62       70.21
+                                 Tuvalu |          1        0.04       70.25
+U.S. Department of the Treasury - Off.. |          1        0.04       70.29
+             USAID Administrative Costs |          5        0.21       70.50
+                  USAID Africa Regional |         16        0.66       71.16
+               USAID Caribbean Regional |          6        0.25       71.41
+         USAID Central America Regional |         11        0.46       71.87
+            USAID Central Asia Regional |          9        0.37       72.24
+USAID Democracy, Conflict and Humanit.. |        249       10.30       82.54
+             USAID East Africa Regional |         13        0.54       83.08
+USAID Economic Growth, Education and .. |         32        1.32       84.40
+                    USAID Global Health |         57        2.36       86.76
+USAID Inspector General Operating Exp.. |          3        0.12       86.88
+USAID Latin America and Caribbean Reg.. |         28        1.16       88.04
+USAID Legislative and Public Affairs .. |          3        0.12       88.17
+             USAID Middle East Regional |         11        0.46       88.62
+   USAID Office of Development Partners |         22        0.91       89.53
+                USAID Operating Expense |         25        1.03       90.57
+USAID Regional Development Mission-Asia |         18        0.74       91.31
+           USAID South America Regional |          3        0.12       91.44
+         USAID Southern Africa Regional |          8        0.33       91.77
+             USAID West Africa Regional |         10        0.41       92.18
+                                 Uganda |         21        0.87       93.05
+                                Ukraine |         20        0.83       93.88
+                   United Arab Emirates |          1        0.04       93.92
+                                Uruguay |          1        0.04       93.96
+                             Uzbekistan |         19        0.79       94.75
+                                Vanuatu |          4        0.17       94.91
+                              Venezuela |          5        0.21       95.12
+                                Vietnam |         15        0.62       95.74
+                         Virgin Islands |          1        0.04       95.78
+                     West Africa Region |         11        0.46       96.24
+                     West Bank and Gaza |         14        0.58       96.81
+                              Worldwide |         19        0.79       97.60
+                                  Yemen |         21        0.87       98.47
+                                 Zambia |         27        1.12       99.59
+                               Zimbabwe |         10        0.41      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      2,417      100.00
+
+. tab benefitingcountry, mi
+
+                      BenefitingCountry |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                            Afghanistan |         40        1.65        1.65
+                          Africa Region |         27        1.12        2.77
+                                Albania |         14        0.58        3.35
+                                Algeria |          1        0.04        3.39
+                                 Angola |         22        0.91        4.30
+                              Argentina |          1        0.04        4.34
+                                Armenia |         24        0.99        5.34
+                            Asia Region |         19        0.79        6.12
+                                Austria |          1        0.04        6.16
+                             Azerbaijan |         14        0.58        6.74
+                                Bahrain |          1        0.04        6.79
+                             Bangladesh |         34        1.41        8.19
+                                Belarus |          6        0.25        8.44
+                                  Benin |         18        0.74        9.18
+                                Bolivia |         21        0.87       10.05
+                 Bosnia and Herzegovina |         18        0.74       10.80
+                               Botswana |          4        0.17       10.96
+                                 Brazil |         17        0.70       11.67
+                               Bulgaria |          4        0.17       11.83
+                           Burkina Faso |         15        0.62       12.45
+                                  Burma |         17        0.70       13.16
+                                Burundi |         14        0.58       13.74
+                               Cambodia |         37        1.53       15.27
+                               Cameroon |          9        0.37       15.64
+                                 Canada |          1        0.04       15.68
+                             Cape Verde |         11        0.46       16.14
+                       Caribbean Region |         14        0.58       16.71
+               Central African Republic |          2        0.08       16.80
+                Central American Region |         17        0.70       17.50
+                    Central Asia Region |         17        0.70       18.20
+                                   Chad |          4        0.17       18.37
+                                  Chile |          1        0.04       18.41
+                                  China |         11        0.46       18.87
+                               Colombia |         14        0.58       19.45
+          Congo, Democratic Republic of |         38        1.57       21.02
+                     Congo, Republic of |          1        0.04       21.06
+                             Costa Rica |          4        0.17       21.22
+                          Cote d'Ivoire |          9        0.37       21.60
+                                Croatia |          1        0.04       21.64
+                                   Cuba |          8        0.33       21.97
+                               Djibouti |          9        0.37       22.34
+                     Dominican Republic |         22        0.91       23.25
+                     East Africa Region |         22        0.91       24.16
+                       East Asia Region |         37        1.53       25.69
+                Eastern European Region |         12        0.50       26.19
+                                Ecuador |          9        0.37       26.56
+                                  Egypt |         17        0.70       27.27
+                            El Salvador |         29        1.20       28.47
+                      Equatorial Guinea |          2        0.08       28.55
+                                Eritrea |          3        0.12       28.67
+                               Ethiopia |         30        1.24       29.91
+                         Eurasia Region |         15        0.62       30.53
+                                   Fiji |          2        0.08       30.62
+                                  Gabon |          1        0.04       30.66
+                            Gambia, The |          6        0.25       30.91
+                                Georgia |         42        1.74       32.64
+                                  Ghana |         40        1.65       34.30
+                                 Greece |          1        0.04       34.34
+                              Guatemala |         30        1.24       35.58
+                                 Guinea |         14        0.58       36.16
+                                 Guyana |          9        0.37       36.53
+                                  Haiti |         35        1.45       37.98
+                               Honduras |         28        1.16       39.14
+       I.wonder.if.Laura.will.find.this |         11        0.46       39.59
+                                  India |         20        0.83       40.42
+                              Indonesia |         25        1.03       41.46
+                                   Iran |          1        0.04       41.50
+                                   Iraq |          7        0.29       41.79
+                                Ireland |          1        0.04       41.83
+                                 Israel |          2        0.08       41.91
+                                Jamaica |         22        0.91       42.82
+      Joint Europe and Eurasia Regional |          2        0.08       42.90
+                                 Jordan |         23        0.95       43.86
+                             Kazakhstan |         22        0.91       44.77
+                                  Kenya |         43        1.78       46.55
+                                 Kosovo |         30        1.24       47.79
+                        Kyrgyz Republic |         11        0.46       48.24
+                                   Laos |          4        0.17       48.41
+     Latin America and Caribbean Region |         17        0.70       49.11
+                                Lebanon |         13        0.54       49.65
+                                Lesotho |         17        0.70       50.35
+                                Liberia |         33        1.37       51.72
+                                  Libya |          3        0.12       51.84
+                              Macedonia |         10        0.41       52.25
+                             Madagascar |         23        0.95       53.21
+                                 Malawi |         33        1.37       54.57
+                               Maldives |          1        0.04       54.61
+                                   Mali |         24        0.99       55.61
+                       Marshall Islands |          2        0.08       55.69
+                             Mauritania |          7        0.29       55.98
+                              Mauritius |          1        0.04       56.02
+                                 Mexico |         22        0.91       56.93
+                                Moldova |         11        0.46       57.39
+                               Mongolia |         12        0.50       57.88
+                             Montenegro |          3        0.12       58.01
+                                Morocco |         17        0.70       58.71
+                             Mozambique |         24        0.99       59.70
+                                Namibia |         13        0.54       60.24
+                       Near East Region |          6        0.25       60.49
+                                  Nepal |         26        1.08       61.56
+                            New Zealand |          1        0.04       61.61
+                              Nicaragua |         36        1.49       63.09
+                                  Niger |         10        0.41       63.51
+                                Nigeria |         25        1.03       64.54
+                               Pakistan |         38        1.57       66.12
+                                 Panama |          9        0.37       66.49
+                       Papua New Guinea |          3        0.12       66.61
+                               Paraguay |         13        0.54       67.15
+                                   Peru |         30        1.24       68.39
+                            Philippines |         29        1.20       69.59
+                                Romania |          2        0.08       69.67
+                                 Russia |         12        0.50       70.17
+                                 Rwanda |         27        1.12       71.29
+                                  Samoa |          1        0.04       71.33
+                                Senegal |         38        1.57       72.90
+                                 Serbia |         15        0.62       73.52
+                           Sierra Leone |         15        0.62       74.14
+                               Slovenia |          1        0.04       74.18
+                                Somalia |         15        0.62       74.80
+                           South Africa |         18        0.74       75.55
+                    South Africa Region |         13        0.54       76.09
+                   South America Region |          3        0.12       76.21
+                      South Asia Region |          7        0.29       76.50
+                            South Sudan |          8        0.33       76.83
+                                  Spain |          1        0.04       76.87
+                              Sri Lanka |         22        0.91       77.78
+                  State Africa Regional |          1        0.04       77.82
+State Near East Regional/Middle East .. |          1        0.04       77.87
+                                  Sudan |          2        0.08       77.95
+               Sudan, Pre-2011 Election |         22        0.91       78.86
+                               Suriname |          2        0.08       78.94
+                              Swaziland |          6        0.25       79.19
+                   Syrian Arab Republic |          2        0.08       79.27
+                                 Taiwan |          1        0.04       79.31
+                             Tajikistan |         21        0.87       80.18
+                               Tanzania |         33        1.37       81.55
+                               Thailand |         10        0.41       81.96
+                            Timor-Leste |         13        0.54       82.50
+                                   Togo |          1        0.04       82.54
+                                Tunisia |          1        0.04       82.58
+                           Turkmenistan |         15        0.62       83.20
+                                 Tuvalu |          1        0.04       83.24
+             USAID Middle East Regional |          1        0.04       83.29
+                                 Uganda |         28        1.16       84.44
+                                Ukraine |         20        0.83       85.27
+                   United Arab Emirates |          1        0.04       85.31
+                                Uruguay |          1        0.04       85.35
+                             Uzbekistan |         19        0.79       86.14
+                                Vanuatu |          4        0.17       86.31
+                              Venezuela |          8        0.33       86.64
+                                Vietnam |         15        0.62       87.26
+                         Virgin Islands |          1        0.04       87.30
+                     West Africa Region |         20        0.83       88.13
+                     West Bank and Gaza |         15        0.62       88.75
+                              Worldwide |        211        8.73       97.48
+                                  Yemen |         21        0.87       98.35
+                                 Zambia |         27        1.12       99.46
+                               Zimbabwe |         13        0.54      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      2,417      100.00
+
+. replace benefitingcountry = "N/A" if benefitingcountry =="I.wonder.if.Laura.will.find.this"
+(11 real changes made)
+
+. 
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. g byte notCountry = regexm(benefitingcountry, "(USAID|Region|Worldwide|Office|Treasury)") == 1
+
+. tab benefitingcountry if notCountry
+
+                      BenefitingCountry |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                          Africa Region |         27        5.84        5.84
+                            Asia Region |         19        4.11        9.96
+                       Caribbean Region |         14        3.03       12.99
+                Central American Region |         17        3.68       16.67
+                    Central Asia Region |         17        3.68       20.35
+                     East Africa Region |         22        4.76       25.11
+                       East Asia Region |         37        8.01       33.12
+                Eastern European Region |         12        2.60       35.71
+                         Eurasia Region |         15        3.25       38.96
+      Joint Europe and Eurasia Regional |          2        0.43       39.39
+     Latin America and Caribbean Region |         17        3.68       43.07
+                       Near East Region |          6        1.30       44.37
+                    South Africa Region |         13        2.81       47.19
+                   South America Region |          3        0.65       47.84
+                      South Asia Region |          7        1.52       49.35
+                  State Africa Regional |          1        0.22       49.57
+State Near East Regional/Middle East .. |          1        0.22       49.78
+             USAID Middle East Regional |          1        0.22       50.00
+                     West Africa Region |         20        4.33       54.33
+                              Worldwide |        211       45.67      100.00
+----------------------------------------+-----------------------------------
+                                  Total |        462      100.00
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. tab category, mi
+
+                               Category |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                                        |        149        6.16        6.16
+                                    DRG |         71        2.94        9.10
+Democracy, Human Rights, and Governance |        260       10.76       19.86
+                            ENVIRONMENT |         78        3.23       23.09
+                             Econ. Dev. |         70        2.90       25.98
+                   Economic Development |        332       13.74       39.72
+          Education and Social Services |        170        7.03       46.75
+                                 Health |        463       19.16       65.91
+                Humanitarian Assistance |        176        7.28       73.19
+                     Peace and Security |        116        4.80       77.99
+                     Program Management |        477       19.74       97.72
+                           multi-sector |         55        2.28      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      2,417      100.00
+
+. replace category = proper(category)
+(750 real changes made)
+
+. replace category = "Democracy, Human Rights, And Governance" if category == "Drg"
+(71 real changes made)
+
+. replace category = "Economic Development" if category == "Econ. Dev."
+(70 real changes made)
+
+. replace category = "Missing" if category == ""
+(149 real changes made)
+
+. tab category, mi
+
+                               Category |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+Democracy, Human Rights, And Governance |        331       13.69       13.69
+                   Economic Development |        402       16.63       30.33
+          Education And Social Services |        170        7.03       37.36
+                            Environment |         78        3.23       40.59
+                                 Health |        463       19.16       59.74
+                Humanitarian Assistance |        176        7.28       67.03
+                                Missing |        149        6.16       73.19
+                           Multi-Sector |         55        2.28       75.47
+                     Peace And Security |        116        4.80       80.26
+                     Program Management |        477       19.74      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      2,417      100.00
+
+. 
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. tab sector, mi sort
+
+                                 Sector |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+            Direct Administrative Costs |        364       15.06       15.06
+                               HIV/AIDS |        128        5.30       20.36
+                            Agriculture |        123        5.09       25.44
+              Monitoring and Evaluation |        119        4.92       30.37
+   Protection, Assistance and Solutions |        119        4.92       35.29
+                          Civil Society |         96        3.97       39.26
+                        Good Governance |         91        3.76       43.03
+         Private Sector Competitiveness |         89        3.68       46.71
+Political Competition and Consensus-B.. |         84        3.48       50.19
+              Maternal and Child Health |         77        3.19       53.37
+             Multi-Sector - Unspecified |         68        2.81       56.19
+                        Basic Education |         66        2.73       58.92
+           Rule of Law and Human Rights |         64        2.65       61.56
+Family Planning and Reproductive Health |         60        2.48       64.05
+                         Infrastructure |         55        2.28       66.32
+ Conflict Mitigation and Reconciliation |         54        2.23       68.56
+                     Disaster Readiness |         54        2.23       70.79
+                   Economic Opportunity |         54        2.23       73.02
+                           Tuberculosis |         52        2.15       75.18
+            Water Supply and Sanitation |         50        2.07       77.24
+                        Social Services |         46        1.90       79.15
+                   Trade and Investment |         46        1.90       81.05
+                       Financial Sector |         44        1.82       82.87
+           Clean Productive Environment |         39        1.61       84.48
+     Natural Resources and Biodiversity |         38        1.57       86.06
+                      Social Assistance |         38        1.57       87.63
+                                Malaria |         37        1.53       89.16
+                       Higher Education |         30        1.24       90.40
+            Other Public Health Threats |         29        1.20       91.60
+                       Counterterrorism |         23        0.95       92.55
+                              Nutrition |         23        0.95       93.50
+         Economic Development - General |         22        0.91       94.41
+                    Transnational Crime |         22        0.91       95.32
+    Macroeconomic Foundation for Growth |         18        0.74       96.07
+Education and Social Services - General |         17        0.70       96.77
+                       Health - General |         17        0.70       97.48
+Pandemic Influenza and Other Emerging.. |         16        0.66       98.14
+                  Environment - General |         12        0.50       98.63
+                      Counter-Narcotics |          9        0.37       99.01
+Stabilization Operations and Security.. |          9        0.37       99.38
+            International Contributions |          4        0.17       99.54
+                            Environment |          3        0.12       99.67
+                   Migration Management |          3        0.12       99.79
+Social Policies, Regulations, and Sys.. |          2        0.08       99.88
+Combating Weapons of Mass Destruction.. |          1        0.04       99.92
+Democracy, Human Rights, and Governan.. |          1        0.04       99.96
+                          Manufacturing |          1        0.04      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      2,417      100.00
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. describe amount spent spent2
+
+              storage   display    value
+variable name   type    format     label      variable label
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+amount          str17   %17s                  Amount
+spent           float   %9.0g                 Spent
+spent2          float   %9.0g                 Spent2
+
+. codebook amount spent spent2
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+amount                                                                                                                                                Amount
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                  type:  string (str17)
+
+         unique values:  2,311                    missing "":  0/2,417
+
+              examples:  "$1,999,997.00 "
+                         "$2,348,295.41 "
+                         "$325,836.00 "
+                         "$581.02 "
+
+               warning:  variable has leading and trailing blanks
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+spent                                                                                                                                                  Spent
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (float)
+
+                 range:  [-7616900,5.019e+08]         units:  .01
+         unique values:  2,310                    missing .:  10/2,417
+
+                  mean:   2.2e+06
+              std. dev:   1.5e+07
+
+           percentiles:        10%       25%       50%       75%       90%
+                                68   25409.8    213781    916351   3.0e+06
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+spent2                                                                                                                                                Spent2
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (float)
+
+                 range:  [-7616900,5.019e+08]         units:  .01
+         unique values:  2,310                    missing .:  10/2,417
+
+                  mean:   2.2e+06
+              std. dev:   1.5e+07
+
+           percentiles:        10%       25%       50%       75%       90%
+                                68   25409.8    213781    916351   3.0e+06
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. describe amount spent spent2
+
+              storage   display    value
+variable name   type    format     label      variable label
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+amount          str17   %17s                  Amount
+spent           float   %9.0g                 Spent
+spent2          float   %9.0g                 Spent2
+
+. compare spent spent2
+
+                                        ---------- difference ----------
+                            count       minimum      average     maximum
+------------------------------------------------------------------------
+spent=spent2                 2407
+                       ----------
+jointly defined              2407             0            0           0
+jointly missing                10
+                       ----------
+total                        2417
+
+. assert spent == spent2 
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. compare spent2 amount
+
+                            count
+---------------------------------
+jointly defined              2407
+spent2 missing only            10
+                       ----------
+total                        2417
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. charlist amount
+ $(),-.0123456789
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. replace spent = spent / 1000000
+(2,407 real changes made)
+
+. 
+end of do-file
+
+. tab fiscalyeartype
+
+FiscalYearTyp |
+            e |      Freq.     Percent        Cum.
+--------------+-----------------------------------
+Disbursements |      1,533       63.43       63.43
+  Obligations |        884       36.57      100.00
+--------------+-----------------------------------
+        Total |      2,417      100.00
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. saveold "obligations.dta" if fiscalyeartype == "Obligations", replace version(12)
+if not allowed
+r(101);
+
+end of do-file
+
+r(101);
+
+. help save
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. 
+. cd $pathdata
+C:\Users\Tim\Documents\Github\StataTraining\Day2\Data
+
+. 
+. * --- 10 min Exercise --- * 
+. * 1) load the StataTrainingMessy.csv
+. * 2) browse the data and describe the data, any variables with missing values?
+. * 3) identify potential data problems and propose solutions
+. * 4) What is the difference between spent & spent2 & amount?
+. 
+. * ### Solutions ### *
+. 
+. * 1) import
+. import delimited "StataTrainingMessy.csv", clear
+(12 vars, 2417 obs)
+
+. 
+. * 2) browse data (may options)
+. br
+
+. codebook, p
+
+   Potential problems in dataset   [unnamed]
+
+               potential problem   variables
+-------------------------------------------------------------------------------------------------
+ string vars with leading blanks   agency amount
+  string vars with trailing blanks   agency sector amount
+  string vars with embedded blanks   account agency operatingunit benefitingcountry category sector
+-------------------------------------------------------------------------------------------------
+
+. codebook, c
+
+Variable       Obs Unique      Mean       Min       Max  Label
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+fiscalyear    2417     10  2085.057       213     20014  FiscalYear
+qtr           2352      6  3.081207         0        40  QTR
+fiscalyear~e  2417      4         .         .         .  FiscalYearType
+account       2417     30         .         .         .  Account
+agency        2417     11         .         .         .  Agency
+operatingu~t  2417    183         .         .         .  OperatingUnit
+benefiting~y  2417    158         .         .         .  BenefitingCountry
+category      2268     11         .         .         .  Category
+sector        2417     47         .         .         .  Sector
+amount        2417   2311         .         .         .  Amount
+spent         2407   2310   2171756  -7616900  5.02e+08  Spent
+spent2        2407   2310   2171756  -7616900  5.02e+08  Spent2
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+. describe
+
+Contains data
+  obs:         2,417                          
+ vars:            12                          
+ size:       894,290                          
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+fiscalyear      int     %8.0g                 FiscalYear
+qtr             byte    %8.0g                 QTR
+fiscalyeartype  str13   %13s                  FiscalYearType
+account         str47   %47s                  Account
+agency          str19   %19s                  Agency
+operatingunit   str114  %114s                 OperatingUnit
+benefitingcou~y str59   %59s                  BenefitingCountry
+category        str39   %39s                  Category
+sector          str51   %51s                  Sector
+amount          str17   %17s                  Amount
+spent           float   %9.0g                 Spent
+spent2          float   %9.0g                 Spent2
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: 
+     Note: Dataset has changed since last saved.
+
+. inspect
+
+fiscalyear:  FiscalYear                         Number of Observations
+-----------------------                ---------------------------------------
+                                             Total      Integers   Nonintegers
+|  #                         Negative            -             -             -
+|  #                         Zero                -             -             -
+|  #                         Positive        2,417         2,417             -
+|  #                                   -----------   -----------   -----------
+|  #                         Total           2,417         2,417             -
+|  #   .   .   .   .         Missing             -
++----------------------                -----------
+213               20014                      2,417
+  (10 unique values)
+
+qtr:  QTR                                       Number of Observations
+---------                              ---------------------------------------
+                                             Total      Integers   Nonintegers
+|  #                         Negative            -             -             -
+|  #                         Zero               30            30             -
+|  #                         Positive        2,322         2,322             -
+|  #                                   -----------   -----------   -----------
+|  #                         Total           2,352         2,352             -
+|  #   .   .   .   .         Missing            65
++----------------------                -----------
+0                    40                      2,417
+   (6 unique values)
+
+fiscalyeartype:  FiscalYearType                 Number of Observations
+-------------------------------        ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+account:  Account                               Number of Observations
+-----------------                      ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+agency:  Agency                                 Number of Observations
+---------------                        ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+operatingunit:  OperatingUnit                   Number of Observations
+-----------------------------          ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+benefitingcountry:  BenefitingCountry           Number of Observations
+-------------------------------------  ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+category:  Category                             Number of Observations
+-------------------                    ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+sector:  Sector                                 Number of Observations
+---------------                        ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+amount:  Amount                                 Number of Observations
+---------------                        ---------------------------------------
+                                             Total      Integers   Nonintegers
+|                            Negative            -             -             -
+|                            Zero                -             -             -
+|                            Positive            -             -             -
+|                                      -----------   -----------   -----------
+|                            Total               -             -             -
+|                            Missing         2,417
++----------------------                -----------
+.             -9.0e+307                      2,417
+   (0 unique value)
+
+spent:  Spent                                   Number of Observations
+-------------                          ---------------------------------------
+                                             Total      Integers   Nonintegers
+|  #                         Negative          209            59           150
+|  #                         Zero                -             -             -
+|  #                         Positive        2,198           770         1,428
+|  #                                   -----------   -----------   -----------
+|  #                         Total           2,407           829         1,578
+|  #   .   .   .   .         Missing            10
++----------------------                -----------
+-7616900       5.02e+08                      2,417
+(More than 99 unique values)
+
+spent2:  Spent2                                 Number of Observations
+---------------                        ---------------------------------------
+                                             Total      Integers   Nonintegers
+|  #                         Negative          209            59           150
+|  #                         Zero                -             -             -
+|  #                         Positive        2,198           770         1,428
+|  #                                   -----------   -----------   -----------
+|  #                         Total           2,407           829         1,578
+|  #   .   .   .   .         Missing            10
++----------------------                -----------
+-7616900       5.02e+08                      2,417
+(More than 99 unique values)
+
+. mdesc
+
+    Variable    |     Missing          Total     Percent Missing
+----------------+-----------------------------------------------
+     fiscalyear |           0          2,417           0.00
+            qtr |          65          2,417           2.69
+   fiscalyear~e |           0          2,417           0.00
+        account |           0          2,417           0.00
+         agency |           0          2,417           0.00
+   operatingu~t |           0          2,417           0.00
+   benefiting~y |           0          2,417           0.00
+       category |         149          2,417           6.16
+         sector |           0          2,417           0.00
+         amount |           0          2,417           0.00
+          spent |          10          2,417           0.41
+         spent2 |          10          2,417           0.41
+----------------+-----------------------------------------------
+
+. 
+. * 3) data problems (two ways to resolve)
+. sum
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+  fiscalyear |      2,417    2085.057    1844.668        213      20014
+         qtr |      2,352    3.081207    4.685221          0         40
+fiscalyear~e |          0
+     account |          0
+      agency |          0
+-------------+---------------------------------------------------------
+operatingu~t |          0
+benefiting~y |          0
+    category |          0
+      sector |          0
+      amount |          0
+-------------+---------------------------------------------------------
+       spent |      2,407     2171756    1.51e+07   -7616900   5.02e+08
+      spent2 |      2,407     2171756    1.51e+07   -7616900   5.02e+08
+
+. codebook, c
+
+Variable       Obs Unique      Mean       Min       Max  Label
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+fiscalyear    2417     10  2085.057       213     20014  FiscalYear
+qtr           2352      6  3.081207         0        40  QTR
+fiscalyear~e  2417      4         .         .         .  FiscalYearType
+account       2417     30         .         .         .  Account
+agency        2417     11         .         .         .  Agency
+operatingu~t  2417    183         .         .         .  OperatingUnit
+benefiting~y  2417    158         .         .         .  BenefitingCountry
+category      2268     11         .         .         .  Category
+sector        2417     47         .         .         .  Sector
+amount        2417   2311         .         .         .  Amount
+spent         2407   2310   2171756  -7616900  5.02e+08  Spent
+spent2        2407   2310   2171756  -7616900  5.02e+08  Spent2
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+. 
+. * ### Fiscal year seems messed up. Look at it in detail
+. tab fiscalyear, mi
+
+ FiscalYear |      Freq.     Percent        Cum.
+------------+-----------------------------------
+        213 |        141        5.83        5.83
+       2007 |          1        0.04        5.88
+       2008 |          1        0.04        5.92
+       2009 |        394       16.30       22.22
+       2010 |        403       16.67       38.89
+       2011 |        455       18.82       57.72
+       2012 |        465       19.24       76.95
+       2013 |        425       17.58       94.54
+       2014 |        108        4.47       99.01
+      20014 |         24        0.99      100.00
+------------+-----------------------------------
+      Total |      2,417      100.00
+
+. 
+. * ### Need to fix some unlikely values (20014)
+. recode fiscalyear (213 = 2013) (20014 = 2014)
+(fiscalyear: 165 changes made)
+
+. tab fiscalyear, mi
+
+ FiscalYear |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       2007 |          1        0.04        0.04
+       2008 |          1        0.04        0.08
+       2009 |        394       16.30       16.38
+       2010 |        403       16.67       33.06
+       2011 |        455       18.82       51.88
+       2012 |        465       19.24       71.12
+       2013 |        566       23.42       94.54
+       2014 |        132        5.46      100.00
+------------+-----------------------------------
+      Total |      2,417      100.00
+
+. 
+. * ### Quarter also look a bit funny
+. tab qtr, mi
+
+        QTR |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |         30        1.24        1.24
+          1 |        542       22.42       23.67
+          2 |        600       24.82       48.49
+          3 |        475       19.65       68.14
+          4 |        670       27.72       95.86
+         40 |         35        1.45       97.31
+          . |         65        2.69      100.00
+------------+-----------------------------------
+      Total |      2,417      100.00
+
+. recode qtr (40 = 4) (0 = .)
+(qtr: 65 changes made)
+
+. tab qtr, mi
+
+        QTR |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        542       22.42       22.42
+          2 |        600       24.82       47.25
+          3 |        475       19.65       66.90
+          4 |        705       29.17       96.07
+          . |         95        3.93      100.00
+------------+-----------------------------------
+      Total |      2,417      100.00
+
+. 
+. * ### Fiscal year type is not consistent
+. tab fiscalyeartype, mi
+
+FiscalYearTyp |
+            e |      Freq.     Percent        Cum.
+--------------+-----------------------------------
+    Disbsmnt. |        275       11.38       11.38
+Disbursements |      1,258       52.05       63.43
+        Obgl. |        128        5.30       68.72
+  Obligations |        756       31.28      100.00
+--------------+-----------------------------------
+        Total |      2,417      100.00
+
+. replace fiscalyeartype = "Disbursements" if fiscalyeartype == "Disbsmnt."
+(275 real changes made)
+
+. replace fiscalyeartype = "Obligations" if fiscalyeartype == "Obgl."
+(128 real changes made)
+
+. tab fiscalyeartype, mi
+
+FiscalYearTyp |
+            e |      Freq.     Percent        Cum.
+--------------+-----------------------------------
+Disbursements |      1,533       63.43       63.43
+  Obligations |        884       36.57      100.00
+--------------+-----------------------------------
+        Total |      2,417      100.00
+
+. 
+. * ### Seems ok except for the many N/A
+. tab account, mi sort
+
+                                Account |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                                    N/A |        544       22.51       22.51
+                 Development Assistance |        476       19.69       42.20
+                  Economic Support Fund |        371       15.35       57.55
+         Global Health & Child Survival |        306       12.66       70.21
+      International Disaster Assistance |        134        5.54       75.76
+Assistance for Europe, Eurasia and Ce.. |         95        3.93       79.69
+Child Survival and Health Programs Fund |         91        3.76       83.45
+Assist. For N.I.S Of Former Soviet Un.. |         80        3.31       86.76
+                     Operating Expenses |         73        3.02       89.78
+                 Transition Initiatives |         48        1.99       91.77
+ Commodity Credit Corp Title II and III |         42        1.74       93.50
+         Special Assistance Initiatives |         31        1.28       94.79
+             Global HIV/AIDS Initiative |         23        0.95       95.74
+                         Democracy Fund |         20        0.83       96.57
+           Development Credit Authority |         19        0.79       97.35
+                    Gifts and Donations |         19        0.79       98.14
+       Millennium Challenge Corporation |         10        0.41       98.55
+      Civilian Stabilization Initiative |          7        0.29       98.84
+           Commodity Credit Corporation |          6        0.25       99.09
+                Capital Investment Fund |          4        0.17       99.26
+                  IG Operating Expenses |          4        0.17       99.42
+     Housing Guaranty Financing Account |          3        0.12       99.54
+          Andean Counterdrug Initiative |          2        0.08       99.63
+                    Complex Crises Fund |          2        0.08       99.71
+Development Credit Authority-Financ A.. |          2        0.08       99.79
+Central America-Carib Emergency Dis Rec |          1        0.04       99.83
+            Development Fund for Africa |          1        0.04       99.88
+                           HIV/AIDS WCF |          1        0.04       99.92
+   Housing Guaranty Liquidating Account |          1        0.04       99.96
+                       Tech. Assistance |          1        0.04      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      2,417      100.00
+
+. replace account = "Unknown" if account == "N/A"
+(544 real changes made)
+
+. tab account, mi sort
+
+                                Account |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                                Unknown |        544       22.51       22.51
+                 Development Assistance |        476       19.69       42.20
+                  Economic Support Fund |        371       15.35       57.55
+         Global Health & Child Survival |        306       12.66       70.21
+      International Disaster Assistance |        134        5.54       75.76
+Assistance for Europe, Eurasia and Ce.. |         95        3.93       79.69
+Child Survival and Health Programs Fund |         91        3.76       83.45
+Assist. For N.I.S Of Former Soviet Un.. |         80        3.31       86.76
+                     Operating Expenses |         73        3.02       89.78
+                 Transition Initiatives |         48        1.99       91.77
+ Commodity Credit Corp Title II and III |         42        1.74       93.50
+         Special Assistance Initiatives |         31        1.28       94.79
+             Global HIV/AIDS Initiative |         23        0.95       95.74
+                         Democracy Fund |         20        0.83       96.57
+           Development Credit Authority |         19        0.79       97.35
+                    Gifts and Donations |         19        0.79       98.14
+       Millennium Challenge Corporation |         10        0.41       98.55
+      Civilian Stabilization Initiative |          7        0.29       98.84
+           Commodity Credit Corporation |          6        0.25       99.09
+                Capital Investment Fund |          4        0.17       99.26
+                  IG Operating Expenses |          4        0.17       99.42
+     Housing Guaranty Financing Account |          3        0.12       99.54
+          Andean Counterdrug Initiative |          2        0.08       99.63
+                    Complex Crises Fund |          2        0.08       99.71
+Development Credit Authority-Financ A.. |          2        0.08       99.79
+Central America-Carib Emergency Dis Rec |          1        0.04       99.83
+            Development Fund for Africa |          1        0.04       99.88
+                           HIV/AIDS WCF |          1        0.04       99.92
+   Housing Guaranty Liquidating Account |          1        0.04       99.96
+                       Tech. Assistance |          1        0.04      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      2,417      100.00
+
+. 
+. * ### what are the problems with the Agency names?
+. tab agency, mi
+
+             Agency |      Freq.     Percent        Cum.
+--------------------+-----------------------------------
+               MCC  |        141        5.83        5.83
+             USAID  |        286       11.83       17.67
+Department of Stata |         15        0.62       18.29
+                DoD |         24        0.99       19.28
+                IAF |         27        1.12       20.40
+        PEACE CORPS |         81        3.35       23.75
+           Treasury |         15        0.62       24.37
+          U.S.A.I.D |        463       19.16       43.53
+              USADF |         23        0.95       44.48
+               USDA |          2        0.08       44.56
+              usaid |      1,340       55.44      100.00
+--------------------+-----------------------------------
+              Total |      2,417      100.00
+
+. 
+. * ### lots of problems: 1) USAID, 2) Stata! 3) MCC has spaces 4) Peace Corps all caps
+. 
+. * ### First, USAID is not consistent. Use the regexm function to fix all occurences
+. replace agency = "USAID" if regexm(agency, "(U.S.A.I.D|usaid|USAID )") == 1
+(2,089 real changes made)
+
+. 
+. * Fix the errors created by leading spaces
+. replace agency = trim(agency)
+(141 real changes made)
+
+. tab agency, mi 
+
+             Agency |      Freq.     Percent        Cum.
+--------------------+-----------------------------------
+Department of Stata |         15        0.62        0.62
+                DoD |         24        0.99        1.61
+                IAF |         27        1.12        2.73
+                MCC |        141        5.83        8.56
+        PEACE CORPS |         81        3.35       11.92
+           Treasury |         15        0.62       12.54
+              USADF |         23        0.95       13.49
+              USAID |      2,089       86.43       99.92
+               USDA |          2        0.08      100.00
+--------------------+-----------------------------------
+              Total |      2,417      100.00
+
+. 
+. replace agency = "DOS" if agency == "Department of Stata"
+(15 real changes made)
+
+. replace agency = "DOD" if agency == "DoD"
+(24 real changes made)
+
+. replace agency = proper(agency) if agency == "PEACE CORPS"
+(81 real changes made)
+
+. tab agency, mi
+
+             Agency |      Freq.     Percent        Cum.
+--------------------+-----------------------------------
+                DOD |         24        0.99        0.99
+                DOS |         15        0.62        1.61
+                IAF |         27        1.12        2.73
+                MCC |        141        5.83        8.56
+        Peace Corps |         81        3.35       11.92
+           Treasury |         15        0.62       12.54
+              USADF |         23        0.95       13.49
+              USAID |      2,089       86.43       99.92
+               USDA |          2        0.08      100.00
+--------------------+-----------------------------------
+              Total |      2,417      100.00
+
+. 
+. * Everything looks good, let's move on to operating units
+. 
+. * Operating Unit (ignoring mostly for now)
+. tab operatingunit, mi 
+
+                          OperatingUnit |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                            Afghanistan |         36        1.49        1.49
+                          Africa Region |          9        0.37        1.86
+                                Albania |         14        0.58        2.44
+                                Algeria |          1        0.04        2.48
+                                 Angola |         22        0.91        3.39
+                              Argentina |          1        0.04        3.43
+                                Armenia |         24        0.99        4.43
+              Asia Middle East Regional |         18        0.74        5.17
+                            Asia Region |          1        0.04        5.21
+                                Austria |          1        0.04        5.25
+                             Azerbaijan |         14        0.58        5.83
+                             Bangladesh |         33        1.37        7.20
+                                Belarus |          6        0.25        7.45
+                                  Benin |         18        0.74        8.19
+                                Bolivia |         17        0.70        8.90
+                 Bosnia and Herzegovina |         17        0.70        9.60
+                               Botswana |          4        0.17        9.76
+                                 Brazil |         14        0.58       10.34
+                               Bulgaria |          4        0.17       10.51
+          Bureau for Management (USAID) |          3        0.12       10.63
+Bureau for Policy, Planning and Learn.. |          1        0.04       10.67
+                           Burkina Faso |         12        0.50       11.17
+                                  Burma |         13        0.54       11.71
+                                Burundi |         12        0.50       12.21
+                               Cambodia |         34        1.41       13.61
+                               Cameroon |          8        0.33       13.94
+                                 Canada |          1        0.04       13.98
+                             Cape Verde |         11        0.46       14.44
+                       Caribbean Region |          6        0.25       14.69
+               Central African Republic |          2        0.08       14.77
+                Central American Region |          2        0.08       14.85
+                    Central Asia Region |          5        0.21       15.06
+                                   Chad |          2        0.08       15.14
+                                  China |         17        0.70       15.85
+                               Colombia |         10        0.41       16.26
+          Congo, Democratic Republic of |         33        1.37       17.63
+                     Congo, Republic of |          1        0.04       17.67
+                             Costa Rica |          1        0.04       17.71
+                          Cote d'Ivoire |          7        0.29       18.00
+                                Croatia |          1        0.04       18.04
+                                   Cuba |          4        0.17       18.20
+                                 Cyprus |          2        0.08       18.29
+                               Djibouti |          8        0.33       18.62
+                     Dominican Republic |         22        0.91       19.53
+                     East Africa Region |          6        0.25       19.78
+                       East Asia Region |          7        0.29       20.07
+                Eastern European Region |          1        0.04       20.11
+                                Ecuador |          8        0.33       20.44
+                                  Egypt |         10        0.41       20.85
+                            El Salvador |         29        1.20       22.05
+                      Equatorial Guinea |          2        0.08       22.13
+                               Ethiopia |         27        1.12       23.25
+                         Eurasia Region |          2        0.08       23.33
+                                   Fiji |          1        0.04       23.38
+                  Food Security (USAID) |          4        0.17       23.54
+                                  Gabon |          1        0.04       23.58
+                            Gambia, The |          6        0.25       23.83
+                                Georgia |         41        1.70       25.53
+                                  Ghana |         35        1.45       26.98
+                                 Greece |          1        0.04       27.02
+                              Guatemala |         26        1.08       28.09
+                                 Guinea |         11        0.46       28.55
+                                 Guyana |          9        0.37       28.92
+                                  Haiti |         28        1.16       30.08
+                               Honduras |         26        1.08       31.15
+                                  India |         14        0.58       31.73
+                              Indonesia |         24        0.99       32.73
+International Organizations and Devel.. |          1        0.04       32.77
+International Organizations and Devel.. |          1        0.04       32.81
+International Organizations and Devel.. |          1        0.04       32.85
+International Organizations and Devel.. |          1        0.04       32.89
+                                   Iran |          1        0.04       32.93
+                                   Iraq |          5        0.21       33.14
+                                Ireland |          1        0.04       33.18
+                                 Israel |          1        0.04       33.22
+                                Jamaica |         20        0.83       34.05
+                 Joint Eurasia Regional |         25        1.03       35.08
+      Joint Europe and Eurasia Regional |          2        0.08       35.17
+                                 Jordan |         25        1.03       36.20
+                             Kazakhstan |         19        0.79       36.99
+                                  Kenya |         32        1.32       38.31
+                                 Kosovo |         10        0.41       38.73
+                        Kyrgyz Republic |         28        1.16       39.88
+                                   Laos |          3        0.12       40.01
+     Latin America and Caribbean Region |          4        0.17       40.17
+                                Lebanon |          9        0.37       40.55
+                                Lesotho |         15        0.62       41.17
+                                Liberia |         30        1.24       42.41
+                                  Libya |          2        0.08       42.49
+                              Macedonia |          9        0.37       42.86
+                             Madagascar |         21        0.87       43.73
+                                 Malawi |         26        1.08       44.81
+                                   Mali |         23        0.95       45.76
+                       Marshall Islands |          1        0.04       45.80
+                             Mauritania |          5        0.21       46.01
+                              Mauritius |          1        0.04       46.05
+                                 Mexico |         22        0.91       46.96
+                                Moldova |         11        0.46       47.41
+                               Mongolia |         12        0.50       47.91
+                             Montenegro |          4        0.17       48.08
+                                Morocco |         17        0.70       48.78
+                             Mozambique |         21        0.87       49.65
+                                Namibia |         12        0.50       50.14
+                       Near East Region |          3        0.12       50.27
+                     Near East Regional |          3        0.12       50.39
+                                  Nepal |         19        0.79       51.18
+                            New Zealand |          1        0.04       51.22
+                              Nicaragua |         34        1.41       52.63
+                                  Niger |          7        0.29       52.92
+                                Nigeria |         22        0.91       53.83
+Office of Afghanistan and Pakistan Af.. |          2        0.08       53.91
+Office of Innovation and Development .. |          3        0.12       54.03
+                               Pakistan |         30        1.24       55.28
+                                 Panama |         10        0.41       55.69
+                       Papua New Guinea |          3        0.12       55.81
+                               Paraguay |         12        0.50       56.31
+                                   Peru |         22        0.91       57.22
+                            Philippines |         27        1.12       58.34
+                                Romania |          2        0.08       58.42
+                                 Russia |         11        0.46       58.87
+                                 Rwanda |         30        1.24       60.12
+                                  Samoa |          1        0.04       60.16
+                                Senegal |         35        1.45       61.61
+                                 Serbia |         15        0.62       62.23
+                           Sierra Leone |         13        0.54       62.76
+                               Slovenia |          1        0.04       62.81
+                                Somalia |         11        0.46       63.26
+                           South Africa |         13        0.54       63.80
+                    South Africa Region |          3        0.12       63.92
+                   South America Region |          3        0.12       64.05
+                      South Asia Region |          2        0.08       64.13
+                            South Sudan |         10        0.41       64.54
+                                  Spain |          1        0.04       64.58
+                              Sri Lanka |         16        0.66       65.25
+                  State Africa Regional |          1        0.04       65.29
+State Near East Regional/Middle East .. |          1        0.04       65.33
+                                  Sudan |          2        0.08       65.41
+               Sudan, Pre-2011 Election |         21        0.87       66.28
+                               Suriname |          2        0.08       66.36
+                              Swaziland |          3        0.12       66.49
+                   Syrian Arab Republic |          2        0.08       66.57
+                             Tajikistan |         20        0.83       67.40
+                               Tanzania |         31        1.28       68.68
+                               Thailand |          9        0.37       69.05
+                            Timor-Leste |         12        0.50       69.55
+                                   Togo |          1        0.04       69.59
+                           Turkmenistan |         15        0.62       70.21
+                                 Tuvalu |          1        0.04       70.25
+U.S. Department of the Treasury - Off.. |          1        0.04       70.29
+             USAID Administrative Costs |          5        0.21       70.50
+                  USAID Africa Regional |         16        0.66       71.16
+               USAID Caribbean Regional |          6        0.25       71.41
+         USAID Central America Regional |         11        0.46       71.87
+            USAID Central Asia Regional |          9        0.37       72.24
+USAID Democracy, Conflict and Humanit.. |        249       10.30       82.54
+             USAID East Africa Regional |         13        0.54       83.08
+USAID Economic Growth, Education and .. |         32        1.32       84.40
+                    USAID Global Health |         57        2.36       86.76
+USAID Inspector General Operating Exp.. |          3        0.12       86.88
+USAID Latin America and Caribbean Reg.. |         28        1.16       88.04
+USAID Legislative and Public Affairs .. |          3        0.12       88.17
+             USAID Middle East Regional |         11        0.46       88.62
+   USAID Office of Development Partners |         22        0.91       89.53
+                USAID Operating Expense |         25        1.03       90.57
+USAID Regional Development Mission-Asia |         18        0.74       91.31
+           USAID South America Regional |          3        0.12       91.44
+         USAID Southern Africa Regional |          8        0.33       91.77
+             USAID West Africa Regional |         10        0.41       92.18
+                                 Uganda |         21        0.87       93.05
+                                Ukraine |         20        0.83       93.88
+                   United Arab Emirates |          1        0.04       93.92
+                                Uruguay |          1        0.04       93.96
+                             Uzbekistan |         19        0.79       94.75
+                                Vanuatu |          4        0.17       94.91
+                              Venezuela |          5        0.21       95.12
+                                Vietnam |         15        0.62       95.74
+                         Virgin Islands |          1        0.04       95.78
+                     West Africa Region |         11        0.46       96.24
+                     West Bank and Gaza |         14        0.58       96.81
+                              Worldwide |         19        0.79       97.60
+                                  Yemen |         21        0.87       98.47
+                                 Zambia |         27        1.12       99.59
+                               Zimbabwe |         10        0.41      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      2,417      100.00
+
+. tab benefitingcountry, mi
+
+                      BenefitingCountry |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                            Afghanistan |         40        1.65        1.65
+                          Africa Region |         27        1.12        2.77
+                                Albania |         14        0.58        3.35
+                                Algeria |          1        0.04        3.39
+                                 Angola |         22        0.91        4.30
+                              Argentina |          1        0.04        4.34
+                                Armenia |         24        0.99        5.34
+                            Asia Region |         19        0.79        6.12
+                                Austria |          1        0.04        6.16
+                             Azerbaijan |         14        0.58        6.74
+                                Bahrain |          1        0.04        6.79
+                             Bangladesh |         34        1.41        8.19
+                                Belarus |          6        0.25        8.44
+                                  Benin |         18        0.74        9.18
+                                Bolivia |         21        0.87       10.05
+                 Bosnia and Herzegovina |         18        0.74       10.80
+                               Botswana |          4        0.17       10.96
+                                 Brazil |         17        0.70       11.67
+                               Bulgaria |          4        0.17       11.83
+                           Burkina Faso |         15        0.62       12.45
+                                  Burma |         17        0.70       13.16
+                                Burundi |         14        0.58       13.74
+                               Cambodia |         37        1.53       15.27
+                               Cameroon |          9        0.37       15.64
+                                 Canada |          1        0.04       15.68
+                             Cape Verde |         11        0.46       16.14
+                       Caribbean Region |         14        0.58       16.71
+               Central African Republic |          2        0.08       16.80
+                Central American Region |         17        0.70       17.50
+                    Central Asia Region |         17        0.70       18.20
+                                   Chad |          4        0.17       18.37
+                                  Chile |          1        0.04       18.41
+                                  China |         11        0.46       18.87
+                               Colombia |         14        0.58       19.45
+          Congo, Democratic Republic of |         38        1.57       21.02
+                     Congo, Republic of |          1        0.04       21.06
+                             Costa Rica |          4        0.17       21.22
+                          Cote d'Ivoire |          9        0.37       21.60
+                                Croatia |          1        0.04       21.64
+                                   Cuba |          8        0.33       21.97
+                               Djibouti |          9        0.37       22.34
+                     Dominican Republic |         22        0.91       23.25
+                     East Africa Region |         22        0.91       24.16
+                       East Asia Region |         37        1.53       25.69
+                Eastern European Region |         12        0.50       26.19
+                                Ecuador |          9        0.37       26.56
+                                  Egypt |         17        0.70       27.27
+                            El Salvador |         29        1.20       28.47
+                      Equatorial Guinea |          2        0.08       28.55
+                                Eritrea |          3        0.12       28.67
+                               Ethiopia |         30        1.24       29.91
+                         Eurasia Region |         15        0.62       30.53
+                                   Fiji |          2        0.08       30.62
+                                  Gabon |          1        0.04       30.66
+                            Gambia, The |          6        0.25       30.91
+                                Georgia |         42        1.74       32.64
+                                  Ghana |         40        1.65       34.30
+                                 Greece |          1        0.04       34.34
+                              Guatemala |         30        1.24       35.58
+                                 Guinea |         14        0.58       36.16
+                                 Guyana |          9        0.37       36.53
+                                  Haiti |         35        1.45       37.98
+                               Honduras |         28        1.16       39.14
+       I.wonder.if.Laura.will.find.this |         11        0.46       39.59
+                                  India |         20        0.83       40.42
+                              Indonesia |         25        1.03       41.46
+                                   Iran |          1        0.04       41.50
+                                   Iraq |          7        0.29       41.79
+                                Ireland |          1        0.04       41.83
+                                 Israel |          2        0.08       41.91
+                                Jamaica |         22        0.91       42.82
+      Joint Europe and Eurasia Regional |          2        0.08       42.90
+                                 Jordan |         23        0.95       43.86
+                             Kazakhstan |         22        0.91       44.77
+                                  Kenya |         43        1.78       46.55
+                                 Kosovo |         30        1.24       47.79
+                        Kyrgyz Republic |         11        0.46       48.24
+                                   Laos |          4        0.17       48.41
+     Latin America and Caribbean Region |         17        0.70       49.11
+                                Lebanon |         13        0.54       49.65
+                                Lesotho |         17        0.70       50.35
+                                Liberia |         33        1.37       51.72
+                                  Libya |          3        0.12       51.84
+                              Macedonia |         10        0.41       52.25
+                             Madagascar |         23        0.95       53.21
+                                 Malawi |         33        1.37       54.57
+                               Maldives |          1        0.04       54.61
+                                   Mali |         24        0.99       55.61
+                       Marshall Islands |          2        0.08       55.69
+                             Mauritania |          7        0.29       55.98
+                              Mauritius |          1        0.04       56.02
+                                 Mexico |         22        0.91       56.93
+                                Moldova |         11        0.46       57.39
+                               Mongolia |         12        0.50       57.88
+                             Montenegro |          3        0.12       58.01
+                                Morocco |         17        0.70       58.71
+                             Mozambique |         24        0.99       59.70
+                                Namibia |         13        0.54       60.24
+                       Near East Region |          6        0.25       60.49
+                                  Nepal |         26        1.08       61.56
+                            New Zealand |          1        0.04       61.61
+                              Nicaragua |         36        1.49       63.09
+                                  Niger |         10        0.41       63.51
+                                Nigeria |         25        1.03       64.54
+                               Pakistan |         38        1.57       66.12
+                                 Panama |          9        0.37       66.49
+                       Papua New Guinea |          3        0.12       66.61
+                               Paraguay |         13        0.54       67.15
+                                   Peru |         30        1.24       68.39
+                            Philippines |         29        1.20       69.59
+                                Romania |          2        0.08       69.67
+                                 Russia |         12        0.50       70.17
+                                 Rwanda |         27        1.12       71.29
+                                  Samoa |          1        0.04       71.33
+                                Senegal |         38        1.57       72.90
+                                 Serbia |         15        0.62       73.52
+                           Sierra Leone |         15        0.62       74.14
+                               Slovenia |          1        0.04       74.18
+                                Somalia |         15        0.62       74.80
+                           South Africa |         18        0.74       75.55
+                    South Africa Region |         13        0.54       76.09
+                   South America Region |          3        0.12       76.21
+                      South Asia Region |          7        0.29       76.50
+                            South Sudan |          8        0.33       76.83
+                                  Spain |          1        0.04       76.87
+                              Sri Lanka |         22        0.91       77.78
+                  State Africa Regional |          1        0.04       77.82
+State Near East Regional/Middle East .. |          1        0.04       77.87
+                                  Sudan |          2        0.08       77.95
+               Sudan, Pre-2011 Election |         22        0.91       78.86
+                               Suriname |          2        0.08       78.94
+                              Swaziland |          6        0.25       79.19
+                   Syrian Arab Republic |          2        0.08       79.27
+                                 Taiwan |          1        0.04       79.31
+                             Tajikistan |         21        0.87       80.18
+                               Tanzania |         33        1.37       81.55
+                               Thailand |         10        0.41       81.96
+                            Timor-Leste |         13        0.54       82.50
+                                   Togo |          1        0.04       82.54
+                                Tunisia |          1        0.04       82.58
+                           Turkmenistan |         15        0.62       83.20
+                                 Tuvalu |          1        0.04       83.24
+             USAID Middle East Regional |          1        0.04       83.29
+                                 Uganda |         28        1.16       84.44
+                                Ukraine |         20        0.83       85.27
+                   United Arab Emirates |          1        0.04       85.31
+                                Uruguay |          1        0.04       85.35
+                             Uzbekistan |         19        0.79       86.14
+                                Vanuatu |          4        0.17       86.31
+                              Venezuela |          8        0.33       86.64
+                                Vietnam |         15        0.62       87.26
+                         Virgin Islands |          1        0.04       87.30
+                     West Africa Region |         20        0.83       88.13
+                     West Bank and Gaza |         15        0.62       88.75
+                              Worldwide |        211        8.73       97.48
+                                  Yemen |         21        0.87       98.35
+                                 Zambia |         27        1.12       99.46
+                               Zimbabwe |         13        0.54      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      2,417      100.00
+
+. replace benefitingcountry = "N/A" if benefitingcountry =="I.wonder.if.Laura.will.find.this"
+(11 real changes made)
+
+. 
+. * For later, let's tag all Benefiting countries that have region in their name
+. g byte notCountry = regexm(benefitingcountry, "(USAID|Region|Worldwide|Office|Treasury)") == 1
+
+. tab benefitingcountry if notCountry
+
+                      BenefitingCountry |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                          Africa Region |         27        5.84        5.84
+                            Asia Region |         19        4.11        9.96
+                       Caribbean Region |         14        3.03       12.99
+                Central American Region |         17        3.68       16.67
+                    Central Asia Region |         17        3.68       20.35
+                     East Africa Region |         22        4.76       25.11
+                       East Asia Region |         37        8.01       33.12
+                Eastern European Region |         12        2.60       35.71
+                         Eurasia Region |         15        3.25       38.96
+      Joint Europe and Eurasia Regional |          2        0.43       39.39
+     Latin America and Caribbean Region |         17        3.68       43.07
+                       Near East Region |          6        1.30       44.37
+                    South Africa Region |         13        2.81       47.19
+                   South America Region |          3        0.65       47.84
+                      South Asia Region |          7        1.52       49.35
+                  State Africa Regional |          1        0.22       49.57
+State Near East Regional/Middle East .. |          1        0.22       49.78
+             USAID Middle East Regional |          1        0.22       50.00
+                     West Africa Region |         20        4.33       54.33
+                              Worldwide |        211       45.67      100.00
+----------------------------------------+-----------------------------------
+                                  Total |        462      100.00
+
+. 
+. * Category
+. tab category, mi
+
+                               Category |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                                        |        149        6.16        6.16
+                                    DRG |         71        2.94        9.10
+Democracy, Human Rights, and Governance |        260       10.76       19.86
+                            ENVIRONMENT |         78        3.23       23.09
+                             Econ. Dev. |         70        2.90       25.98
+                   Economic Development |        332       13.74       39.72
+          Education and Social Services |        170        7.03       46.75
+                                 Health |        463       19.16       65.91
+                Humanitarian Assistance |        176        7.28       73.19
+                     Peace and Security |        116        4.80       77.99
+                     Program Management |        477       19.74       97.72
+                           multi-sector |         55        2.28      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      2,417      100.00
+
+. replace category = proper(category)
+(750 real changes made)
+
+. replace category = "Democracy, Human Rights, And Governance" if category == "Drg"
+(71 real changes made)
+
+. replace category = "Economic Development" if category == "Econ. Dev."
+(70 real changes made)
+
+. replace category = "Missing" if category == ""
+(149 real changes made)
+
+. tab category, mi
+
+                               Category |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+Democracy, Human Rights, And Governance |        331       13.69       13.69
+                   Economic Development |        402       16.63       30.33
+          Education And Social Services |        170        7.03       37.36
+                            Environment |         78        3.23       40.59
+                                 Health |        463       19.16       59.74
+                Humanitarian Assistance |        176        7.28       67.03
+                                Missing |        149        6.16       73.19
+                           Multi-Sector |         55        2.28       75.47
+                     Peace And Security |        116        4.80       80.26
+                     Program Management |        477       19.74      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      2,417      100.00
+
+. 
+. * Sector
+. tab sector, mi sort
+
+                                 Sector |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+            Direct Administrative Costs |        364       15.06       15.06
+                               HIV/AIDS |        128        5.30       20.36
+                            Agriculture |        123        5.09       25.44
+              Monitoring and Evaluation |        119        4.92       30.37
+   Protection, Assistance and Solutions |        119        4.92       35.29
+                          Civil Society |         96        3.97       39.26
+                        Good Governance |         91        3.76       43.03
+         Private Sector Competitiveness |         89        3.68       46.71
+Political Competition and Consensus-B.. |         84        3.48       50.19
+              Maternal and Child Health |         77        3.19       53.37
+             Multi-Sector - Unspecified |         68        2.81       56.19
+                        Basic Education |         66        2.73       58.92
+           Rule of Law and Human Rights |         64        2.65       61.56
+Family Planning and Reproductive Health |         60        2.48       64.05
+                         Infrastructure |         55        2.28       66.32
+ Conflict Mitigation and Reconciliation |         54        2.23       68.56
+                     Disaster Readiness |         54        2.23       70.79
+                   Economic Opportunity |         54        2.23       73.02
+                           Tuberculosis |         52        2.15       75.18
+            Water Supply and Sanitation |         50        2.07       77.24
+                        Social Services |         46        1.90       79.15
+                   Trade and Investment |         46        1.90       81.05
+                       Financial Sector |         44        1.82       82.87
+           Clean Productive Environment |         39        1.61       84.48
+     Natural Resources and Biodiversity |         38        1.57       86.06
+                      Social Assistance |         38        1.57       87.63
+                                Malaria |         37        1.53       89.16
+                       Higher Education |         30        1.24       90.40
+            Other Public Health Threats |         29        1.20       91.60
+                       Counterterrorism |         23        0.95       92.55
+                              Nutrition |         23        0.95       93.50
+         Economic Development - General |         22        0.91       94.41
+                    Transnational Crime |         22        0.91       95.32
+    Macroeconomic Foundation for Growth |         18        0.74       96.07
+Education and Social Services - General |         17        0.70       96.77
+                       Health - General |         17        0.70       97.48
+Pandemic Influenza and Other Emerging.. |         16        0.66       98.14
+                  Environment - General |         12        0.50       98.63
+                      Counter-Narcotics |          9        0.37       99.01
+Stabilization Operations and Security.. |          9        0.37       99.38
+            International Contributions |          4        0.17       99.54
+                            Environment |          3        0.12       99.67
+                   Migration Management |          3        0.12       99.79
+Social Policies, Regulations, and Sys.. |          2        0.08       99.88
+Combating Weapons of Mass Destruction.. |          1        0.04       99.92
+Democracy, Human Rights, and Governan.. |          1        0.04       99.96
+                          Manufacturing |          1        0.04      100.00
+----------------------------------------+-----------------------------------
+                                  Total |      2,417      100.00
+
+. 
+. * Describe the amounts
+. describe amount spent spent2
+
+              storage   display    value
+variable name   type    format     label      variable label
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+amount          str17   %17s                  Amount
+spent           float   %9.0g                 Spent
+spent2          float   %9.0g                 Spent2
+
+. codebook amount spent spent2
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+amount                                                                                                                                                Amount
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                  type:  string (str17)
+
+         unique values:  2,311                    missing "":  0/2,417
+
+              examples:  "$1,999,997.00 "
+                         "$2,348,295.41 "
+                         "$325,836.00 "
+                         "$581.02 "
+
+               warning:  variable has leading and trailing blanks
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+spent                                                                                                                                                  Spent
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (float)
+
+                 range:  [-7616900,5.019e+08]         units:  .01
+         unique values:  2,310                    missing .:  10/2,417
+
+                  mean:   2.2e+06
+              std. dev:   1.5e+07
+
+           percentiles:        10%       25%       50%       75%       90%
+                                68   25409.8    213781    916351   3.0e+06
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+spent2                                                                                                                                                Spent2
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                  type:  numeric (float)
+
+                 range:  [-7616900,5.019e+08]         units:  .01
+         unique values:  2,310                    missing .:  10/2,417
+
+                  mean:   2.2e+06
+              std. dev:   1.5e+07
+
+           percentiles:        10%       25%       50%       75%       90%
+                                68   25409.8    213781    916351   3.0e+06
+
+. 
+. * 4) spent versus spent2
+. describe amount spent spent2
+
+              storage   display    value
+variable name   type    format     label      variable label
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+amount          str17   %17s                  Amount
+spent           float   %9.0g                 Spent
+spent2          float   %9.0g                 Spent2
+
+. compare spent spent2
+
+                                        ---------- difference ----------
+                            count       minimum      average     maximum
+------------------------------------------------------------------------
+spent=spent2                 2407
+                       ----------
+jointly defined              2407             0            0           0
+jointly missing                10
+                       ----------
+total                        2417
+
+. assert spent == spent2 
+
+. 
+. compare spent2 amount
+
+                            count
+---------------------------------
+jointly defined              2407
+spent2 missing only            10
+                       ----------
+total                        2417
+
+. *assert string(spent2) == amount
+. charlist amount
+ $(),-.0123456789
+
+. 
+. replace spent = spent / 1000000
+(2,407 real changes made)
+
+. 
+. preserve
+
+. keep if fiscalyeartype == "Obligations"
+(1,533 observations deleted)
+
+. saveold "obligations.dta" , replace version(12)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file obligations.dta not found)
+file obligations.dta saved
+
+. restore
+
+. 
+. preserve
+
+. keep if fiscalyeartype == "Disbursements"
+(884 observations deleted)
+
+. saveold "disbursements.dta" , replace version(12)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+(note: file disbursements.dta not found)
+file disbursements.dta saved
+
+. restore
+
+. 
+. saveold "StataTrainingClean.dta", replace version(12)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file StataTrainingClean.dta saved
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. use "disbursements.dta", clear
+
+. br
+
+. use "obligations.dta", clear
+
+. count
+  884
+
+. 
+end of do-file
+
+. help count
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. use "disbursements.dta", clear
+
+. scalar disb_N = r(N)
+
+. br
+
+. use "obligations.dta", clear
+
+. scalar ob_N = r(N)
+
+. display ob_N + disb_N
+1768
+
+. 
+end of do-file
+
+. scalar dir
+      ob_N =        884
+    disb_N =        884
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. use "disbursements.dta", clear
+
+. scalar disb_N = r(N)
+
+. 
+end of do-file
+
+. di disb_N
+884
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. use "obligations.dta", clear
+
+. 
+end of do-file
+
+. count
+  884
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. use "disbursements.dta", clear
+
+. count
+  1,533
+
+. scalar disb_N = r(N)
+
+. 
+. use "obligations.dta", clear
+
+. count
+  884
+
+. scalar ob_N = r(N)
+
+. display ob_N + disb_N
+2417
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. scalar dir
+      ob_N =        884
+    disb_N =       1533
+
+. display ob_N + disb_N
+2417
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. append using "disbursements.dta", gen(data_source)
+
+. tab data_source, mi
+
+data_source |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |        884       36.57       36.57
+          1 |      1,533       63.43      100.00
+------------+-----------------------------------
+      Total |      2,417      100.00
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. label define fisc_type 0 "obligations" 1 "disbursements"
+
+. label values data_source fisc_type 
+
+. count
+  2,417
+
+. clear
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. use "StataTrainingClean.dta", clear
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. sum
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+  fiscalyear |      2,417    2011.329    1.530527       2007       2014
+         qtr |      2,322    2.578381    1.148259          1          4
+fiscalyear~e |          0
+     account |          0
+      agency |          0
+-------------+---------------------------------------------------------
+operatingu~t |          0
+benefiting~y |          0
+    category |          0
+      sector |          0
+      amount |          0
+-------------+---------------------------------------------------------
+       spent |      2,407    2.171756    15.13846    -7.6169   501.9166
+      spent2 |      2,407     2171756    1.51e+07   -7616900   5.02e+08
+  notCountry |      2,417     .191146    .3932852          0          1
+
+. sum spent, detail 
+
+                            Spent
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%    -.3607914        -7.6169
+ 5%     -.004491          -6.69
+10%      .000068       -5.42145       Obs               2,407
+25%     .0254098      -4.825231       Sum of Wgt.       2,407
+
+50%     .2137813                      Mean           2.171756
+                        Largest       Std. Dev.      15.13846
+75%     .9163505       154.5814
+90%            3        208.985       Variance        229.173
+95%      6.01795       297.7359       Skewness       21.12665
+99%     28.62951       501.9166       Kurtosis       584.6251
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. bysort fiscalyear: sum spent
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2007
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       spent |          1    .0220026           .   .0220026   .0220026
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2008
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       spent |          1     134.585           .    134.585    134.585
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2009
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       spent |        393    1.215735    3.312959      -6.69   25.83019
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2010
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       spent |        401    2.245192    10.75151      -3.08    122.407
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2011
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       spent |        451    2.116126     10.5945         -2   154.5814
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2012
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       spent |        464    3.715323    28.00194  -4.639095   501.9166
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2013
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       spent |        564    1.420509    9.937029    -7.6169    208.985
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2014
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       spent |        132    1.782233    9.713572  -.2586957   106.1701
+
+
+. bysort fiscalyear: sum spent if inlist("USAID", agency), d
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2007
+
+                            Spent
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%     .0220026       .0220026
+ 5%     .0220026              .
+10%     .0220026              .       Obs                   1
+25%     .0220026              .       Sum of Wgt.           1
+
+50%     .0220026                      Mean           .0220026
+                        Largest       Std. Dev.             .
+75%     .0220026              .
+90%     .0220026              .       Variance              .
+95%     .0220026              .       Skewness              .
+99%     .0220026       .0220026       Kurtosis              .
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2008
+
+                            Spent
+-------------------------------------------------------------
+no observations
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2009
+
+                            Spent
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%    -.0890967          -6.69
+ 5%    -9.87e-06      -4.825231
+10%     .0019869      -.5763986       Obs                 380
+25%     .0294603      -.0890967       Sum of Wgt.         380
+
+50%     .2046317                      Mean           1.152452
+                        Largest       Std. Dev.      3.123834
+75%     .8591579       17.47528
+90%     2.960369       18.49886       Variance       9.758339
+95%     5.298716         22.074       Skewness       4.570973
+99%     17.47528       25.83019       Kurtosis       27.64181
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2010
+
+                            Spent
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%    -.0825301          -3.08
+ 5%    -.0008629      -.1555388
+10%      .000411      -.1332148       Obs                 375
+25%     .0209095      -.0825301       Sum of Wgt.         375
+
+50%     .2212105                      Mean           2.139053
+                        Largest       Std. Dev.      10.47625
+75%     .9102859       30.33898
+90%     3.052856       98.63298       Variance       109.7518
+95%     7.403542       113.3203       Skewness       9.514566
+99%     30.33898        122.407       Kurtosis       100.2549
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2011
+
+                            Spent
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%      -.17613             -2
+ 5%     -.002776          -.248
+10%      .000025      -.2342066       Obs                 428
+25%     .0176297            -.2       Sum of Wgt.         428
+
+50%     .2159387                      Mean           2.212014
+                        Largest       Std. Dev.      10.86725
+75%     .9572554       42.01596
+90%     3.118599       48.09723       Variance       118.0972
+95%     7.936803        134.811       Skewness       11.17775
+99%     34.80169       154.5814       Kurtosis       144.2981
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2012
+
+                            Spent
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%    -.1029548      -4.639095
+ 5%    -.0016073       -.958923
+10%     .0002262            -.2       Obs                 422
+25%      .033308        -.10304       Sum of Wgt.         422
+
+50%      .223268                      Mean           2.067312
+                        Largest       Std. Dev.       7.96222
+75%     1.259455             48
+90%     3.653265       49.68336       Variance       63.39695
+95%     7.430453           66.8       Skewness       9.061188
+99%     28.94898       112.6652       Kurtosis       106.0436
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2013
+
+                            Spent
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%    -.3607914      -2.852668
+ 5%     -.033446      -.9022455
+10%    -.0024933       -.403556       Obs                 392
+25%     .0109244      -.3607914       Sum of Wgt.         392
+
+50%     .1748246                      Mean           .7686441
+                        Largest       Std. Dev.      1.935026
+75%      .709585       8.870124
+90%     2.261913       13.02041       Variance       3.744326
+95%     3.741494       15.64618       Skewness       6.280351
+99%     8.870124       22.70937       Kurtosis       57.84819
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> fiscalyear = 2014
+
+                            Spent
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%    -.2586957      -.2586957
+ 5%    -.0095786      -.0702099
+10%     -.000593       -.020496       Obs                  83
+25%     .0161056      -.0141936       Sum of Wgt.          83
+
+50%     .1866794                      Mean            1.41272
+                        Largest       Std. Dev.      4.022592
+75%     1.168957        6.01795
+90%     3.010352       10.57392       Variance       16.18125
+95%         5.86       13.69908       Skewness       5.818689
+99%     31.82208       31.82208       Kurtosis       41.77603
+
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. tab fiscalyear agency, mi
+
+           |                                               Agency
+FiscalYear |       DOD        DOS        IAF        MCC  Peace C..   Treasury      USADF      USAID       USDA |     Total
+-----------+---------------------------------------------------------------------------------------------------+----------
+      2007 |         0          0          0          0          0          0          0          1          0 |         1 
+      2008 |         0          0          0          0          0          1          0          0          0 |         1 
+      2009 |         0          0          5          0          0          2          6        381          0 |       394 
+      2010 |         0          0          7          0         12          1          6        377          0 |       403 
+      2011 |         0          0          5          0         12          3          3        432          0 |       455 
+      2012 |         0         10          3          0         21          4          4        423          0 |       465 
+      2013 |         0          4          5        141         15          4          3        392          2 |       566 
+      2014 |        24          1          2          0         21          0          1         83          0 |       132 
+-----------+---------------------------------------------------------------------------------------------------+----------
+     Total |        24         15         27        141         81         15         23      2,089          2 |     2,417 
+
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. tab fiscalyear, sum(spent) means
+
+            | Summary of
+            |    Spent
+ FiscalYear |        Mean
+------------+------------
+       2007 |   .02200264
+       2008 |   134.58496
+       2009 |   1.2157354
+       2010 |   2.2451917
+       2011 |   2.1161262
+       2012 |   3.7153234
+       2013 |   1.4205091
+       2014 |   1.7822329
+------------+------------
+      Total |   2.1717564
+
+. tab fiscalyear, sum(spent)
+
+            |          Summary of Spent
+ FiscalYear |        Mean   Std. Dev.       Freq.
+------------+------------------------------------
+       2007 |   .02200264           0           1
+       2008 |   134.58496           0           1
+       2009 |   1.2157354   3.3129589         393
+       2010 |   2.2451917   10.751505         401
+       2011 |   2.1161262   10.594496         451
+       2012 |   3.7153234   28.001944         464
+       2013 |   1.4205091   9.9370291         564
+       2014 |   1.7822329   9.7135725         132
+------------+------------------------------------
+      Total |   2.1717564   15.138462       2,407
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. tab agency, gen(agency_flag)
+
+             Agency |      Freq.     Percent        Cum.
+--------------------+-----------------------------------
+                DOD |         24        0.99        0.99
+                DOS |         15        0.62        1.61
+                IAF |         27        1.12        2.73
+                MCC |        141        5.83        8.56
+        Peace Corps |         81        3.35       11.92
+           Treasury |         15        0.62       12.54
+              USADF |         23        0.95       13.49
+              USAID |      2,089       86.43       99.92
+               USDA |          2        0.08      100.00
+--------------------+-----------------------------------
+              Total |      2,417      100.00
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. tabsort agency, sum(spent) so(mean)
+
+            |          Summary of Spent
+     Agency |        Mean   Std. Dev.       Freq.
+------------+------------------------------------
+        DOS |   62.483729   144.23886          15
+   Treasury |   16.363234   37.935055          15
+        DOD |    4.756706    21.61229          24
+        MCC |   2.7437354   18.072078         139
+      USAID |   1.6712207   7.7632464       2,081
+       USDA |   .71251595   .27912922           2
+      USADF |   .67494948   2.1289512          23
+  Peace Cor |    .5927542   .64411451          81
+        IAF |   .23707015   .21286984          27
+------------+------------------------------------
+      Total |   2.1717564   15.138462       2,407
+
+. tab agency, sum(spent)
+
+                   |          Summary of Spent
+            Agency |        Mean   Std. Dev.       Freq.
+-------------------+------------------------------------
+               DOD |    4.756706    21.61229          24
+               DOS |   62.483729   144.23886          15
+               IAF |   .23707015   .21286984          27
+               MCC |   2.7437354   18.072078         139
+       Peace Corps |    .5927542   .64411451          81
+          Treasury |   16.363234   37.935055          15
+             USADF |   .67494948   2.1289512          23
+             USAID |   1.6712207   7.7632464       2,081
+              USDA |   .71251595   .27912922           2
+-------------------+------------------------------------
+             Total |   2.1717564   15.138462       2,407
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. tabsort agency fiscalyear
+
+            |                                       FiscalYear
+     Agency |      2013       2012       2011       2010       2009       2014       2007       2008 |     Total
+------------+----------------------------------------------------------------------------------------+----------
+      USAID |       392        423        432        377        381         83          1          0 |     2,089 
+        MCC |       141          0          0          0          0          0          0          0 |       141 
+Peace Corps |        15         21         12         12          0         21          0          0 |        81 
+        IAF |         5          3          5          7          5          2          0          0 |        27 
+        DOD |         0          0          0          0          0         24          0          0 |        24 
+      USADF |         3          4          3          6          6          1          0          0 |        23 
+        DOS |         4         10          0          0          0          1          0          0 |        15 
+   Treasury |         4          4          3          1          2          0          0          1 |        15 
+       USDA |         2          0          0          0          0          0          0          0 |         2 
+------------+----------------------------------------------------------------------------------------+----------
+      Total |       566        465        455        403        394        132          1          1 |     2,417 
+
+
+. tabsort category, sum(spent) sort (spent)
+
+            |          Summary of Spent
+   Category |        Mean   Std. Dev.       Freq.
+------------+------------------------------------
+    Missing |   6.7722268   48.153285         149
+  Multi-Sec |   4.7676435   20.674787          55
+  Education |   3.3497407   14.927056         169
+  Economic  |   2.2603739   12.612496         397
+     Health |   2.5166118   10.860611         462
+  Humanitar |    2.660461   9.9091297         175
+  Democracy |   .86232319   3.1592994         331
+  Program M |   .88474447   2.6738027         475
+  Peace And |   .73567216   2.6492001         116
+  Environme |    .9408328   1.5564635          78
+------------+------------------------------------
+      Total |   2.1717564   15.138462       2,407
+
+. 
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. tabstat spent, by(fiscalyear) stat(mean median sd n)
+
+Summary for variables: spent
+     by categories of: fiscalyear (FiscalYear)
+
+fiscalyear |      mean       p50        sd         N
+-----------+----------------------------------------
+      2007 |  .0220026  .0220026         .         1
+      2008 |   134.585   134.585         .         1
+      2009 |  1.215735   .211934  3.312959       393
+      2010 |  2.245192  .2310116  10.75151       401
+      2011 |  2.116126  .1943747   10.5945       451
+      2012 |  3.715323   .223268  28.00194       464
+      2013 |  1.420509  .2116153  9.937029       564
+      2014 |  1.782233  .1639026  9.713572       132
+-----------+----------------------------------------
+     Total |  2.171756  .2137813  15.13846      2407
+----------------------------------------------------
+
+. tabstat spent, by(agency_flag8) stat(mean median sd n) nototal col(stat)
+
+Summary for variables: spent
+     by categories of: agency_flag8 (agency==USAID)
+
+agency_flag8 |      mean       p50        sd         N
+-------------+----------------------------------------
+           0 |  5.366894  .2335917    36.042       326
+           1 |  1.671221   .206975  7.763246      2081
+------------------------------------------------------
+
+. tabstat spent, by(agency_flag8) stat(mean median sd n)
+
+Summary for variables: spent
+     by categories of: agency_flag8 (agency==USAID)
+
+agency_flag8 |      mean       p50        sd         N
+-------------+----------------------------------------
+           0 |  5.366894  .2335917    36.042       326
+           1 |  1.671221   .206975  7.763246      2081
+-------------+----------------------------------------
+       Total |  2.171756  .2137813  15.13846      2407
+------------------------------------------------------
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. table fiscalyear qtr if inlist("USAID", agency), /*
+> */ c(mean spent sum spent sd spent) f(%9.2fc) 
+
+------------------------------------------
+FiscalYea |              QTR              
+r         |      1       2       3       4
+----------+-------------------------------
+     2007 |                           0.02
+          |                           0.02
+          |                               
+          | 
+     2009 |   0.75    0.97    0.82    1.66
+          |  58.32   86.64   59.37  233.60
+          |   1.93    2.97    2.48    3.91
+          | 
+     2010 |   1.03    0.76    2.28    3.65
+          |  76.44   64.95  212.03  448.72
+          |   3.98    1.61   12.20   14.44
+          | 
+     2011 |   2.83    1.02    1.45    2.99
+          | 280.65   96.43  138.11  407.19
+          |  16.12    3.08    4.28   12.64
+          | 
+     2012 |   2.09    2.30    1.69    2.12
+          | 219.79  207.06  138.57  306.99
+          |   7.40   11.92    4.54    6.80
+          | 
+     2013 |   0.62    0.66    0.77    0.95
+          |  43.28   75.01   66.52  114.51
+          |   1.91    2.27    1.27    2.03
+          | 
+     2014 |           1.41                
+          |         117.26                
+          |           4.02                
+------------------------------------------
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. bysort agency: table fiscalyear qtr, c(sum spent) f(%9.2fc)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> agency = DOD
+no observations
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> agency = DOS
+
+------------------------------------------
+FiscalYea |              QTR              
+r         |      1       2       3       4
+----------+-------------------------------
+     2012 | 516.35   14.08  298.20    7.61
+     2013 |           6.49   94.12    0.24
+     2014 |           0.16                
+------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> agency = IAF
+no observations
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> agency = MCC
+
+------------------------------------------
+FiscalYea |              QTR              
+r         |      1       2       3       4
+----------+-------------------------------
+     2013 |  77.55   32.86  227.31   43.66
+------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> agency = Peace Corps
+
+------------------------
+FiscalYea |     QTR     
+r         |     1      2
+----------+-------------
+     2010 | 11.89       
+     2011 |  5.37       
+     2012 | 14.14       
+     2013 | 13.34       
+     2014 |  1.55   1.72
+------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> agency = Treasury
+no observations
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> agency = USADF
+no observations
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> agency = USAID
+
+------------------------------------------
+FiscalYea |              QTR              
+r         |      1       2       3       4
+----------+-------------------------------
+     2007 |                           0.02
+     2009 |  58.32   86.64   59.37  233.60
+     2010 |  76.44   64.95  212.03  448.72
+     2011 | 280.65   96.43  138.11  407.19
+     2012 | 219.79  207.06  138.57  306.99
+     2013 |  43.28   75.01   66.52  114.51
+     2014 |         117.26                
+------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+-> agency = USDA
+
+----------------------
+FiscalYea |    QTR    
+r         |    1     3
+----------+-----------
+     2013 | 0.91  0.52
+----------------------
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. egen tot_spent = total(spent), by(qtr fiscalyear agency fiscalyeartype)
+
+. twoway(connected tot_spent qtr, sort) if agency == "USAID", by(fiscalyear) scheme(s1color)
+
+. twoway(connected tot_spent qtr, sort) if agency == "USAID" & fiscalyeartype == "Obligations" /*
+> */, by(fiscalyear) scheme(s1color)
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. twoway(connected tot_spent qtr, sort) if agency == "USAID" & fiscalyeartype == "Disbursements" /*
+> */, by(fiscalyear) scheme(s1color)
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. twoway(connected tot_spent qtr if agency == "USAID" & fiscalyeartype == "Obligations", sort)/*
+> */ (connected tot_spent qtr if agency == "USAID" & fiscalyeartype == "Disbursements", sort) /*
+> */, by(fiscalyear) scheme(s1color)
+
+. 
+end of do-file
+
+. twoway (scatter spent2 spent), legend(order(1 "Obligations" 2 "Disbursements")) by(fiscalyeartype)
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. twoway(connected tot_spent qtr if agency == "USAID" & fiscalyeartype == "Obligations", sort)/*
+> */ (connected tot_spent qtr if agency == "USAID" & fiscalyeartype == "Disbursements", sort) /*
+> */, by(fiscalyear) scheme(s1color) legend(order(1 "Obligations" 2 "Disbursements")) by(fiscalyeartype)
+
+. 
+. 
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. twoway(connected tot_spent qtr if agency == "USAID" & fiscalyeartype == "Obligations", sort)/*
+> */ (connected tot_spent qtr if agency == "USAID" & fiscalyeartype == "Disbursements", sort) /*
+> */, by(fiscalyear) scheme(s1color) legend(order(1 "Obligations" 2 "Disbursements"))
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. table agency fiscalyear, /*
+> */ c(mean spent count spent) f(%9.2fc) row col
+
+------------------------------------------------------------------------------------
+            |                               FiscalYear                              
+     Agency |   2007    2008    2009    2010    2011    2012    2013    2014   Total
+------------+-----------------------------------------------------------------------
+        DOD |                                                           4.76    4.76
+            |                                                             24      24
+            | 
+        DOS |                                          83.62   25.21    0.16   62.48
+            |                                             10       4       1      15
+            | 
+        IAF |                   0.44    0.23    0.10    0.15    0.25    0.19    0.24
+            |                      5       7       5       3       5       2      27
+            | 
+        MCC |                                                   2.74            2.74
+            |                                                    139             139
+            | 
+Peace Corps |                           0.99    0.45    0.67    0.89    0.16    0.59
+            |                             12      12      21      15      21      81
+            | 
+   Treasury |         134.58   17.35   73.30    0.32    0.15    0.32           16.36
+            |              1       2       1       3       4       4              15
+            | 
+      USADF |                   0.50    1.89    0.27    0.02    0.10    0.03    0.67
+            |                      6       6       3       4       3       1      23
+            | 
+      USAID |   0.02            1.15    2.14    2.21    2.07    0.77    1.41    1.67
+            |      1             380     375     428     422     392      83   2,081
+            | 
+       USDA |                                                   0.71            0.71
+            |                                                      2               2
+            | 
+      Total |   0.02  134.58    1.22    2.25    2.12    3.72    1.42    1.78    2.17
+            |      1       1     393     401     451     464     564     132   2,407
+------------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. webuse set https://github.com/GeoCenter/StataTraining/tree/master/Day2/Data
+(prefix now "https://github.com/GeoCenter/StataTraining/tree/master/Day2/Data")
+
+. use hh
+no; data in memory would be lost
+r(4);
+
+. use hh, clear
+
+. webuse hh
+file https://github.com/GeoCenter/StataTraining/tree/master/Day2/Data/hh.dta not Stata format
+r(610);
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. cd "C:\Users\t\Documents\Github\StataTraining\Day2\Data"
+unable to change to C:\Users\t\Documents\Github\StataTraining\Day2\Data
+r(170);
+
+end of do-file
+
+r(170);
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. cd "C:\Users\Tim\Documents\Github\StataTraining\Day2\Data"
+C:\Users\Tim\Documents\Github\StataTraining\Day2\Data
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. use StataTrainingClean.dta, clear
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. keep if regexm(benefitingcountry, "(Afghanistan|Geogria|Kenya|Pakistan|Senegal)") ///
+>  & inlist("Disbursements", fiscalyeartype)
+(2,315 observations deleted)
+
+. 
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. cd "C:\Users\Tim\Documents\Github\StataTraining\Day2\Data"
+C:\Users\Tim\Documents\Github\StataTraining\Day2\Data
+
+. 
+. * Create a merge dataset for the homework
+. use StataTrainingClean.dta, clear
+
+. 
+. keep if regexm(benefitingcountry, "(Afghanistan|Geogria|Kenya|Pakistan|Senegal)") ///
+>  & inlist("Disbursements", fiscalyeartype)
+(2,315 observations deleted)
+
+. 
+. * Create unique IDs for each country -- map them to WB IDs
+. encode benefitingcountry, gen(country_id)
+
+. label define country_id 3 "Kenya" 4 "Pakistan" 5 "Senegal", modify
+
+. recode country_id (2 = 3)(3 = 4)(4 = 5)
+(country_id: 78 changes made)
+
+. tab country_id
+
+BenefitingC |
+     ountry |      Freq.     Percent        Cum.
+------------+-----------------------------------
+Afghanistan |         24       23.53       23.53
+      Kenya |         30       29.41       52.94
+   Pakistan |         22       21.57       74.51
+    Senegal |         26       25.49      100.00
+------------+-----------------------------------
+      Total |        102      100.00
+
+. 
+. drop notCountry spent2 amount account operatingunit
+
+. 
+. compress
+  variable country_id was long now byte
+  variable agency was str19 now str11
+  variable benefitingcountry was str59 now str11
+  variable sector was str51 now str44
+  (6,732 bytes saved)
+
+. 
+. * Collapse down by category, then check for uniqueness
+. collapse (mean) spent (sum) spent_total = spent (count) count = spent ///
+>  if inlist("USAID", agency), ///
+>  by(fiscalyear category country_id agency)
+
+. 
+.  * Create a year variable to merge with
+. ren fiscalyear year
+
+. order country_id year
+
+. sort country_id category year
+
+. 
+. * Clean up the variable labels 
+. la var spent "average disbursement"
+
+. la var spent_total "total disbursements"
+
+. la var count "number of records"
+
+. 
+. * Create country + year id variable to enable a proper merge
+. sort country_id category year
+
+. gen loc_time_id = real( string(country_id) + string(year) )
+
+. 
+. saveold "FA_merge.dta", replace version(12)
+(saving in Stata 12 format, which can be read by Stata 11 or 12)
+file FA_merge.dta saved
+
+. 
+end of do-file
+
+. do c:\users\tim\appdata\local\temp\st_stata_temp.tmp
+
+. /*-------------------------------------------------------------------------------
+> # Name:         StataTrainingDay2
+> # Purpose:      Day two homework solution
+> # Author:       Tim Essam, Ph.D.
+> # Created:      2015/12/28
+> # Owner:        Tim Essam - USAID GeoCenter | OakStream Systems, LLC
+> # License:      MIT License
+> # Ado(s):       see below
+> #-------------------------------------------------------------------------------
+> */
+. 
+. global pathdata "C:\Users\Tim\Documents\Github\StataTraining\Day2\Data"
+
+. global pathlog "C:\Users\Tim\Documents\Github\StataTraining\Day2"
+
+. global path "C:\Users\Tim\Documents\Github\StataTraining\Day2\"
+
+. 
+. cd $path
+C:\Users\Tim\Documents\Github\StataTraining\Day2
+
+. capture log close
