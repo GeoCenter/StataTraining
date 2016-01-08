@@ -2,7 +2,7 @@
 ** INSTRUCTORS: AARON CHAFETZ, TIM ESSAM, LAURA HUGHES  
 ** DAY 1 DO FILE  (1/8/16)
 ** CREATED: 12/15/15
-** MODIFIED: 12/20/15
+** MODIFIED: 1/7/16
 
 /* Notes on Do files
 Stata reads each line as a command
@@ -33,6 +33,9 @@ Before starting, you should setup your file/folder structure for this
 	you have sperate folders for your data, documents, and do files
 */
 
+// PART I - Overview of Data Analysis and Using Stata//
+	* See Day 1 Presentation *
+	
 // PART II - Importind data and basic commands//
 
 *Let's start by looking at the help documentation for importing 
@@ -50,9 +53,14 @@ Before starting, you should setup your file/folder structure for this
 * with that data imported, we can see the variables listed to the right
 * we can browse the data in a way that looks like Excel
 	browse
-
 /*numbers are colored black; numbers with variable labels are stored as blue;
 	and string (or text) is stored as red */
+// HANDS ON //
+*try importing data, viewing the data, and then clearing it
+*source - https://github.com/fivethirtyeight/data/tree/master/bad-drivers
+
+*when returing to our original dataset, we have to open it back up
+use FAD.dta
 *we can get a quick description of our variables
 	describe
 *we can quickly sort and then list our the top expenditures in 2013
@@ -81,9 +89,30 @@ Before starting, you should setup your file/folder structure for this
 		
 // PART III - Group Exercise I //
 
+// PART IV - Exploratory Visualizatons //
+/*often good to get a sense of the data through visualising it
+	Stata has a lot of built in graphing feature that make it easy
+	to create graphs quickly and reproduce them */
+*lets start with a histogram to see the distribution of obligations in 2012
+	hist spent if fiscalyear==2012 & fiscalyeartype=="Obligations", frequency
+*or we could do a bar
+	graph bar (sum) spent if fiscalyear==2012 & fiscalyeartype=="Obligations", over(agency)
+*since we have time series, it would be good to look at spending over time
+	preserve
+	collapse (sum) spent, by(fiscalyear agency)
+	sort fiscalyear
+	twoway connected spent fiscalyear if agency=="USAID" || ///
+		connected spent fiscalyear if agency=="MCC"
+	restore
+* or a scatter plot
+sysuse census.dta
+// HANDS ON //
+*play with the sysuse auto dataset. 
+*what relationships can you find in the data through exploratory analysis?
 
 // PART IV - Working with variables//
-
+*open FAD back up
+	use FAD.dta
 *we can create a new variable that shows amount in millions 
 	gen spent_mil = spent/1000000
 *we can label the variable 
