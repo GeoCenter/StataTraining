@@ -32,7 +32,7 @@ input x1	y1	x2	y2	x3	y3	x4	y4
 7.0	4.82	7.0	7.26	7.0	6.42	8.0	7.91
 5.0	5.68	5.0	4.74	5.0	5.73	8.0	6.89
 end
-save "quartet.dta", replace
+saveold "quartet.dta", replace version(12)
 
  * What are the means for each data set?
  sum x* 
