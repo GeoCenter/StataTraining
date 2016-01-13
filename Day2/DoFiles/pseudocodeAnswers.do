@@ -109,7 +109,7 @@ gen byte isUSAIDdisburse = (paymentType == "Disbursements") & (agency == "USAID"
 // 6 ---------------------------------------------------------------------------
 // Calculate the total spent per year
 egen totSpent = sum(spentAmt), by(fiscalyear)
-la var totSpent "total spending by fiscal year"
+label var totSpent "total spending by fiscal year"
 
 /* PATH 2
 egen totSpent = sum(spentAmt) if isUSAIDdisburse == 1, by(fiscalyear)
@@ -118,13 +118,13 @@ egen totSpent = sum(spentAmt) if isUSAIDdisburse == 1, by(fiscalyear)
 // Visually check that this looks right. We'll have to sort the data before it makes sense:
 sort fiscalyear category
 clist
-*browse
+// browse
 
 
 // 7 ---------------------------------------------------------------------------
 // Calculate the proportion for each category
 gen shareByCat = spentAmt / totSpent
-la var shareByCat "spending share by category"
+label var shareByCat "spending share by category"
 
 /* Note: here PATH 1 and PATH 2 converge; since totSpent has missing values
 for the rows we want to ignore, it'll generate another missing value for the 
@@ -151,7 +151,8 @@ egen yearTot = total(shareByCat), by(fiscalyear)
 If one of the values doesn't check out, the .do file will stop and give us
 an ugly red error. */
 assert yearTot == 1
-*assert yearTot == 1.1
+
+// assert yearTot == 1.1  // This would break the code, since every value is 1.
 
 
 // 9 ---------------------------------------------------------------------------
@@ -163,10 +164,10 @@ twoway (bar shareByCat fiscalyear), by(category)
 
 
 // Note: you can plot everything on top of each other, but it quickly becomes hard to see.
-* Ecode the category variable to be a numeric
-* Declare data to be a panel and use a panel line plot (spaghetti graph)
+// Ecode the category variable to be a numeric
+// Declare data to be a panel and use a panel line plot (spaghetti graph)
 encode category, gen(cat_enc)
-la var cat_enc "category variable encoded"
+label var cat_enc "category variable encoded"
 xtset cat_enc fiscalyear
 xtline shareByCat if fiscalyear >2007, overlay legend(size(small)) scheme(s1color)
 
