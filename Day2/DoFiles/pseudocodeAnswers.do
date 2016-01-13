@@ -34,6 +34,7 @@ webuse "pseudocoding_data.dta", clear
 // Check if the spent data are the correct format.
 // If they're not numbers, correct them.
 
+// describe
 // confirm numeric variable spent
 /* Note: this will throw an error which breaks your .do file.  Which is good, 
 since it alerts you to a problem. But bad if your subsequent code fixes the error! */
@@ -44,16 +45,22 @@ codebook spent
 
 // Convert the strings to numbers
 gen spentAmt = real(spent)
+// Double check that you have no missing values
+codebook spentAmt 
 
-/* Note: you could, in theory, use the function 'replace' to write over the 
+/* Note: you could, in theory, use the function 'replace' or 'destring' to write over the 
 variable spent. However-- you can't replace a variable with one of a different
 type (going from a string to a float). More importantly, that means you couldn't
 visually check that the conversion looked right.*/
 
 
 // 3 ---------------------------------------------------------------------------
-// Change spentAmt to be millions of USD.  In this case, we'll just replace the var.
-replace spentAmt = spentAmt / 1e6 // scientific notation is sometimes easier. 1e6 = 1*10^6 = 1,000,000
+// Change spentAmt to be millions of USD.  In this case, we'll create a scalar that 
+// we can use to define the amount by which we are deflating the value.
+scalar deflator = 1000000
+replace spentAmt = spentAmt / deflator
+
+// Can also use "scalar deflator2 = 1e6" - scientific notation is sometimes easier. 1e6 = 1*10^6 = 1,000,000
 
 // 4 ---------------------------------------------------------------------------
 // Change the variable names to something more meaningful
@@ -94,7 +101,7 @@ In the rest of the code, I'll refer to this as PATH 2 to show the alternate path
 So you can choose your own adventure!
 
 Okay, the code for this step in PATH 2:
-gen byte isUSAIDdisburse = paymentType == "Disbursements" & agency == "USAID"
+gen byte isUSAIDdisburse = (paymentType == "Disbursements") & (agency == "USAID")
 
 */
 
@@ -102,19 +109,22 @@ gen byte isUSAIDdisburse = paymentType == "Disbursements" & agency == "USAID"
 // 6 ---------------------------------------------------------------------------
 // Calculate the total spent per year
 egen totSpent = sum(spentAmt), by(fiscalyear)
+la var totSpent "total spending by fiscal year"
 
 /* PATH 2
 egen totSpent = sum(spentAmt) if isUSAIDdisburse == 1, by(fiscalyear)
 */
 
 // Visually check that this looks right. We'll have to sort the data before it makes sense:
-gsort fiscalyear category
-browse
+sort fiscalyear category
+clist
+*browse
 
 
 // 7 ---------------------------------------------------------------------------
 // Calculate the proportion for each category
 gen shareByCat = spentAmt / totSpent
+la var shareByCat "spending share by category"
 
 /* Note: here PATH 1 and PATH 2 converge; since totSpent has missing values
 for the rows we want to ignore, it'll generate another missing value for the 
@@ -134,24 +144,32 @@ that it is less likely to miss an error, and it's simple to check a ton of data
 all at the same time.
 */
 
-// First, we'll generate the sum for each share by year.
-egen yearTot = sum(shareByCat), by(fiscalyear)
+// First, we'll generate the total for each share by year.
+egen yearTot = total(shareByCat), by(fiscalyear)
 
 /* Then we'll check if the total per year is 1.
 If one of the values doesn't check out, the .do file will stop and give us
 an ugly red error. */
 assert yearTot == 1
+*assert yearTot == 1.1
 
 
 // 9 ---------------------------------------------------------------------------
 // Generate a small multiples plot of each category
-twoway scatter shareByCat fiscalyear, by(category)
+twoway (scatter shareByCat fiscalyear, sort), by(category)
+twoway (connected shareByCat fiscalyear, sort), by(category)
 
-twoway bar shareByCat fiscalyear, by(category)
+twoway (bar shareByCat fiscalyear), by(category)
+
 
 // Note: you can plot everything on top of each other, but it quickly becomes hard to see.
-gsort fiscalyear category
-twoway scatter shareByCat fiscalyear,  connect(l)
+* Ecode the category variable to be a numeric
+* Declare data to be a panel and use a panel line plot (spaghetti graph)
+encode category, gen(cat_enc)
+la var cat_enc "category variable encoded"
+xtset cat_enc fiscalyear
+xtline shareByCat if fiscalyear >2007, overlay legend(size(small)) scheme(s1color)
+
 
 // 10 --------------------------------------------------------------------------
 // Save results
