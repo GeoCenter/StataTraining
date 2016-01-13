@@ -156,7 +156,7 @@ reshape wide
 
 * ------------------------------------------------- *
 * ### Reshape Exercise  & Solution ###
-use "wb_gdp_wide.dta", clear
+webuse "wb_gdp_wide.dta", clear
 
 /* How are data messy?
 1) Columns contain variables
@@ -246,21 +246,21 @@ saveold "hh3.dta", replace version(12)
 
 
 * -------------------------------------------------- *
-/* --- Appending ---*
+/* ### Appending ###
 Stacking two datasets with common variables. Could be used to update a dataset. 
 Use scalars to keep track of total expected observations, after append */
-use "disbursements.dta", clear
+webuse "disbursements.dta", clear
 count
 scalar disb_N = r(N)
 
-use "obligations.dta", clear
+webuse "obligations.dta", clear
 count
 scalar ob_N = r(N)
 scalar dir
 display ob_N + disb_N
 
 * Append two datasets together
-append using "disbursements.dta", gen(data_source)
+append using "$dataurl/disbursements.dta", gen(data_source)
 tab data_source, mi
 
 *label data source values
@@ -273,7 +273,7 @@ clear
 * -------------------------------------------------- *
 * ### Summarizing Data ###
 * Review previous commands introduced to students
-use "StataTrainingClean.dta", clear
+webuse "StataTrainingClean.dta", clear
 
 * === Summarise ===*
 * - summary stats for all variables
@@ -319,7 +319,8 @@ table fiscalyear qtr if inlist("USAID", agency), /*
 bysort agency: table fiscalyear qtr, c(sum spent) f(%9.2fc)
 
 egen tot_spent = total(spent), by(qtr fiscalyear agency fiscalyeartype)
-twoway(connected tot_spent qtr, sort) if agency == "USAID", by(fiscalyear) scheme(s1color)
+
+*twoway(connected tot_spent qtr, sort) if agency == "USAID", by(fiscalyear) scheme(s1color)
 twoway(connected tot_spent qtr if agency == "USAID" & fiscalyeartype == "Obligations", sort)/*
 */ (connected tot_spent qtr if agency == "USAID" & fiscalyeartype == "Disbursements", sort) /*
 */, by(fiscalyear) scheme(s1color) legend(order(1 "Obligations" 2 "Disbursements"))
@@ -329,7 +330,7 @@ table agency fiscalyear, /*
 
 * -------------------------------------------------- *
 * ### Collapsing ###
-use "StataTrainingClean.dta", clear 
+webuse "StataTrainingClean.dta", clear 
 keep if fiscalyeartype == "Disbursements"
 order agency fiscalyear category spent
 
@@ -357,7 +358,7 @@ twoway(connected spent fiscalyear, `lineopt' )/*
 * --------------------------------------------
 * === Collapsing Solution === *
 * Load data
-use "StataTrainingClean.dta", clear
+webuse "StataTrainingClean.dta", clear
 
 * Keep only observations from agency == USAID
 keep if inlist(agency, "USAID") & fiscalyeartype == "Disbursements"
@@ -401,7 +402,7 @@ legend(order(1 "Obligations" 2 "Disbursements") nobox region(fcolor(none) lcolor
 * -------------------------------------------------- *
 * === Estout ===*
 cls
-use "StataTrainingClean.dta", clear
+webuse "StataTrainingClean.dta", clear
 
 * Post results from the summary command to e(class) format
 estpost sum spent2 if inlist(fiscalyeartype, "Disbursements"), detail
@@ -427,7 +428,7 @@ esttab . using "disbursement_means2.txt", cells("`fmt1' `fmt2'") ///
 * -------------------------------------------------- *
 * === Estout Exercise === *
 cls
-use "StataTrainingClean.dta", clear
+webuse "StataTrainingClean.dta", clear
 estpost tabulate category fiscalyear if inrange(fiscalyear, 2009, 2013), nototal
 
 esttab using test.rtf, cell(b(fmt(0))) unstack noobs collabels(none) modelwidth(5) ///
