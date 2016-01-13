@@ -127,9 +127,12 @@ la var gdpType "type of gdp, growth is overall growth"
 * merge b/c neither dataset will have a unique id!
 */
 
-
+* Load in the foreign assistance data and look at it's structure? What do you notice?
+* Is there a unique id? No, so it will be a many to 1 merge at this point
 cls
 use "$dataurl/FA_merge.dta", clear
+clist
+
 
 * Merge with WB data so we can look at indicators alongside foreign assistance data
 merge m:1 loc_time_id using "$dataurl/wb_indicators_long.dta"
