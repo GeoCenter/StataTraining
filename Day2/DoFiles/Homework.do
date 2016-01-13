@@ -137,6 +137,13 @@ clist
 * Merge with WB data so we can look at indicators alongside foreign assistance data
 merge m:1 loc_time_id using "$dataurl/wb_indicators_long.dta"
 
-log close
 
+* Pretty much finished, but you could go crazy and reshape one more time to stack all the gdp variables!
+ren(ag_gdp gdp_growth tax_gdp) (gdpag gdpgrowth gdptax)
+
+* Our unique variable combination (i) is loc_time_i + category
+* Our variable we want to create (j) is gdpType, this is to be filled with a string
+reshape long gdp@, i(loc_time_id category) j(gdpType, string)
+la var gdp "Gdp values"
+* Probably enough reshaping for today! How does gdp look compared to spending?
 
