@@ -1,5 +1,5 @@
 /*
-Part 2, Exercise 2: merging
+Part 2, Exercise 3: merging
 Fundamentals of Data Analysis and Visualization (using Stata)
 
 Laura Hughes, 13 January 2016, lhughes@usaid.gov
