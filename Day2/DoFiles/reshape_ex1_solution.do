@@ -38,10 +38,11 @@ table category year, c(mean disbursements mean obligations) row col
 * Finally, plot the two datasets. Use a few local macros to clean up graph a bit (advanced).
 local labopts "ylabel(, labsize(small) angle(horizontal)) xlabel(, labsize(vsmall)) ytitle(, size(vsmall)) xtitle(, size(vsmall))"
 local layout "by(category, rows(2)) subtitle(, size(tiny) fcolor("245 245 245") bexpand)"
-local lineopt "lcolor("102 194 165") mcolor("102 194 165") mlcolor("white") msize(medium) ylabel(, nogrid)"
+local lineopt1 "lcolor("171 221 165") mcolor("102 194 165") mlcolor("white") msize(medium) lpattern(solid) msymbol(circle)" 
+local lineopt2 "lcolor("253 174 97") mcolor("244 109 67") mlcolor("white") msize(medium) lpattern(solid)"
 local gopts "graphregion(fcolor(none) ifcolor(none))"
 
-twoway(connected disbursements year, sort)(connected obligations year, sort),/*
+twoway(connected disbursements year, sort `lineopt1')(connected obligations year, sort `lineopt2'),/*
 */ by(category, note("")) yscale(noline) `labopts' `layout' scheme(s1mono) `gopts'
 
 * Are the data really tidy? Could we combine obligated and disbursed into a spending category?
