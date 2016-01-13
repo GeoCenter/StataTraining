@@ -11,6 +11,10 @@
 clear
 capture log close
 
+webuse set "https://github.com/GeoCenter/StataTraining/raw/master/Day2/Data"
+global dataurl "https://github.com/GeoCenter/StataTraining/raw/master/Day2/Data/"
+
+
 * Path to be determined based on where users install zip
 capture log close
 log using "$pathlog\MessyDataExamples.log", replace
