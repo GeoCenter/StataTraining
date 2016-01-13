@@ -105,11 +105,11 @@ duplicates drop
 isid hid // Check is unique now
 
 // yippio!
-save "hh3.dta", replace // save for later use
+save "hh3_edited.dta", replace // save for later use
 
 // 4: Merge (for real) ---------------------------------------------------------
 webuse"ind2.dta", clear // reset ind2.dta to be the "master" file
- merge m:1 hid using "hh3.dta", gen(_merge)  // Not run; will --> error
+ merge m:1 hid using "hh3_edited.dta", gen(_merge)  // Not run; will --> error
 
 // 5: Check merge worked -------------------------------------------------------
 list
