@@ -88,6 +88,8 @@ rename (d2007 o2007)(disbursements2007 obligations2007)
 // 3: Reshape data -------------------------------------------------------------
 reshape long disbursements@ obligations@, i(category) j(year)
 
+clist // Check it looks right
+
 // OR: reshape long disbursements@ obligations@, i(cat_id) j(year)
 
 /* Note: this is a bit messy still. To make it even cleaner, we can reshape again (but first we need to rename)
