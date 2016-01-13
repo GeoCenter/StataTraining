@@ -138,7 +138,7 @@ input id gdp2014 gdp2015 cpc2014 cpc2015
 1 8.28 9.99 1 1
 2 9.10 4.05 0 0
 end
-saveold "gdp_cpd.dta", replace version(12)
+saveold "gdp_cpc.dta", replace version(12)
 
 clist, noo
 * Looks as if a variable (year) is stored in the name
@@ -194,6 +194,13 @@ input id cows value
 2 1 500
 end
 saveold "ind_ag.dta", replace version(12)
+
+clear
+input id age hid
+1 45 101
+2 20 101
+end
+saveold "ind_age.dta", replace version(12)
 
 clear
 input hid str4 income
