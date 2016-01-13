@@ -46,3 +46,9 @@ twoway(connected disbursements year, sort `lineopt1')(connected obligations year
 */ by(category, note("")) yscale(noline) `labopts' `layout' scheme(s1mono) `gopts'
 
 * Are the data really tidy? Could we combine obligated and disbursed into a spending category?
+* We could reshape 1 more time to make them fully tidy
+rename (disbursements obligations ) (spentDisb spentOblig)
+reshape long spent@, i(category year) j(spendingType, string)
+la var spendingType "Type of spending - obligated or disbursed"
+sort category spendingType year
+clist
