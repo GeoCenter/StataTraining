@@ -43,7 +43,9 @@ local lineopt2 "lcolor("253 174 97") mcolor("244 109 67") mlcolor("white") msize
 local gopts "graphregion(fcolor(none) ifcolor(none))"
 
 twoway(connected disbursements year, sort `lineopt1')(connected obligations year, sort `lineopt2'),/*
-*/ by(category, note("")) yscale(noline) `labopts' `layout' scheme(s1mono) `gopts'
+*/ by(category, note("")) yscale(noline) `labopts' `layout' scheme(s1mono) `gopts' /*
+*/ legend(order(1 "Disbursements" 2 "Obligations") nobox region(fcolor(none) lcolor(none)) ///
+ size(tiny) span)
 
 * Are the data really tidy? Could we combine obligated and disbursed into a spending category?
 * We could reshape 1 more time to make them fully tidy

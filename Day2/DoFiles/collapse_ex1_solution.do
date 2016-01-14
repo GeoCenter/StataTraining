@@ -36,8 +36,8 @@ inrange(fiscalyear, 2010, 2013), c(mean spent) format(%9.2fc)
 la var spent "Total spending (M USD)"
 * formatting graph
 * Can you plot or summarize aggregate spending now?
-local labopts "ylabel(, labsize(small) angle(horizontal)) xlabel(, labsize(vsmall)) ytitle(, size(vsmall)) xtitle(, size(vsmall))"
-local layout "subtitle(, size(tiny) fcolor("245 245 245") bexpand)"
+local labopts "ylabel(, labsize(small) angle(horizontal)) xlabel(, labsize(vsmall)) ytitle(, size(small)) xtitle(, size(small))"
+local layout "subtitle(, size(small) fcolor("245 245 245") bexpand)"
 local lineopt1 "lcolor("171 221 165") mcolor("102 194 165") mlcolor("white") msize(medium) lpattern(solid) msymbol(circle)" 
 local lineopt2 "lcolor("253 174 97") mcolor("244 109 67") mlcolor("white") msize(medium) lpattern(solid)"
 local gopts "graphregion(fcolor(none) ifcolor(none)) ylabel(, nogrid)"
@@ -46,7 +46,7 @@ local gopts "graphregion(fcolor(none) ifcolor(none)) ylabel(, nogrid)"
 twoway(connected spent qtr if fiscalyeartype == "Disbursements", sort `lineopt2') ///
 (connected spent qtr if fiscalyeartype == "Obligations", sort `lineopt1') ///
 if inlist(agency, "USAID") & inrange(fiscalyear, 2010, 2013), by(fiscalyear, note("")) ///
-legend(order(1 "Obligations" 2 "Disbursements") nobox region(fcolor(none) lcolor(none)) ///
+legend(order(1 "Disbursements" 2 "Obligations") nobox region(fcolor(none) lcolor(none)) ///
  size(tiny) span) subtitle(, size(vsmall)) ///
 `labopts' `layout' scheme(s1mono) `gopts'
 
