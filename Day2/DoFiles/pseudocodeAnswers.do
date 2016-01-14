@@ -176,3 +176,12 @@ xtline shareByCat if fiscalyear >2007, overlay legend(size(small)) scheme(s1colo
 // Save results
 save "shareByCat.dta", replace
 export excel "shareByCat.xls", firstrow(variables) replace
+
+// 11 Extra credit -------------------------------------------------------------
+// Which sector had the most spending in the timeframe?
+
+// Ignore the 2007 data, since it seems incomplete
+drop if fiscalyear < 2009
+
+// Health is the clear winner.
+tabstat spentAmt, by(category) stat(sum)
