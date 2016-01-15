@@ -30,6 +30,8 @@ bysort hid: gen id = _n
 clist
 
 * Now, we know that when id == 2 we want to remove these observations
+* What would happen if the income variable for hid number 4 was a different value
+* than missing? How could we fix this?
 drop if id == 2
 clist
 isid hid
@@ -44,7 +46,7 @@ tempfile temp1
 save "`temp1'"
 
 * Can also save to a local directory:
-saveold "C:\Users\t\Documents\GitHub\StataTraining\Day2\Data\merge_hw.dta
+saveold "C:/Users/t/Documents/GitHub/StataTraining/Day2/Data/merge_hw.dta"
 
 * Both datasets have a hid variable so it looks like we will be merging to that
 webuse "ind2.dta", clear
@@ -53,7 +55,6 @@ merge m:1 hid using "`temp1'"
 * Keep observations that appear in both datasets
 keep if _merge == 3
 clist
-
 
 * Alternative solution, using a stata file saved on your machine (here, I am pulling from repo).
 webuse "ind2.dta", clear

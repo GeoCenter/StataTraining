@@ -45,6 +45,8 @@ codebook spent
 
 // Convert the strings to numbers
 gen spentAmt = real(spent)
+
+// Can also use the destring command: destring spent, replace 
 // Double check that you have no missing values
 codebook spentAmt 
 
@@ -157,8 +159,8 @@ assert yearTot == 1
 
 // 9 ---------------------------------------------------------------------------
 // Generate a small multiples plot of each category
-twoway (scatter shareByCat fiscalyear, sort), by(category)
-twoway (connected shareByCat fiscalyear, sort), by(category)
+twoway(scatter shareByCat fiscalyear, sort), by(category)
+twoway(connected shareByCat fiscalyear, sort), by(category)
 
 twoway (bar shareByCat fiscalyear), by(category)
 
