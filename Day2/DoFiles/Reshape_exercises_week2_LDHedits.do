@@ -90,9 +90,10 @@ end
 
 * --- Question 1: Reshape (wide) the dataframe to create three new variables that contain
 * the values for the SeriesName variable. 
-* Hint: use the ", string" option for the j variable. Also, when reshaping wide
+* Hint 1: use the ", string" option for the j variable. Also, when reshaping wide
 * you do not need to use the "@" character, just the part of the variable name. 
-
+* Hint 2: when reshaping long --> wide your i variable (unique ID) is the variable
+* that will be unique only after reshaping.
 
 * --- Question 2: Rename the resulting variables and create a new variable called "year"
 * that takes the appropriate value of the year given in the original dataframe.
