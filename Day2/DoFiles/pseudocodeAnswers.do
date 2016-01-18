@@ -27,8 +27,14 @@ Laura Hughes, lhughes@usaid.gov, 12 January 2016
 // 1 ---------------------------------------------------------------------------
 // Set working directory and import data
 
-webuse set "https://github.com/GeoCenter/StataTraining/raw/master/Day2/Data"
-webuse "pseudocoding_data.dta", clear
+// For Stata v. 13 or Stata v. 14
+// webuse set "https://github.com/GeoCenter/StataTraining/raw/master/Day2/Data"
+// webuse "reshape_ex1.dta", clear
+
+// Otherwise....
+setwd "<<Insert where you saved the files>>"
+// Can also use the user interface: Go to "FILE" --> "CHANGE WORKING DIRECTORY" 
+// and navigate to the folder with the file.
 
 // 2 ---------------------------------------------------------------------------
 // Check if the spent data are the correct format.

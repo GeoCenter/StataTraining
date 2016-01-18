@@ -13,8 +13,15 @@ Goals:
 */
 
 // 0: Load data ----------------------------------------------------------------
-webuse set "https://github.com/GeoCenter/StataTraining/raw/master/Day2/Data"
-webuse "reshape_ex1.dta", clear
+// For Stata v. 13 or Stata v. 14
+// webuse set "https://github.com/GeoCenter/StataTraining/raw/master/Day2/Data"
+// webuse "reshape_ex1.dta", clear
+
+// Otherwise....
+setwd "<<Insert where you saved the files>>"
+// Can also use the user interface: Go to "FILE" --> "CHANGE WORKING DIRECTORY" 
+// and navigate to the folder with the file.
+use "reshape_ex1.dta, clear
 
 // 1: ID errors / messiness ----------------------------------------------------
 // Since the dataset is small, honestly browse is a good (but unsustainable) way to look at the data
