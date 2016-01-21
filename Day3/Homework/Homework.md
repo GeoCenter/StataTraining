@@ -79,7 +79,7 @@ Now that we have all the data together in one file, its time for us to start cle
 >	rename `year' y`l`year''
 >	}
 > ```
->     * so, for a little more of what's going on in this loop, we are telling Stata to place in memory the variable label for each indicator e.g. for `E` the variable label is `1960`, and we are then renaming the variable with the label, e.g. `E` becomes `y1960`.
+> - so, for a little more of what's going on in this loop, we are telling Stata to place in memory the variable label for each indicator e.g. for `E` the variable label is `1960`, and we are then renaming the variable with the label, e.g. `E` becomes `y1960`.
 > - since we only need to observe variables during 2002-2012, you can drop all the other years
 > - see `help drop`
 
