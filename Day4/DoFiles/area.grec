@@ -1,0 +1,60 @@
+StataFileTM:00001:01100:GREC:                          :
+00004:00004:00001:
+*! classname: twowaygraph_g
+*! family: twoway
+*! date: 19 Jan 2016
+*! time: 16:08:08
+*! graph_scheme: s2color
+*! naturallywhite: 1
+*! end
+
+// File created by Graph Editor Recorder.
+// Edit only if you know what you are doing.
+
+.plotregion1.plot1.style.editstyle area(shadestyle(intensity(inten60))) editcopy
+// plot1 intensity
+
+.plotregion1.plot1.style.editstyle area(shadestyle(color("193 109 98"))) editcopy
+.plotregion1.plot1.style.editstyle area(linestyle(color("193 109 98"))) editcopy
+// plot1 color
+
+// plot1 color
+
+.yaxis1.draw_view.setstyle, style(off)
+// yaxis1 edits
+
+.yaxis1.style.editstyle majorstyle(gridstyle(linestyle(color(gs14)))) editcopy
+.yaxis1.style.editstyle majorstyle(gridstyle(linestyle(width(medthick)))) editcopy
+// yaxis1 edits
+
+// yaxis1 edits
+
+.xaxis1.position.setstyle, style(below)
+.xaxis1.draw_view.setstyle, style(off)
+// xaxis1 edits
+
+.style.editstyle margin(zero) editcopy
+// Graph margin
+
+.style.editstyle boxstyle(shadestyle(color(white))) editcopy
+.style.editstyle boxstyle(linestyle(color(gs6))) editcopy
+.style.editstyle boxstyle(linestyle(width(medthick))) editcopy
+// Graph edits
+
+.style.editstyle inner_boxstyle(shadestyle(color(mint))) editcopy
+.style.editstyle inner_boxstyle(linestyle(color(mint))) editcopy
+// Graph color
+
+// Graph color
+
+.style.editstyle inner_boxstyle(linestyle(width(medthick))) editcopy
+// Graph width
+
+.style.editstyle inner_boxstyle(shadestyle(color(gs6))) editcopy
+.style.editstyle inner_boxstyle(linestyle(color(gs6))) editcopy
+// Graph color
+
+// Graph color
+
+
+// <end>
