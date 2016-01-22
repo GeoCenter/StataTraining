@@ -62,28 +62,28 @@ All the WDI files also include another tab that contains "meta data" for each co
 > - make sure to save this as a .dta file
 
 ### Part B - Append, Reshape, and Clean Data
-Now that we have all the data in Stata format (.dta), we can append all the files together so we can start using it to answer our questions. After it's appended we need to reshape the data **twice**. 
+Now that we have our data in Stata format (.dta), we can append all the files together so we can start using it to answer our questions. After it's appended we need to reshape the data **twice**. 
 
 > B.1 Append files together
-> - start by opening up one of your indicator files and append the other files onto
+> - start by opening up one of your indicator .dta files and append the other files onto it
 > ```
 > use ..., clear
 > append ...
 > ```
 > - see `help append` on how this works (note: you can append multiple files at the same time
 
-Now that we have all the data together in one file, its time for us to start cleaning up the data a bit. The first we should so is reshape it. But before we can do that, we need to rename all our year variables to look like to `y1960 y1961 y1962 ...`.
+Now that we have all the data together in one file, it's time for us to start cleaning up the data a bit. The first we should so is reshape it. But before we can do that, we need to rename all our year variables, adding a `y` stub to the year, so they will look like `y1960 y1961 y1962 ...`.
 
 > B.2 - Rename years (loop) and drop unnecessary years
 > - look through `help foreach` to figure out how to setup a loop over variables (I'll help you through the rest of the code)
-> - we will use `year` for our *lname*
+> - we will use `year` for our *lname* [indicated in the help file]
 > ```
 > foreach year ...{
 >    local l`year' : variable label `year'
 >	rename `year' y`l`year''
 >	}
 > ```
-> - so, for a little more of what's going on in this loop, we are telling Stata to place in memory the variable label for each indicator e.g. for `E` the variable label is `1960`, and we are then renaming the variable with the label, e.g. `E` becomes `y1960`.
+> - so, for a little more of what's going on in this loop, we are telling Stata to store in its memory the variable label for each indicator e.g. variable `E`'s label is `1960`, and we are then renaming the variable with its label, e.g. `E` becomes `y1960`.
 > - since we only need to observe variables during 2002-2012, you can drop all the other years
 > - see `help drop`
 
@@ -94,20 +94,21 @@ Now that we have the years labeled correctly (and we have our stub of `y`, we ca
 > - see `help reshape`
 > - after reshaping, run the following code to do some more cleaning of the data
 > ```
-> drop IndicatorName //not needed; will be in variable label
->	encode IndicatorCode, gen(ind) //need to encode for reshape
->	drop IndicatorCode //no longer needed
->	order CountryName CountryCode year ind y //reorder for viewing when browsing
+> *cleaning
+>   drop IndicatorName //not needed; will be in the variable label
+>	encode IndicatorCode, gen(ind) //need to encode prior to reshaping
+>	drop IndicatorCode //no longer needed since we have the new variable ind
+>	order CountryName CountryCode year ind y //reorder for viewing purposes when browsing
 >	lab list ind //list for labeling variables after reshape
 >```
 
-So, we have all the years and data in two columns, but this still isn't tidy. It will be extremely useful for our analysis to have each WDI indicator as a separate variable/column. You know what that means...a second reshape!
+So, we have years and data in two columns, but this still isn't tidy. It will be extremely useful for our analysis to have each WDI indicator as a separate variable/column. You know what that means...a second reshape!
 
 > B.4 - Reshape 2
 > - reshape your data so in addition to your year column you will break your data column out by indicator, so you will have a separate column per indicator
 > - see `help reshape`
 
-With this reshape, we lost the names of our indicators and they are now just numbered stubs. Luckily we ran `lab list ind` prior to our reshape and know what the variable are.
+With this reshape, we lost the names of our indicators and they are now just numbered stubs. Luckily we ran `lab list ind` prior to our reshape and know which variables are which.
 
 | n | var | varlabel |
 |---|---------------|--------------------------------------------------------------|
@@ -134,13 +135,14 @@ Hopefully you didn't forget about the metadata file we saved at the beginning. N
 > - since everything should have merged (other than unclassified), we don't need the generated variable so you can `drop _merge`
 > - see `help merge`
 
-Just a little bit of cleaning using the code below and we'll have a final dataset to use for our analysis!
+With a little bit of cleaning using the code below, we'll have a final dataset to use for our analysis!
 ```
-rename CountryName ctry
-rename CountryCode iso
-   lab var iso "ISO Country Code"
-   lab var year "Year"
-order reg inc, before(ag_empl)
+*more cleaning
+  rename CountryName ctry
+  rename CountryCode iso
+  lab var iso "ISO Country Code"
+  lab var year "Year"
+  order reg inc, before(ag_empl)
 ```
 
 > C.2 - Save
@@ -165,9 +167,9 @@ Wow, so it took quite a bit of work to get a working dataset to use for our anal
 
 > D.4 - How has population growth changed over the period of 2003-2012 across different country income level groups?
 > - it will be usefull to use the `collapse` command, aggregating up the sum by income level and year
-> - Population growth in 2016 would look like
+> - The equation for population growth in 2016 would look like:
 >     * ` popgrowth_16 = (pop_16 - pop_15)/pop_15`
-> - in order to get the year before the observation, you will want to make sure you first sort (`sort inc year`) and then use `pop[_n-1]`, where `_n` is the number of the current observation.
+> - in order to get the year before the current observation, you will want to make sure you first sort (`sort inc year`) and then use `pop[_n-1]`, where `_n` is the number of the current observation.
 > - see `help _n`
 > - since this is a time series, it would be good to use a `line` or `connected` plot if you are going to graph this.
 > - it will be useful to break the graphs into [small multiples] (https://en.wikipedia.org/wiki/Small_multiple), using the `by` option
