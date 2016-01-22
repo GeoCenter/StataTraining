@@ -40,6 +40,30 @@ twoway connected mpg price, sort(price) msymbol(x)
 
 twoway line mpg price, sort(price) lpattern(longdash_dot)
 
+// area
+twoway area mpg price, sort(price) cmissing(yes)
+
+// bar
+twoway bar price rep78
+
+// dot
 twoway dot mpg rep78, ndots(5)
 
+// dropline
 twoway dropline mpg price in 1/5, vert
+
+// lowess
+twoway scatter mpg weight || lowess  mpg weight
+
+// lfit
+twoway scatter mpg weight || lfit  mpg weight, range(40 .)
+
+// qfit
+
+twoway scatter mpg weight || qfit  mpg weight
+
+// lpoly
+twoway scatter mpg weight || lpoly  mpg weight, kernel(cosine)
+
+// fpfit
+twoway scatter mpg weight || fpfit  mpg weight
