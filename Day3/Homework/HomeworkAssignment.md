@@ -1,24 +1,26 @@
 ## Homework Day 3
 <br>
 ### Introduction
-When we conduct analysis, rarely do we handed a clean dataset right from the start and just have dig into the numbers for some answers. For this week’s homework, we’re going to walk through a typical process for data munging and  then do a little bit of work with our final dataset. We'll be combining a number of topics we've covered over the past few weeks, so have your cheatsheets at the ready (but don't worry, we'll help you walk through the process).
+When we conduct analysis, rarely are we handed a clean dataset right from the start and just have dig into the numbers for some answers. For this week’s homework, we’re going to walk through a typical process for data munging and then do a little bit of work with our final dataset. We'll be combining a number of topics we've covered over the past few weeks, so have your [cheat sheets] (https://github.com/GeoCenter/StataTraining/tree/master/Cheat%20Sheets) at the ready (but don't worry, we'll help you walk through the process).
 
-Our homework will involve working with the [World Banks World Development Indicators] (http://data.worldbank.org/data-catalog/world-development-indicators) to answer a series of questions/tasks.
+Your homework will involve working with the [World Banks World Development Indicators] (http://data.worldbank.org/data-catalog/world-development-indicators) to answer the following series of questions/tasks.
 - What was the average percent of the workforce employed in agriculture by region in 2012?
 - How many people had access to improved sanitation in 2012 by region?
-- Create a scatter plot of improved sanitation versus the percent of the population living in rural areas in 2010.
-- How has population growth changed over the period of 2003-2012 in different income levels?
+- Visualize the relationship between access to improved sanitation and size of a country's rural population in 2010 via a a scatter plot.
+- How has population growth changed over the period of 2003-2012 across different country income level groups?
 
-To answer these questions, we have provided you with raw data files downloaded directly from [WDI] (http://data.worldbank.org/data-catalog/world-development-indicators). To answer these questions, we need to start with our raw data, import it, "clean" it, and create a final dataset to perform our anylysis on.
+To answer these questions, we have provided you with raw data files downloaded directly from [WDI] (http://data.worldbank.org/data-catalog/world-development-indicators). To answer these questions, we need to start with our raw data, import it, "clean" it, and create a final dataset to perform our analysis on.
 
 Assignments through out the walk through will look like this:
-> A.1 Import data
+> X.1 Derive demand
+> - [hint/guidance]
+> -...
 
 ### Part A - Import and Explore the data
-The first stage of any analysis is getting the data setup and imported in our program. To do so, we want to start by identifying a directory of where the files are saved and see what files we have saved in there
+The first stage of any analysis is getting the data setup and imported in our program. To do so, we want to start by identifying a directory of where the files are saved and see what files we have saved in there. You can use the commands below, replacing the file path with your local directory.
 ```
-*set working directory
-    cd "~\Data Analysis Training\Day3HW\"
+*set working directory (where data is saved)
+    cd "~\Data Analysis Training\Day3\Homework\WDI_Data"
 *lists files in the directory
     ls 
 ```
@@ -28,28 +30,30 @@ Now, let's import some data. All the files are set up in the same structure, jus
 > - your options (after the comma) should look like this `[command] ..., sheet("Data") cellrange(A4:BH252) firstrow clear'
 >- dig into the data using commands like `browse`, `describe`, and `codebook`
 
-Looking at the data, we can see there is only one indicator per file and the data is not "tidy". We can reshape long using the year variable. And as we see here, Stata cannot interpret variables that start with or are entirely numbers as indicator names. We will need to adjust this later, changing the varaibles to `y1960 y1961 y1962 ...`. On a good note, the string variables (country name, indicator, etc) imported as string and the numberic variables imported as numbers, so we don't need to destring any of the variables.
+Looking at the data, we can see there is only one indicator per file and the data is not "tidy". We can reshape long using the year variable. And as we see here, Stata cannot interpret variables that start with or are entirely numbers as indicator names; instead, we are just given letters as variable names in place of the year. We will need to adjust this later, changing the variables to `y1960 y1961 y1962 ...`. On a lighter note, the string variables (country name, indicator, etc) imported as string and the numeric variables imported as numbers, so we don't need to destring any of the variables.
 
 Rather than reshaping the file multiple times, we can append all the data together first and then we will only need one reshape. Instead of going through importing each data set individually into Stata and then saving it as a .dta file, we can run it through a loop. 
 
 > A.2 Loop import over each of the indicator files 
-> - import file
-> - replace `IndicatorCode` with the indictor file name [for reshaping]
-> - saves as .dta 
+> - your loop should include 3 lines of code: 
+>     * `import` indicator file
+>     * `replace` `IndicatorCode` with the indictor file name [for reshaping]
+>     * `save` as .dta file 
 > - set a local macro ("vars") with the names of each file
 >     * `local vars ag_empl chldmort electricity  health_exp_pc hivprev pop pop_rural sanitation`
 > - check out `help foreach' on using a loop with a macro
 > - use the import command line you used in A.1, replacing the indicator with *lname* ("x").
+> - your code should look very similar to what is listed below
 > ```
 > foreach x of local vars{
->   import excel "~\Data Analysis Training\Day3HW\`x'", clear ...  
+>   import excel "~\Data Analysis Training\Day3\Homework\WDI_Data\`x'", clear ...  
 >   replace IndicatorCode = `x'	   
 >   save ...
 >  }
 >```
 
 
-The WDI files have another tab that includes "meta data" for each country, i.e. region, income level. It would be good to include these data in our final dataset.
+All the WDI files also include another tab that contains "meta data" for each country, i.e. region, income level. It would be good to include these data in our final dataset. Since each of these is the same in all the files, we only need to import one file.
 
 > A.3 Import country meta data
 > - Use the command used in A.1 on one indicator to import the Metadata sheet (you will not need to indicate a cell cell range)
@@ -70,7 +74,7 @@ Now that we have all the data in Stata format (.dta), we can append all the file
 
 Now that we have all the data together in one file, its time for us to start cleaning up the data a bit. The first we should so is reshape it. But before we can do that, we need to rename all our year variables to look like to `y1960 y1961 y1962 ...`.
 
-> B.2 - Rename years (loop) and drop unnessary years
+> B.2 - Rename years (loop) and drop unnecessary years
 > - look through `help foreach` to figure out how to setup a loop over variables (I'll help you through the rest of the code)
 > - we will use `year` for our *lname*
 > ```
@@ -97,10 +101,10 @@ Now that we have the years labeled correctly (and we have our stub of `y`, we ca
 >	lab list ind //list for labeling variables after reshape
 >```
 
-So, we have all the years and data in two columns, but this still isn't tidy. It will be extremely useful for our analysis to have each WDI indicator as a seperate variable/column. You know what that means...a second reshape!
+So, we have all the years and data in two columns, but this still isn't tidy. It will be extremely useful for our analysis to have each WDI indicator as a separate variable/column. You know what that means...a second reshape!
 
 > B.4 - Reshape 2
-> - reshape your data so in addition to your year column you will break your data column out by indicator, so you will have a seperate column per indicator
+> - reshape your data so in addition to your year column you will break your data column out by indicator, so you will have a separate column per indicator
 > - see `help reshape`
 
 With this reshape, we lost the names of our indicators and they are now just numbered stubs. Luckily we ran `lab list ind` prior to our reshape and know what the variable are.
@@ -127,7 +131,7 @@ Hopefully you didn't forget about the metadata file we saved at the beginning. N
 > C.1 - Merge metadata onto datafile
 > - since our "master" dataset has multiple country observations and and our merge file only has one observation per country, we will be using a many to one merge
 > - locate the path of your country metadata file and merge this file with the appended dataset
-> - since everything should merged (other than unclassificed), we don't need the generated variable so you can `drop _merge`
+> - since everything should have merged (other than unclassified), we don't need the generated variable so you can `drop _merge`
 > - see `help merge`
 
 Just a little bit of cleaning using the code below and we'll have a final dataset to use for our analysis!
@@ -155,11 +159,11 @@ Wow, so it took quite a bit of work to get a working dataset to use for our anal
 > - you will need to generate a new variable as your first step 
 > - see `help tabstat` 
 
-> D.3 - Create a scatter plot of improved sanitation versus the percent of the population living in rural areas in 2010.
+> D.3 - Visualize the relationship between access to improved sanitation and size of a country's rural population in 2010 via a a scatter plot.
 > - remember that the y variable goes before the x variable in our command for graphs
 > - see `help scatter' or check out [Stata Graphs] (http://www.stata.com/support/faqs/graphics/gph/stata-graphs/) 
 
-> D.4 - How has population growth changed over the period of 2003-2012 in different income levels?
+> D.4 - How has population growth changed over the period of 2003-2012 across different country income level groups?
 > - it will be usefull to use the `collapse` command, aggregating up the sum by income level and year
 > - Population growth in 2016 would look like
 >     * ` popgrowth_16 = (pop_16 - pop_15)/pop_15`
