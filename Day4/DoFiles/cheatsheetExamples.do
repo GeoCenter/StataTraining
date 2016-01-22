@@ -9,6 +9,10 @@ graph bar (count), over(foreign) intensity(*0.5)
 
 graph hbar (median) price, over(foreign)
 
+// dot
+
+graph dot (median) length headroom, over(foreign) marker(1, msymbol(S)) linetype(line)
+
 
 // Box plot
 graph box price, over(foreign) medtype(marker) medmarker(msymbol(Dh))
@@ -23,6 +27,8 @@ kdensity mpg, width(3)
 // Matrix
 gr matrix price mpg weight
 
+// Lowess
+
 
 
 // --- twoway -----------------------------------------------------------------
@@ -33,3 +39,7 @@ scatter mpg price
 twoway connected mpg price, sort(price) msymbol(x)
 
 twoway line mpg price, sort(price) lpattern(longdash_dot)
+
+twoway dot mpg rep78, ndots(5)
+
+twoway dropline mpg price in 1/5, vert
