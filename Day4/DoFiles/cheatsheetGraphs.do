@@ -121,36 +121,3 @@ line y1 x, lw(vvvthin) || line y2 x, lw(vvthin) || line y3 x, lw(vthin) || /*
 scatter y1 y2 y3 y4 y5 y6 y7 y8 y9 y10 y11 y12 y13 y14 x, m(i i i i i i i i i i i i i i) mlabel(labStr labStr labStr labStr labStr labStr labStr labStr labStr labStr labStr labStr labStr labStr) /*
 */ mlabsize(minuscule quarter_tiny  third_tiny half_tiny tiny vsmall small medsmall medium medlarge large vlarge huge vhuge) mlabc(red red red red red red red red red red red red red red) 
 	 graph export "labelSize.pdf", as(pdf) replace
-
-// -----------
-
-// Examples for sheet
-
-sysuse auto, clear
-
-// --- Non-twoway
-
-// Categorical barplot
-graph bar (count), over(foreign) intensity(*0.5)
-
-graph hbar (median) price, over(foreign)
-
-
-// Box plot
-graph box price, over(foreign) medtype(marker) medmarker(msymbol(Dh))
-graph hbox mpg, over(rep78, descending) by(foreign) missing 
-
-// histogram
-histogram mpg, width(5) frequency kdensity kdenopts(bwidth(5))
-
-// KDE
-kdensity mpg, width(3)
-
-// Scatter
-scatter mpg price
-
-// Line/connected
-twoway connected mpg price, sort(price) msymbol(i)
-
-// Matrix
-gr matrix price mpg weight
