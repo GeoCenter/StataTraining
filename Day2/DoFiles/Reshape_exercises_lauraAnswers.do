@@ -1,3 +1,9 @@
+/*
+Reshape Exercises -- Week 2 of Fundamentals of Data Analysis & Visualization
+
+Laura Hughes, lhughes@usaid.gov, 18 January 2016
+
+*/
 clear
 capture log close
 
@@ -85,7 +91,6 @@ and each year is stacked.
 */
 
 
-Question for Tim: why can't you reshape long q*FY@ ....?
 
 
 * --- Question 2: 
