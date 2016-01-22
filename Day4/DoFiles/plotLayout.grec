@@ -1,0 +1,118 @@
+StataFileTM:00001:01100:GREC:                          :
+00004:00004:00001:
+*! classname: twowaygraph_g
+*! family: twoway
+*! date: 19 Jan 2016
+*! time: 16:54:31
+*! graph_scheme: s2color
+*! naturallywhite: 1
+*! end
+
+// File created by Graph Editor Recorder.
+// Edit only if you know what you are doing.
+
+.style.editstyle boxstyle(shadestyle(color(gs12))) editcopy
+.style.editstyle boxstyle(linestyle(color(gs12))) editcopy
+// Graph color
+
+.style.editstyle boxstyle(linestyle(color(magenta))) editcopy
+.style.editstyle boxstyle(linestyle(width(medthick))) editcopy
+// Graph edits
+
+.style.editstyle inner_boxstyle(shadestyle(color(gs14))) editcopy
+.style.editstyle inner_boxstyle(linestyle(color(green))) editcopy
+.style.editstyle inner_boxstyle(linestyle(width(medthick))) editcopy
+// Graph edits
+
+.style.editstyle declared_ysize(2) editcopy
+.style.editstyle declared_xsize(3) editcopy
+// Graph size
+
+// title size
+
+// Graph size
+
+.plotregion1.style.editstyle boxstyle(shadestyle(color(gs15))) editcopy
+.plotregion1.style.editstyle boxstyle(linestyle(color(mint))) editcopy
+.plotregion1.style.editstyle boxstyle(linestyle(width(medthick))) editcopy
+// plotregion1 edits
+
+.plotregion1.style.editstyle inner_boxstyle(shadestyle(color(yellow))) editcopy
+.plotregion1.style.editstyle inner_boxstyle(linestyle(color(yellow))) editcopy
+// plotregion1 color
+
+.plotregion1.style.editstyle inner_boxstyle(shadestyle(color(gs16))) editcopy
+.plotregion1.style.editstyle inner_boxstyle(linestyle(color(gs16))) editcopy
+// plotregion1 color
+
+.plotregion1.style.editstyle inner_boxstyle(linestyle(color(eltgreen))) editcopy
+// plotregion1 color
+
+.plotregion1.style.editstyle inner_boxstyle(linestyle(width(medthick))) editcopy
+// plotregion1 width
+
+.plotregion1.style.editstyle inner_boxstyle(linestyle(color(forest_green))) editcopy
+// plotregion1 color
+
+.plotregion1.style.editstyle inner_boxstyle(shadestyle(color(gs15))) editcopy
+// plotregion1 color
+
+.plotregion1.style.editstyle boxstyle(shadestyle(color(gs14))) editcopy
+// plotregion1 color
+
+// plotregion1 color
+
+.style.editstyle inner_boxstyle(shadestyle(color(gs13))) editcopy
+// Graph color
+
+// Graph color
+
+.yaxis1.style.editstyle majorstyle(gridstyle(linestyle(color(gs16)))) editcopy
+// yaxis1 color
+
+// yaxis1 color
+
+.yaxis1.style.editstyle linestyle(pattern(dash)) editcopy
+// yaxis1 pattern
+
+.yaxis1.style.editstyle linestyle(width(medthick)) editcopy
+// yaxis1 width
+
+// yaxis1 width
+
+.xaxis1.style.editstyle draw_major_grid(yes) editcopy
+.xaxis1.style.editstyle majorstyle(gridstyle(linestyle(color(gs16)))) editcopy
+// xaxis1 edits
+
+// xaxis1 edits
+
+.xaxis1.style.editstyle linestyle(width(medthick)) editcopy
+.xaxis1.style.editstyle linestyle(pattern(dash)) editcopy
+// xaxis1 edits
+
+.xaxis1.style.editstyle linestyle(pattern(dot)) editcopy
+// xaxis1 pattern
+
+.xaxis1.style.editstyle linestyle(pattern(dash)) editcopy
+// xaxis1 pattern
+
+// xaxis1 pattern
+
+.plotregion1.plot1.style.editstyle marker(fillcolor(gs6)) editcopy
+.plotregion1.plot1.style.editstyle marker(linestyle(color(gs6))) editcopy
+// plot1 edits
+
+.plotregion1.plot1.style.editstyle marker(fillcolor(gs8)) editcopy
+.plotregion1.plot1.style.editstyle marker(linestyle(color(gs8))) editcopy
+// plot1 edits
+
+.plotregion1.plot1.style.editstyle marker(size(medlarge)) editcopy
+// plot1 size
+
+.plotregion1.plot1.style.editstyle marker(fillcolor(gs11)) editcopy
+// plot1 edits
+
+// plot1 edits
+
+
+// <end>

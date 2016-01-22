@@ -1,0 +1,65 @@
+StataFileTM:00001:01100:GREC:                          :
+00004:00004:00001:
+*! classname: twowaygraph_g
+*! family: twoway
+*! date: 19 Jan 2016
+*! time: 15:37:54
+*! graph_scheme: s2color
+*! naturallywhite: 1
+*! end
+
+// File created by Graph Editor Recorder.
+// Edit only if you know what you are doing.
+
+
+.plotregion1.plot1.style.editstyle marker(size(vhuge)) editcopy
+.plotregion1.plot1.style.editstyle marker(fillcolor("193 109 98")) editcopy
+.plotregion1.plot1.style.editstyle marker(linestyle(color("193 109 98"))) editcopy
+// plot1 edits
+
+.plotregion1.plot1.style.editstyle marker(size(huge)) editcopy
+// plot1 size
+
+// plot1 size
+
+.style.editstyle boxstyle(shadestyle(color(white))) editcopy
+.style.editstyle boxstyle(linestyle(color(white))) editcopy
+.style.editstyle declared_ysize(1) editcopy
+.style.editstyle declared_xsize(1) editcopy
+// Graph edits
+
+.style.editstyle boxstyle(linestyle(color(gs6))) editcopy
+.style.editstyle boxstyle(linestyle(width(thick))) editcopy
+// Graph edits
+
+
+.yaxis1.draw_view.setstyle, style(off)
+// yaxis1 edits
+
+.yaxis1.style.editstyle majorstyle(gridstyle(linestyle(color(gs14)))) editcopy
+.yaxis1.style.editstyle majorstyle(gridstyle(linestyle(width(medthick)))) editcopy
+// yaxis1 edits
+
+.yaxis1.reset_rule 0 200 50 , tickset(major) ruletype(range) 
+// yaxis1 edits
+
+.xaxis1.position.setstyle, style(below)
+.xaxis1.draw_view.setstyle, style(off)
+// xaxis1 edits
+
+.xaxis1.style.editstyle draw_major_grid(yes) editcopy
+.xaxis1.style.editstyle majorstyle(gridstyle(linestyle(color(gs14)))) editcopy
+.xaxis1.style.editstyle majorstyle(gridstyle(linestyle(width(medthick)))) editcopy
+// xaxis1 edits
+
+.xaxis1.reset_rule 4, tickset(major) ruletype(suggest) 
+// xaxis1 edits
+
+.xaxis1.reset_rule 0 100 25 , tickset(major) ruletype(range) 
+// xaxis1 edits
+
+.xaxis1.reset_rule 0 100 25 , tickset(major) ruletype(range) 
+// xaxis1 edits
+
+
+// <end>
