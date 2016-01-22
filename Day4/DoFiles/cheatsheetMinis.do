@@ -1,3 +1,5 @@
+cd "/Users/laurahughes/GitHub/StataTraining/Day4/DoFiles/plot pdfs"
+
 clear
 set seed 25
 
@@ -27,21 +29,10 @@ gen facet = y1 >= 50
 gen yStr = string(y1)
 
 
+// ------------------------------------------------------------------------------
+// Non-twoway
+// ------------------------------------------------------------------------------
 
-// scatter plot ----------------------------------------------------------------
-twoway(scatter y2 x1 in 1/40), play(peachTheme)
-
-graph export "scatter.pdf", as(pdf) replace
-
-
-// line
-twoway(line y3 id in 1/20, sort)
-
-// connected
-//twoway(connected y1 x1)
-
-// area
-twoway(area y3 id in 5/20, sort)
 
 // bar
 gr bar (asis) id in 1/4, over(id, reverse)
@@ -56,3 +47,36 @@ gr hbox y2 y4
 
 // hist
 hist gauss, w(0.2)
+
+// kde
+kdensity gauss, w(0.2)
+
+// matrix
+gr matrix y1 y2 y4, diag("y1" "y2" "y3")
+
+// dot 
+
+
+
+// ------------------------------------------------------------------------------
+// twoway
+// ------------------------------------------------------------------------------
+
+// scatter plot 
+twoway(scatter y2 x1 in 1/40), play(peachTheme)
+
+graph export "scatter.pdf", as(pdf) replace
+
+
+// line
+twoway(line y3 id in 1/20, sort)
+
+// connected
+twoway(connected y3 id in 1/20, sort)
+
+// area
+twoway(area y3 id in 5/20, sort)
+
+// ------------------------------------------------------------------------------
+// Special pkgs.
+// ------------------------------------------------------------------------------
