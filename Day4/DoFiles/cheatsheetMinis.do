@@ -16,6 +16,7 @@ gen sign = runiform(-1, 1)
 
 gen y2 = x1 + y1 
 gen y3 = id + sign * y1 * 0.2
+
 gen x2 = x1
 
 gen y4 = y1
@@ -29,6 +30,12 @@ replace y4 = 175 if y4 > 98
 gen facet = y1 >= 50
 
 gen yStr = string(y1)
+
+gen y5 = y1/4
+
+
+gen y6 = y1^2 + sign * y1 * 40
+
 
 recode id (1 2 3 4 5 6 7 8 9 10 = 1 "A") (11 12 13 14 15 16 17 18 19 20 = 2 "B")/*
 */ (21 22 23 24 25 26 27 28 29 30 = 3 "C") (31 32 33 34 35 36 37 38 39 40 = 4 "D") /*
@@ -84,13 +91,37 @@ twoway(connected y3 id in 1/20, sort)
 twoway(area y3 id in 9/20, sort)
 
 // bar
-tw bar 
+tw bar posNeg y5 in 30/36, vert
 
 // dot
-twoway dot posNeg y3 in 44/50, horiz dotext(n)
+twoway dot posNeg y5 in 44/50, horiz dotext(n)
 
 // dropline
-twoway dropline posNeg y3 in 44/50, vert
+twoway dropline posNeg y5 in 44/50, vert
+
+
+// ------------------------------------------------------------------------------
+// Fitting
+// ------------------------------------------------------------------------------
+
+tw scatter y1 y6 || lfit y1 y6
+tw scatter y1 y6 || qfit y1 y6
+tw scatter y1 y6 || lpoly y1 y6 
+tw scatter y1 y6 || lowess y1 y6, bw(1)
+tw scatter y1 y6 || fpfit y1 y6
+
+
+tw lfitci y1 y6, fintensity(inten20) alwidth(none) acolor("216 155 145") clcolor("155 98 89") /*
+*/ || scatter y1 y6, msize(vsmall) mcolor("206 130 118")
+
+tw qfitci y1 y6, fintensity(inten20) alwidth(none) acolor("216 155 145") clcolor("155 98 89") /*
+*/ || scatter y1 y6, msize(vsmall) mcolor("206 130 118")
+
+tw lpolyci y1 y6, fintensity(inten20) alwidth(none) acolor("216 155 145") clcolor("155 98 89") /*
+*/ || scatter y1 y6, msize(vsmall) mcolor("206 130 118")
+
+tw fpfitci y1 y6, fintensity(inten20) alwidth(none) acolor("216 155 145") clcolor("155 98 89") /*
+*/ || scatter y1 y6, msize(vsmall) mcolor("206 130 118")
 
 // ------------------------------------------------------------------------------
 // Special pkgs.
