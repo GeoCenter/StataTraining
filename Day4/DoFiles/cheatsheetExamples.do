@@ -57,13 +57,16 @@ twoway scatter mpg weight || lowess  mpg weight
 
 // lfit
 twoway scatter mpg weight || lfit  mpg weight, range(40 .)
+twoway lfitci mpg weight, fintensity(inten30) alwidth(none) || scatter mpg weight
 
 // qfit
-
 twoway scatter mpg weight || qfit  mpg weight
+twoway qfitci mpg weight, fintensity(inten30) alwidth(none) || scatter mpg weight
 
 // lpoly
 twoway scatter mpg weight || lpoly  mpg weight, kernel(cosine)
+twoway lpolyci mpg weight, fintensity(inten30) alwidth(none) || scatter mpg weight
 
 // fpfit
 twoway scatter mpg weight || fpfit  mpg weight
+twoway fpfitci mpg weight, fintensity(inten30) alwidth(none)|| scatter mpg weight
