@@ -1,5 +1,14 @@
 cd "/Users/laurahughes/GitHub/StataTraining/Day4/DoFiles/plot pdfs"
 
+sysuse auto, clear
+
+
+// error bars
+collapse (mean) mpg (sd) sdMPG = mpg, by(foreign)
+serrbar mpg sdMPG foreign
+
+
+
 clear
 set seed 25
 
