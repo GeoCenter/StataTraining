@@ -17,6 +17,10 @@ clear
 set seed 25
 
 range id 1 50 50
+gen id2 = 2
+gen id3 = 3
+gen id4 = 4
+gen id5 = 5
 
 
 gen x1 = runiformint(0, 100)
@@ -118,6 +122,13 @@ twoway dot posNeg y5 in 44/50, horiz dotext(n)
 // dropline
 twoway dropline posNeg y5 in 44/50, vert
 
+// pcspike
+tw pcspike y1 id2 y3 id3 in 6/10 || pcspike y3 id3 y2 id4 in 6/10 || pcspike y2 id4 y1 id5 in 6/10
+
+tw pccapsym y1 id2 y2 id3 in 7/9
+
+// contour
+tw contour y1 y2 y3, level(15) crule(intensity) ecolor("235 205 200")
 
 // ------------------------------------------------------------------------------
 // Fitting
@@ -129,6 +140,8 @@ tw scatter y1 y6 || lpoly y1 y6
 tw scatter y1 y6 || lowess y1 y6, bw(1)
 tw scatter y1 y6 || fpfit y1 y6
 
+tw scatter y1 y6 || mband y1 y6, bands(6)
+tw scatter y1 y6 || mspline y1 y6, bands(5)
 
 tw lfitci y1 y6, fintensity(inten20) alwidth(none) acolor("216 155 145") clcolor("155 98 89") /*
 */ || scatter y1 y6, msize(vsmall) mcolor("206 130 118")

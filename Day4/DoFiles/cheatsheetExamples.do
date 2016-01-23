@@ -59,6 +59,15 @@ twoway dot mpg rep78, ndots(5)
 twoway dropline mpg price in 1/5, vert
 
 
+// pcspike
+sysuse nlswide1, clear
+ twoway pcspike wage68 ttl_exp68 wage88 ttl_exp88
+twoway pccapsym wage68 ttl_exp68 wage88 ttl_exp88
+sysuse auto, clear
+
+// contour
+twoway contour mpg price weight, level(20) crule(intensity) ecolor(blue)
+
 // --- fitting ----
 collapse (mean) mpg (sd) sdMPG = mpg, by(foreign)
 serrbar mpg sdMPG foreign
@@ -83,3 +92,7 @@ twoway lpolyci mpg weight, fintensity(inten30) alwidth(none) || scatter mpg weig
 // fpfit
 twoway scatter mpg weight || fpfit  mpg weight
 twoway fpfitci mpg weight, fintensity(inten30) alwidth(none)|| scatter mpg weight
+
+// mband
+twoway scatter mpg weight || mband mpg weight
+twoway scatter mpg weight || mspline mpg weight
