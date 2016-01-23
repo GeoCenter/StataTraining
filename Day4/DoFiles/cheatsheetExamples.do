@@ -43,6 +43,12 @@ twoway line mpg price, sort(price) lpattern(longdash_dot)
 // area
 twoway area mpg price, sort(price) cmissing(yes)
 
+// gap b/w
+twoway rarea length headroom price
+twoway rbar length headroom price
+twoway rcap length headroom price
+twoway rcapsym length headroom price
+
 // bar
 twoway bar price rep78
 
@@ -51,6 +57,13 @@ twoway dot mpg rep78, ndots(5)
 
 // dropline
 twoway dropline mpg price in 1/5, vert
+
+
+// --- fitting ----
+collapse (mean) mpg (sd) sdMPG = mpg, by(foreign)
+serrbar mpg sdMPG foreign
+
+sysuse auto, clear
 
 // lowess
 twoway scatter mpg weight || lowess  mpg weight

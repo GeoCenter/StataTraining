@@ -7,8 +7,12 @@ sysuse auto, clear
 collapse (mean) mpg (sd) sdMPG = mpg, by(foreign)
 serrbar mpg sdMPG foreign
 
+// better rbar
+sysuse sp500, clear
+twoway rbar high low date in 15/40, barwidth(.6)
 
 
+// Random dataset
 clear
 set seed 25
 
@@ -98,6 +102,12 @@ twoway(connected y3 id in 1/20, sort)
 
 // area
 twoway(area y3 id in 9/20, sort)
+
+// rarea
+tw rarea y1 y2 id in 20/27, sort
+
+tw rcap y1 y2 id in 20/27, sort
+tw rcapsym y1 y2 id in 20/27, sort
 
 // bar
 tw bar posNeg y5 in 30/36, vert
