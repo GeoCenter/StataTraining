@@ -155,7 +155,7 @@ tw pccapsym y1 id2 y2 id3 in 7/9, lc("216 155 145") xlabel(, nogrid) ylabel(, no
 graph export "bump.pdf", as(pdf) replace
 
 // contour
-tw contour y1 y2 y3, level(15) crule(intensity) ecolor("235 205 200") xlabel(, nogrid) ylabel(, nogrid) scheme(cheatsheet)
+tw contour y1 y2 y3, level(8) crule(intensity) ecolor("235 205 200") xlabel(, nogrid) ylabel(, nogrid) scheme(cheatsheet)
 graph export "contour.pdf", as(pdf) replace
 
 // ------------------------------------------------------------------------------
