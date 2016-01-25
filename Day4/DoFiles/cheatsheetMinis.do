@@ -131,7 +131,7 @@ twoway(line y3 id in 1/20, sort)
 graph export "line.pdf", as(pdf) replace
 
 // connected
-twoway(connected y3 id in 1/20, sort), scheme(cheatsheet)
+twoway connected y3 id in 1/20, sort msize(huge) scheme(cheatsheet)
 graph export "conn.pdf", as(pdf) replace
 
 // area
