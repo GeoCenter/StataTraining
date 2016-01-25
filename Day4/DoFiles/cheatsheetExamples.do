@@ -18,6 +18,8 @@ graph dot (median) length headroom, over(foreign) marker(1, msymbol(S)) linetype
 graph box price, over(foreign) medtype(marker) medmarker(msymbol(Dh))
 graph hbox mpg, over(rep78, descending) by(foreign) missing 
 
+vioplot price, over(foreign) 
+
 // histogram
 histogram mpg, width(5) frequency kdensity kdenopts(bwidth(5))
 

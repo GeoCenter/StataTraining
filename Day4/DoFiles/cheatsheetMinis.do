@@ -86,6 +86,9 @@ graph export "box.pdf", as(pdf) replace
 gr hbox y2 y4, inten(*0.4) m(2, m(O))
 graph export "hbox.pdf", as(pdf) replace
 
+vioplot y2 y4, line(lw(medthick)) bar(lw(medthick)) median(mlw(medthick)) yscale(range(-25 200)) xlabel(, nogrid) 
+graph export "violin.pdf", as(pdf) replace
+
 // hist
 hist gauss, w(0.2) xlabel(, nogrid)
 graph export "hist.pdf", as(pdf) replace
