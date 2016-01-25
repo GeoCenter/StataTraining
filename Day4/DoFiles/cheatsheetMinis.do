@@ -58,6 +58,10 @@ gen y5 = y1/4
 
 gen y6 = y1^2 + sign * y1 * 40
 
+gen y7 = runiformint(80, 100)
+gen y8 = runiformint(30, 65)
+
+gen y9 = round(y5, 1)
 
 recode id (1 2 3 4 5 6 7 8 9 10 = 1 "A") (11 12 13 14 15 16 17 18 19 20 = 2 "B")/*
 */ (21 22 23 24 25 26 27 28 29 30 = 3 "C") (31 32 33 34 35 36 37 38 39 40 = 4 "D") /*
@@ -103,7 +107,7 @@ graph export "matrix.pdf", as(pdf) replace
 
 
 // dot 
-gr dot (mean) y3 in 1/30, over(lettStr) scheme(cheatsheet)
+gr dot (mean) y3 in 1/30, over(lettStr) scheme(cheatsheet) ndots(20)
 graph export "dotCat.pdf", as(pdf) replace
 
 
@@ -115,13 +119,19 @@ graph export "dotCat.pdf", as(pdf) replace
 twoway(scatter y2 x1 in 1/40)
 graph export "scatter.pdf", as(pdf) replace
 
+tw scatter y2 y1 [aw = y5], msize(vsmall) scheme(cheatsheet)
+graph export "bubble.pdf", as(pdf) replace
+
+
+tw scatter y6 y2 in 26/30, mlabel(y9) scheme(cheatsheet)
+graph export "labels.pdf", as(pdf) replace
 
 // line
 twoway(line y3 id in 1/20, sort)
 graph export "line.pdf", as(pdf) replace
 
 // connected
-twoway(connected y3 id in 1/20, sort), scheme(cheatSheet)
+twoway(connected y3 id in 1/20, sort), scheme(cheatsheet)
 graph export "conn.pdf", as(pdf) replace
 
 // area
@@ -143,7 +153,7 @@ tw bar posNeg y5 in 30/36, vert
 graph export "twbar.pdf", as(pdf) replace
 
 // dot
-twoway dot posNeg y5 in 44/50, horiz dotext(n)
+twoway dot posNeg y5 in 44/50, horiz dotext(n) ndots(25) scheme(cheatsheet)
 graph export "twdot.pdf", as(pdf) replace
 
 // dropline
@@ -205,3 +215,12 @@ graph export "fpfitci.pdf", as(pdf) replace
 // ------------------------------------------------------------------------------
 // Special pkgs.
 // ------------------------------------------------------------------------------
+
+// Facet
+scatter y7 id
+// Superimpose
+
+line y7 y8 id in 1/20, sort scheme(cheatsheet)
+
+graph export "facet.pdf", as(pdf) replace
+
