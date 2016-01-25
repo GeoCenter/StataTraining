@@ -9,7 +9,7 @@ Your homework will involve working with select indicators from the [World Banks 
 - Visualize the relationship between access to improved sanitation and size of a country's rural population in 2010 via a a scatter plot.
 - How has population growth changed over the period of 2003-2012 across different country income level groups?
 
-We have provided you with raw data files downloaded directly from [WDI] (http://data.worldbank.org/data-catalog/world-development-indicators) which you can acess and download from **[here] (https://github.com/GeoCenter/StataTraining/tree/master/Day3/Homework/WDI_Data)**. To answer these questions, we need to start with our raw data, import it, "clean" it, and create a final dataset to perform our analysis on.
+We have provided you with raw data files downloaded directly from [WDI] (http://data.worldbank.org/data-catalog/world-development-indicators) which you can acess and **[download from here] (https://github.com/GeoCenter/StataTraining/tree/master/Day3/Homework/WDI_Data)**. To answer these questions, we need to start with our raw data, import it, "clean" it, and create a final dataset to perform our analysis on.
 
 Assignments through out the walk through will look like this:
 > X.1 Derive demand
