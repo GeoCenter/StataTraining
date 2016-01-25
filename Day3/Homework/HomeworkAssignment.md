@@ -3,13 +3,13 @@
 ### Introduction
 When we conduct analysis, rarely are we handed a clean dataset right from the start and just have dig into the numbers for some answers. For this week’s homework, we’re going to walk through a typical process for data munging and then do a little bit of work with our final dataset. We'll be combining a number of topics we've covered over the past few weeks, so have your [cheat sheets] (https://github.com/GeoCenter/StataTraining/tree/master/Cheat%20Sheets) at the ready (but don't worry, we'll help you walk through the process).
 
-Your homework will involve working with the [World Banks World Development Indicators] (http://data.worldbank.org/data-catalog/world-development-indicators) to answer the following series of questions/tasks.
+Your homework will involve working with select indicators from the [World Banks World Development Indicators] (http://data.worldbank.org/data-catalog/world-development-indicators) to answer the following series of questions/tasks.
 - What was the average percent of the workforce employed in agriculture by region in 2012?
 - How many people had access to improved sanitation in 2012 by region?
 - Visualize the relationship between access to improved sanitation and size of a country's rural population in 2010 via a a scatter plot.
 - How has population growth changed over the period of 2003-2012 across different country income level groups?
 
-To answer these questions, we have provided you with raw data files downloaded directly from [WDI] (http://data.worldbank.org/data-catalog/world-development-indicators). To answer these questions, we need to start with our raw data, import it, "clean" it, and create a final dataset to perform our analysis on.
+We have provided you with raw data files downloaded directly from [WDI] (http://data.worldbank.org/data-catalog/world-development-indicators) which you can acess and download from **[here] (https://github.com/GeoCenter/StataTraining/tree/master/Day3/Homework/WDI_Data)**. To answer these questions, we need to start with our raw data, import it, "clean" it, and create a final dataset to perform our analysis on.
 
 Assignments through out the walk through will look like this:
 > X.1 Derive demand
@@ -17,35 +17,40 @@ Assignments through out the walk through will look like this:
 > -...
 
 ### Part A - Import and Explore the data
-The first stage of any analysis is getting the data setup and imported in our program. To do so, we want to start by identifying a directory of where the files are saved and see what files we have saved in there. You can use the commands below, replacing the file path with your local directory.
+If you have not already done so, you will need to download the files we're working from the **[WDI_Data folder] (https://github.com/GeoCenter/StataTraining/tree/master/Day3/Homework/WDI_Data)**. 
+
+The first stage of any analysis is getting the data setup and imported in our program. Let's open up a do file and get to work! To get started, we want to identify the directory where the files are saved and see what files we have saved in there. You can use the commands below to perform this task, replacing the file path with your local directory.
 ```
 *set working directory (where data is saved)
     cd "~\Data Analysis Training\Day3\Homework\WDI_Data"
 *lists files in the directory
     ls 
 ```
-Now, let's import some data. All the files are set up in the same structure, just with different data. Let's import one of them to see what it looks like
+Now, let's import some data. All the files are set up in the same structure, just with different data. Let's import one of them to see what it looks like, so let's start with the ag_empl.xlsx file in our set of data files.
 > A.1 Import one data set
 > - check out `help import excel` for help
-> - your options (after the comma) should look like this `[command] ..., sheet("Data") cellrange(A4:BH252) firstrow clear'
->- dig into the data using commands like `browse`, `describe`, and `codebook`
+> - your options (after the comma) should look like this 
+> `[command] ..., sheet("Data") cellrange(A4:BH252) firstrow clear`
+>     * `sheet("Data")` - this will pull the data we need in from the tab labeled "Data" in the Excel file
+>     * `cellrange(A4:BH252)` - here, we're telling Stata to adjust the first row it pulls in. WDI adds some headers rows. Remember we want the first row to be variable names and for the data to start on the second row.
+>     * `firstrow` - this option tells Stata the first row of the dataset is indeed variable name, not data.
+>     * `clear` - and finally, we are telling Stata to clear out any datasets that may be currently stored in the directory
+> - dig into the data using commands like `browse`, `describe`, and `codebook`
 
-Looking at the data, we can see there is only one indicator per file and the data is not "tidy". We can reshape long using the year variable. And as we see here, Stata cannot interpret variables that start with or are entirely numbers as indicator names; instead, we are just given letters as variable names in place of the year. We will need to adjust this later, changing the variables to `y1960 y1961 y1962 ...`. On a lighter note, the string variables (country name, indicator, etc) imported as string and the numeric variables imported as numbers, so we don't need to destring any of the variables.
+Looking at the data, we can see there is only one indicator per file (in this case, its Agricultural Employment as a percent of the overall workforce) and the data is not "tidy". We can reshape long using the year variable. And as we see here, Stata cannot interpret variables that start with or are entirely numbers as indicator names; instead, we are just given letters as variable names in place of the year. We will need to adjust this later, changing the variables to `y1960 y1961 y1962 ...`. On a lighter note, the string variables (country name, indicator, etc) imported as string and the numeric variables imported as numbers, so we don't need to destring any of the variables.
 
-Rather than reshaping the file multiple times, we can append all the data together first and then we will only need one reshape. Instead of going through importing each data set individually into Stata and then saving it as a .dta file, we can run it through a loop. 
+Rather than reshaping each file, we can append all the data together first and then we will only need conduct the reshape on one dataset. Instead of going through importing each data set in our downloaded file individually into Stata and then saving it as a .dta file, we can run it through a loop. We will need to import all eight files in the folder (one for each variable) and append them together.
 
 > A.2 Loop import over each of the indicator files 
 > - your loop should include 3 lines of code: 
->     * `import` indicator file
->     * `replace` `IndicatorCode` with the indictor file name [for reshaping]
+>     * `import` indicator file from downloaded folder
+>     * `replace` `IndicatorCode` with the indictor file name for reshaping. For example, when import the ag_empl.xlsx file, the `IndicatorCode` will list the WDI code for this variable, "SL.AGR.EMPL.ZS", which is not very meaningful to us. Instead, we will replace "SL.AGR.EMPL.ZS" with "ag_empl" and will use this in the reshape later on, so that the variable will be named `ag_empl`
 >     * `save` as .dta file 
-> - set a local macro ("vars") with the names of each file
->     * `local vars ag_empl chldmort electricity  health_exp_pc hivprev pop pop_rural sanitation`
-> - check out `help foreach' on using a loop with a macro
-> - use the import command line you used in A.1, replacing the indicator with *lname* ("x").
+> - check out `help foreach` on using a loop using `in`
+> - use the import command line you used in A.1, replacing the indicator with *lname* ("``` `x' ```").
 > - your code should look very similar to what is listed below
 > ```
-> foreach x of local vars{
+> foreach x in ag_empl chldmort electricity  health_exp_pc hivprev pop pop_rural sanitation{
 >   import excel "~\Data Analysis Training\Day3\Homework\WDI_Data\`x'", clear ...  
 >   replace IndicatorCode = `x'	   
 >   save ...
@@ -53,10 +58,10 @@ Rather than reshaping the file multiple times, we can append all the data togeth
 >```
 
 
-All the WDI files also include another tab that contains "meta data" for each country, i.e. region, income level. It would be good to include these data in our final dataset. Since each of these is the same in all the files, we only need to import one file.
+All the WDI files also include another tab that contains "meta data" for each country, i.e. region, income level. It would be good to include these data in our final dataset. Since the meta data tab is the same in all the files, we only need to import one file (eg ag_empl.xlsx).
 
 > A.3 Import country meta data
-> - Use the command used in A.1 on one indicator to import the Metadata sheet (you will not need to indicate a cell cell range)
+> - Use the command used in A.1 on one indicator to import the Metadata sheet (you will not need to indicate a cell cell range as it variables names start on the first row)
 > - encode region and income level, generating new variables called `reg` and `inc` and dropping the old variables afterward
 > - see `help encode` for how to encode a variable and generate a new variable from this
 > - make sure to save this as a .dta file
@@ -76,7 +81,7 @@ Now that we have all the data together in one file, it's time for us to start cl
 
 > B.2 - Rename years (loop) and drop unnecessary years
 > - look through `help foreach` to figure out how to setup a loop over variables (I'll help you through the rest of the code)
-> - we will use `year` for our *lname* [indicated in the help file]
+> - we will use `year` for our *lname* [indicated in the `help` file]
 > ```
 > foreach year ...{
 >    local l`year' : variable label `year'
