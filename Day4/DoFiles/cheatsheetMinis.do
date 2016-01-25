@@ -119,7 +119,7 @@ graph export "dotCat.pdf", as(pdf) replace
 twoway(scatter y2 x1 in 1/40)
 graph export "scatter.pdf", as(pdf) replace
 
-tw scatter y2 y1 [aw = y5], msize(vsmall) scheme(cheatsheet)
+tw scatter y2 y1 [aw = y5], msize(tiny) scheme(cheatsheet)
 graph export "bubble.pdf", as(pdf) replace
 
 
@@ -219,6 +219,7 @@ graph export "fpfitci.pdf", as(pdf) replace
 // Facet
 scatter y7 id
 // Superimpose
+
 
 line y7 y8 id in 1/20, sort scheme(cheatsheet)
 
