@@ -119,7 +119,7 @@ graph export "dotCat.pdf", as(pdf) replace
 twoway(scatter y2 x1 in 1/40)
 graph export "scatter.pdf", as(pdf) replace
 
-tw scatter y2 y1 [aw = y5], msize(tiny) scheme(cheatsheet)
+tw scatter y2 y1 [aw = y5] in 1/10, msize(small) scheme(cheatsheet)
 graph export "bubble.pdf", as(pdf) replace
 
 
