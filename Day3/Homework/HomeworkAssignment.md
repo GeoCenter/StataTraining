@@ -13,12 +13,12 @@ Your homework will involve working with select indicators from the [World Banks 
 We have provided you with raw data files downloaded directly from [WDI] (http://data.worldbank.org/data-catalog/world-development-indicators) which you can acess and **[download from here] (https://github.com/GeoCenter/StataTraining/tree/master/Day3/Homework/WDI_Data)**. To answer these questions, we need to start with our raw data, import it, "clean" it, and create a final dataset to perform our analysis on.
 
 Assignments through out the walk through will look like this:
-> X.1 Derive demand
+> **X.1 Derive demand**
 > - [hint/guidance]
 > -...
 
 ### Overview
-Before we dive into our analysis, let's develop a plan of action.Thinking about where we need to get to, I forsee breaking our homework into four parts: (a) import/explore, (b) append, reshape, and clean, (c) merge, and (d) analyze.  In Part A, we'll introduce you to loops which is not an easy concept. If you are up for it, we'd like you to take a stab at it, but its completely up to you. If you don't have time or are getting stuck, we've provided the WDI data in .dta format so you can jump right into the data analysis and manipulation in Part B.
+Before we dive into our analysis, let's develop a plan of action.Thinking about where we need to get to, I forsee breaking our homework into four parts: (a) import/explore, (b) append, reshape, and clean, (c) merge, and (d) analyze.  In Part A, we'll introduce you to loops which is not an easy concept. If you are up for it, we'd like you to take a stab at it, but its completely up to you. If you don't have time or are getting stuck, we've provided the [WDI data in .dta format] (https://github.com/GeoCenter/StataTraining/tree/master/Day3/Homework/WDI_Data) so you can jump right into the data analysis and manipulation in Part B.
 
 - Part A - Import and Explore (Optional Section)
     - Review one WDI excel file
@@ -37,7 +37,7 @@ Before we dive into our analysis, let's develop a plan of action.Thinking about 
 
 
 ### Part A - Import and Explore the data
-*This is an option section. If you do not have enough time to complete or are having through getting through this section, you can skip to Part B and **[access the .dta files] (https://github.com/GeoCenter/StataTraining/tree/master/Day3/Homework/PartB_WDI_Data_STATA)***.
+*This is an option section. If you do not have enough time to complete or are having through getting through this section, you can skip to Part B and [access the .dta files] (https://github.com/GeoCenter/StataTraining/tree/master/Day3/Homework/PartB_WDI_Data_STATA).*
 
 If you have not already done so, you will need to download the files we're working from the **[WDI_Data folder] (https://github.com/GeoCenter/StataTraining/tree/master/Day3/Homework/WDI_Data)**. 
 
@@ -48,7 +48,7 @@ The first stage of any analysis is getting the data setup and imported in our pr
 *lists files in the directory
     ls 
 ```
-Now, let's import some data. All the files are set up in the same structure, just with different data. Let's import one of them to see what it looks like, so let's start with the ag_empl.xlsx file in our set of data files.
+Now, let's import some data. All the files are set up in the same structure, just with different data. Let's import one of them to see what it looks like, so let's start with the `ag_empl.xlsx` file in our set of data files.
 > **A.1 Import one data set**
 > - check out `help import excel` for help
 > - your options (after the comma) should look like this 
@@ -63,7 +63,7 @@ Looking at the data, we can see there is only one indicator per file (in this ca
 
 Rather than reshaping each file, we can append all the data together first and then we will only need conduct the reshape on one dataset. Instead of going through importing each data set in our downloaded file individually into Stata and then saving it as a .dta file, we can run it through a loop. We will need to import all eight files in the folder (one for each variable) and append them together.
 
-> **A.2 Loop import over each of the indicator files **
+> **A.2 Loop import over each of the indicator files**
 > - review the setup `help foreach` for a loop using `in`
 > - your loop should contain 3 lines of code within it: 
 >     * `import` indicator file from downloaded folder
@@ -88,7 +88,7 @@ All the WDI files also include another tab that contains "meta data" for each co
 > - make sure to save this as a .dta file
 
 ### Part B - Append, Reshape, and Clean Data
-*If you are starting here, be sure to **[download the WDI data in Stata format] (https://github.com/GeoCenter/StataTraining/tree/master/Day3/Homework/PartB_WDI_Data_STATA)***
+*If you are starting here, be sure to [download the WDI data in Stata format] (https://github.com/GeoCenter/StataTraining/tree/master/Day3/Homework/PartB_WDI_Data_STATA)*
 
 Now that we have our data in Stata format (.dta), we can append all the files together so we can start using it to answer our questions. After it's appended we need to reshape the data **twice**. 
 
@@ -102,20 +102,25 @@ Now that we have our data in Stata format (.dta), we can append all the files to
 
 Now that we have all the data together in one file, it's time for us to start cleaning up the data a bit. The first we should so is reshape it. But before we can do that, we need to rename all our year variables, adding a `y` stub to the year, so they will look like `y1960 y1961 y1962 ...`.
 
+We could rename each of the year variables by hand, but it would take a while. It would look something like this:
+ ```
+  *rename each indicator manually
+    rename E y1960
+    rename F y1961
+    ...etc
+```
+Instead, we can take advantage of loops and macros. We can use a macro that stores variable label and apply this as the variable name (the variable label is the year).
+```
+  *using a macro to take the variable label and assign it as the variable name
+    local yearlabel : variable label E //the variable label is 1960
+    rename E y`yearlabel' //adding on y to the beginning since Stata variables cannot start with numbers
+    *E would be renamed y1960 
+ ``` 
+ 
+So, that's the gist of it. Now we just need to add this too a loop to go through all our year variables.
+
 > **B.2 - Rename years (loop) and drop unnecessary years**
-> - We could rename each of the year variables by hand, but it would take a while. It would look something like this:
-> ```
-> rename E y1960
-> rename F y1961
-> ...etc
->```
-> - Instead, we can take advantage of loops and macros. We can use a macro that stores variable label and apply this as the variable name (the variable label is the year).
->```
-> local yearlabel : variable label E //the variable label is 1960
-> rename E y`yearlabel` //adding on y to the beginning since Stata variables cannot start with numbers
-> E would be renamed y1960 
-> ``` 
-> - that's the gist of it. now we just need to add this too a loop to go through all our year variables. Look through `help foreach` to figure out how to setup a loop over a series of variables (I'll help you through the rest of the code)
+ Look through `help foreach` to figure out how to setup a loop over a series of variables (I'll help you through the rest of the code)
 >     * we will use `year` for our *lname* [indicated in the `help` file]
 > ```
 > foreach year ...{
@@ -127,7 +132,7 @@ Now that we have all the data together in one file, it's time for us to start cl
 > - since we only need to observe variables during 2002-2012, you can drop all the other years
 > - see `help drop`
 
-Now that we have the years labeled correctly (and we have our stub of `y`, we can start our initial reshape. We can tidy up our data by having all of the years in one column and all the data in another.
+Now that we have the years labeled correctly and we have our stub of `y` before each year, we can start our initial reshape. We can tidy up our data by having all of the years in one column and all the data in another.
 
 We want our data table to go from this:
 
@@ -224,25 +229,25 @@ With a little bit of cleaning using the code below, we'll have a final dataset t
 Wow, so it took quite a bit of work to get a working dataset to use for our analysis. Now that the hard part is out of the way, let's try to answer those initial questions.
 
 > **D.1 - What was the average percent of the workforce employed in agriculture by region in 2012?**
->     - see `help tabstat` to see how to structure this command and how to include the options you need to get at this answer
+> - see `help tabstat` to see how to structure this command and how to include the options you need to get at this answer
 
 > **D.2 - How many people had access to improved sanitation in 2012 by region?**
->     - you will need to generate a new variable as your first step 
->     - see `help tabstat` 
+> - you will need to generate a new variable as your first step 
+> - see `help tabstat` 
 
 > **D.3 - Visualize the relationship between access to improved sanitation and size of a country's rural population in 2010 via a a scatter plot.**
->     - remember that the y variable goes before the x variable in our command for graphs
->     - see `help scatter' or check out [Stata Graphs] (http://www.stata.com/support/faqs/graphics/gph/stata-graphs/) 
+> - remember that the y variable goes before the x variable in our command for graphs
+> - see `help scatter' or check out [Stata Graphs] (http://www.stata.com/support/faqs/graphics/gph/stata-graphs/) 
 
 > **D.4 - How has population growth changed over the period of 2003-2012 across different country income level groups?**
->     - it will be usefull to use the `collapse` command, aggregating up the sum by income level and year
->     - The equation for population growth in 2016 would look like:
->         * ` popgrowth_16 = (pop_16 - pop_15)/pop_15`
->     - in order to get the year before the current observation, you will want to make sure you first sort (`sort inc year`) and then use `pop[_n-1]`, where `_n` is the number of the current observation.
->     - see `help _n`
->     - since this is a time series, it would be good to use a `line` or `connected` plot if you are going to graph this.
->     - it will be useful to break the graphs into [small multiples] (https://en.wikipedia.org/wiki/Small_multiple), using the `by` option
->     - see `help line`, `help connected` or check out [Stata Graphs] (http://www.stata.com/support/faqs/graphics/gph/stata-graphs/) 
+> - it will be usefull to use the `collapse` command, aggregating up the sum by income level and year
+> - The equation for population growth in 2016 would look like:
+>     * ` popgrowth_16 = (pop_16 - pop_15)/pop_15`
+> - in order to get the year before the current observation, you will want to make sure you first sort (`sort inc year`) and then use `pop[_n-1]`, where `_n` is the number of the current observation.
+> - see `help _n`
+> - since this is a time series, it would be good to use a `line` or `connected` plot if you are going to graph this.
+> - it will be useful to break the graphs into [small multiples] (https://en.wikipedia.org/wiki/Small_multiple), using the `by` option
+> - see `help line`, `help connected` or check out [Stata Graphs] (http://www.stata.com/support/faqs/graphics/gph/stata-graphs/) 
 
 Great work! You've gone through a typical process, importing raw data, appending it, reshaping it, merging it, and cleaning it and then performed some analysis on the final dataset!
 
