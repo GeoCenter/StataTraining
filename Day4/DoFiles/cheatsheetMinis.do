@@ -6,11 +6,27 @@ adopath ++ "~/Documents/USAID/StataThemes"
 sysuse auto, clear
 
 
+// marginsplot
+reg mpg weight length turn
+margins, eyex(weight) at(weight = (1800(200)4800))
+marginsplot, noci
+graph export "margins.pdf", as(pdf) replace
+
+// coefplot
+regress price mpg headroom trunk length turn
+
+coefplot, drop(_cons) xline(0)
+
+graph export "coef.pdf", as(pdf) replace
+
+
 // error bars
 collapse (mean) mpg (sd) sdMPG = mpg, by(foreign)
 serrbar mpg sdMPG foreign, lw(thick) xscale(range(-1 2)) yscale(range(5 30)) xlabel(, nogrid) ylabel(, nogrid) 
 
 graph export "errbars.pdf", as(pdf) replace
+
+
 
 // better rbar
 sysuse sp500, clear
@@ -119,7 +135,7 @@ graph export "dotCat.pdf", as(pdf) replace
 twoway(scatter y2 x1 in 1/40)
 graph export "scatter.pdf", as(pdf) replace
 
-tw scatter y2 y1 [aw = y5] in 1/10, msize(small) scheme(cheatsheet)
+tw scatter id y3 [aw = id] if !mod(_n,8), msize(huge) scheme(cheatsheet) xscale(range(0 80)) yscale(range(0 70))
 graph export "bubble.pdf", as(pdf) replace
 
 
