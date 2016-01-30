@@ -1,3 +1,9 @@
+/*
+Examples of representative, icon-able graphs from different Stata plotting functions.
+
+Laura Hughes, January 2016, lhughes@usaid.gov
+*/
+
 cd "/Users/laurahughes/GitHub/StataTraining/Day4/DoFiles/plot pdfs"
 
 adopath ++ "~/Documents/USAID/StataThemes"
@@ -79,6 +85,8 @@ gen y8 = runiformint(30, 65)
 
 gen y9 = round(y5, 1)
 
+gen y10 = mod(y2,3)
+
 recode id (1 2 3 4 5 6 7 8 9 10 = 1 "A") (11 12 13 14 15 16 17 18 19 20 = 2 "B")/*
 */ (21 22 23 24 25 26 27 28 29 30 = 3 "C") (31 32 33 34 35 36 37 38 39 40 = 4 "D") /*
 */ (41 42 43 44 45 46 47 48 49 50 = 5 "E"), gen(lettStr)
@@ -93,7 +101,9 @@ recode id (1 2 3 4 5 6 7 8 9 10 = 1 "A") (11 12 13 14 15 16 17 18 19 20 = 2 "B")
 gr bar (asis) id in 1/4, over(id, reverse)
 graph export "bars.pdf", as(pdf) replace
 
-
+// grouped bar
+gr bar (percent) if(_n < 31), over(y10, gap(15)) over(lettStr) bar(2, fc(green))
+graph export "groupedbars.pdf", as(pdf) replace
 
 // hbar
 gr hbar (asis) id in 1/4, over(id)
