@@ -80,12 +80,17 @@ gen y5 = y1/4
 
 gen y6 = y1^2 + sign * y1 * 40
 
+
 gen y7 = runiformint(80, 100)
 gen y8 = runiformint(30, 65)
 
 gen y9 = round(y5, 1)
 
 gen y10 = mod(y2,3)
+
+gen yLin1 = id + sign * y1 * 40
+
+gen yLin2 = -id + sign * y1 * 40
 
 recode id (1 2 3 4 5 6 7 8 9 10 = 1 "A") (11 12 13 14 15 16 17 18 19 20 = 2 "B")/*
 */ (21 22 23 24 25 26 27 28 29 30 = 3 "C") (31 32 33 34 35 36 37 38 39 40 = 4 "D") /*
@@ -194,7 +199,7 @@ tw pccapsym y1 id2 y2 id3 in 7/9, lc("216 155 145") xlabel(, nogrid) ylabel(, no
 graph export "bump.pdf", as(pdf) replace
 
 // contour
-tw contour y1 y2 y3, level(8) crule(intensity) ecolor("235 205 200") xlabel(, nogrid) ylabel(, nogrid) scheme(cheatsheet)
+tw contour y2 x1 y3, level(5) crule(intensity) ecolor("235 205 200") xlabel(, nogrid) ylabel(, nogrid) scheme(cheatsheet) yscale(reverse)
 graph export "contour.pdf", as(pdf) replace
 
 // ------------------------------------------------------------------------------
@@ -248,6 +253,7 @@ scatter y7 id
 
 
 line y7 y8 id in 1/20, sort scheme(cheatsheet)
+line yLin1 yLin2 y1 in 1/20, sort scheme(cheatsheet)
 
 graph export "facet.pdf", as(pdf) replace
 
