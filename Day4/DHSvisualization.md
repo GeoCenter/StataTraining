@@ -6,6 +6,14 @@ Can we use visualizations to present the information more effectively, and ideal
 In this exercise, we will be looking at some aggregate statistics from a recent [Demographic and Health Survey in Rwanda](http://dhsprogram.com/pubs/pdf/PR65/PR65.pdf).  Your task, should you choose to accept it, is to take this table on child malnutrition in 2014-2015 and figure out a story to tell.
 
 ### The Data
+Here's how the data look directly in the report:
+
+![DHS Rwanda Stunting](/Day4/Data/RwandaDHS_2014-2015-34.png)
+
+
+... as you can see, there's a LOT going on, and the data, while organized rationally, don't tell that much of a story and aren't in the best form for direct analysis and visualization. We're nice, though, so we have the raw data for you [here].
+
+There's also lots of different angles you can take on the data: do you look at stunting (height-for age < -2 SD from mean)?  underweight? (weight-for-height < -2 SD from mean)? wasting (weight-for-age < -2 SD from mean)?  All three?  And what are you going to compare?
 
 Data are taken from the 2014-2015 Rwanda Demographic and Health Survey [Key Indicators Report](http://dhsprogram.com/pubs/pdf/PR65/PR65.pdf)
 
