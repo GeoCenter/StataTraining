@@ -3,14 +3,14 @@
 ### Introduction
 When we conduct analysis, rarely are we handed a clean dataset right from the start and just have dig into the numbers for some answers. For this week’s homework, we’re going to walk through a typical process for data munging and then do a little bit of work with our final dataset. We'll be combining a number of topics we've covered over the past few weeks, so have your [cheat sheets] (https://github.com/GeoCenter/StataTraining/tree/master/Cheat%20Sheets) at the ready (but don't worry, we'll help you walk through the process).
 
-Your homework will involve working with select indicators from the [World Banks World Development Indicators] (http://data.worldbank.org/data-catalog/world-development-indicators) to answer the following series of questions/tasks.
+Your homework will involve working with select indicators from the [World Banks World Development Indicators (WDI)] (http://data.worldbank.org/data-catalog/world-development-indicators) to answer the following series of questions/tasks.
 	
 - What was the average percent of the workforce employed in agriculture by region in 2012?
 - How many people had access to improved sanitation in 2012 by region?
 - Visualize the relationship between access to improved sanitation and size of a country's rural population in 2010 via a scatter plot.
 - How has population growth changed over the period of 2003-2012 across different country income level groups?
 
-We have provided you with raw data files downloaded directly from [WDI] (http://data.worldbank.org/data-catalog/world-development-indicators) which you can acess and **[download from here] (https://github.com/GeoCenter/StataTraining/tree/master/Day3/Homework/WDI_Data)**. To answer these questions, we need to start with our raw data, import it, "clean" it, and create a final dataset to perform our analysis on.
+We have provided you with raw data files downloaded directly from WDI, which you can acess and **[download from here] (https://github.com/GeoCenter/StataTraining/tree/master/Day3/Homework/WDI_Data)**. To answer these questions, we need to start with our raw data, import it, "clean" it, and create a final dataset to perform our analysis on.
 
 Assignments through out the walk through will look like this:
 > **X.1 Derive demand**
