@@ -141,7 +141,7 @@ We want our data table to go from this:
 | Aruba       | ABW         | Employment in agriculture (% of total employment) | ag_empl       |       |       |      |
 | Andorra     | AND         | Employment in agriculture (% of total employment) | ag_empl       |       |       |      |
 
-And reshape to look like this:
+And reshape to look like this (where y is your data values):
 
 | CountryName | IndicatorName                           | year | CountryCode | IndicatorCode | y |
 |-------------|-----------------------------------------|------|-------------|---------------|---|
