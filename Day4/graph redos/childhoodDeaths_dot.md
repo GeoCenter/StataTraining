@@ -1,6 +1,6 @@
 ### Creating a lollipop chart in Excel (Version 2010, Windows).
 
-1. Create a bubble plot with size proportional to the number of deaths, x is type of disease, and y is the percentage of teh disease, by country.
+1. Create a bubble plot with size proportional to the number of deaths, x is type of disease, and y is the percentage of the disease, by country.
     * Select the first country
     * Select bubble plot
     * Specify that column B (numdeaths_Africa) is the size variable.
@@ -47,7 +47,7 @@
     * Egads! Those bubbles for Americas look to be HUGE-- as big as the one in the Africa plot.  It turns out that Excel scales the largest data point to be a fixed side.  Which means, we can't compare the sizes between plots.  Alas... this can't be (easily) done.
 9.  Retreate! Fix stupid Excel
     * Edit the data points, removing the size variable.
-    * Change the size of the bubbles: double click bubbles and set **scale bubble size** to 25 so not so huge.
+    * Change the size of the bubbles: double click bubbles and set **scale bubble size** to 20 so not so huge.
     * Finish copying other regions.
     * Reorder the small multiples by most total deaths (Africa) to least (Europe)
   
