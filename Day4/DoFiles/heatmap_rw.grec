@@ -1,0 +1,168 @@
+StataFileTM:00001:01100:GREC:                          :
+00004:00004:00001:
+*! classname: twowaygraph_g
+*! family: twoway
+*! date:  4 Feb 2016
+*! time: 14:24:11
+*! graph_scheme: s2color
+*! naturallywhite: 1
+*! end
+
+// File created by Graph Editor Recorder.
+// Edit only if you know what you are doing.
+
+.xaxis1.style.editstyle majorstyle(tickstyle(show_labels(no))) editcopy
+// xaxis1 edits
+
+// xaxis1 edits
+
+.xaxis1.style.editstyle majorstyle(tickstyle(show_ticks(no))) editcopy
+// xaxis1 edits
+
+// xaxis1 edits
+
+// xaxis1 edits
+
+.xaxis1.style.editstyle linestyle(color(none)) editcopy
+// xaxis1 color
+
+// xaxis1 color
+
+.yaxis1.style.editstyle linestyle(color(none)) editcopy
+// yaxis1 color
+
+// yaxis1 color
+
+.yaxis1.style.editstyle majorstyle(tickstyle(textstyle(color("167 167 167")))) editcopy
+// yaxis1 color
+
+// yaxis1 color
+
+.yaxis1.style.editstyle majorstyle(tickstyle(linestyle(color("167 167 167")))) editcopy
+// yaxis1 color
+
+// yaxis1 color
+
+.plotregion1.plot13.style.editstyle label(textstyle(color(gs9))) editcopy
+// plot13 color
+
+.plotregion1.plot13.style.editstyle label(textstyle(color(gs11))) editcopy
+// plot13 color
+
+.plotregion1.plot13.style.editstyle label(textstyle(color(gs13))) editcopy
+// plot13 color
+
+.plotregion1.plot13.style.editstyle label(textstyle(size(tiny))) editcopy
+// plot13 size
+
+.plotregion1.plot13.style.editstyle label(textstyle(size(vsmall))) editcopy
+// plot13 size
+
+.plotregion1.plot12.style.editstyle area(shadestyle(intensity(inten30))) editcopy
+// plot12 intensity
+
+.plotregion1.plot12.style.editstyle area(shadestyle(intensity(inten80))) editcopy
+// plot12 intensity
+
+.plotregion1.plot12.style.editstyle area(linestyle(color(none))) editcopy
+// plot12 color
+
+.plotregion1.plot13.style.editstyle label(textstyle(color(gs11))) editcopy
+// plot13 color
+
+.plotregion1.plot13.style.editstyle label(textstyle(color(gs8))) editcopy
+// plot13 color
+
+.title.text = {}
+.title.text.Arrpush test
+// title edits
+
+.title.text = {}
+// title edits
+
+.AddTextBox added_text editor 69.76961640818603 24.47117112880074
+.added_text_new = 1
+.added_text_rec = 1
+.added_text[1].style.editstyle  angle(default) size(medsmall) color(black) horizontal(left) vertical(middle) margin(zero) linegap(zero) drawbox(no) boxmargin(zero) fillcolor(bluishgray) linestyle( width(thin) color(black) pattern(solid)) box_alignment(east) editcopy
+.added_text[1].text = {}
+.added_text[1].text.Arrpush 2001 | 2003
+// editor text[1] edits
+
+.added_text[1].style.editstyle size(small) editcopy
+// editor text[1] size
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush 2001    |    2003
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush 2001     |     2003
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush 2001       |     2003
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush 2002
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush 2002
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush |       2002
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush |         2002
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush |         2002          |
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush |         2002       |
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush |         2002       |       2004
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush |         2002       |      2004       |      2006       |      2008       |      2010       |      2012       |      2014
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush 2002       |      2004       |      2006       |      2008       |      2010       |      2012       |      2014
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush 2002       |     2004       |      2006      |      2008      |      2010      |      2012      |      2014
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush 2002       |     2004       |      2006      |      2008      |      2010      |      2012      |      2014
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush 2002       |      2004       |      2006      |       2008      |      2010      |      2012      |      2014
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush 2002       |      2004       |      2006      |       2008      |      2010      |      2012      |       2014
+// editor text[1] edits
+
+.added_text[1].text = {}
+.added_text[1].text.Arrpush 2002      |       2004       |      2006      |       2008      |      2010      |      2012      |       2014
+// editor text[1] edits
+
+.added_text[1].style.editstyle color("167 167 167") editcopy
+.added_text[1].text = {}
+.added_text[1].text.Arrpush 2002      |       2004       |      2006      |       2008      |      2010      |      2012      |       2014
+// editor text[1] edits
+
+
+// <end>
