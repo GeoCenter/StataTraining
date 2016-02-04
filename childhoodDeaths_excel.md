@@ -22,10 +22,16 @@ You should have something that looks like this:
 
 3. Time to clean things up.  Easy things first: let's get rid of the _legend_.  We don't need it.  Click on it, hit delete, and instantly your graph is better.
 ![bar_04]()
-4. Better. There's A LOT of grid lines, and they're dark.  Let's make them less dominant on the graph.
+4. Better. There's A LOT of grid lines, and they're dark.  Let's make the _grid lines less dominant_ on the graph.
     * Click on the y grid lines (horizontal lines across the graph) and double click.
     * The **Format Major Gridlines** box will come up.  Select **Solid Line** and change the color.  I like the **15% grey**
-    * Before you click "okay", click **Line Style**.  Change the line **width** to be 0.2 pt.  Thin and light focuses your eye on the data, not the grid lines.
+    * Before you click "okay", click **Line Style**.  Change the line **width** to be **0.2 pt**.  Thin and light focuses your eye on the data, not the grid lines.
 ![bar_05]()
+
+5.  Better-- but there's still a lot of grid lines.  Let's make the _grid lines less frequent_.  Double click on the y-axis to pull up the **Format Axis** menu.  Change the axis limits using **Axis Options**:
+    * minimum: 0
+    * maximum: 4
+    * major unit: 1 *! important! this is the spacing between the gridlines.
 ![bar_06]()
-5.
+
+6.
