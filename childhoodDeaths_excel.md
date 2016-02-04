@@ -34,4 +34,19 @@ You should have something that looks like this:
     * major unit: 1 *! important! this is the spacing between the gridlines.
 ![bar_06]()
 
-6.
+6. Time to unrotate the _x-axis titles_. Double click the x-axis, pulling up the **Format Axis** menu.
+    * Under **alignment** change the **custom angle** to be **0 degrees**.
+    * Now the text is perpendicular to the axis, but overlaps.
+![bar_07]()
+    * Shrink the font size to 8 point in the **Font menu** (in **Home**).
+    * Change the font color to a medium grey.
+![bar_08]()
+
+7.  That looks decent, but it'd probably make more sense if the bars were _ordered_ from highest to lowest.
+    * On the **home** tab, select **Sort & Filter** --> **Sort Z to A**
+![bar_09]()
+And now it looks like this:
+![bar_10]()
+
+8.  
+    
