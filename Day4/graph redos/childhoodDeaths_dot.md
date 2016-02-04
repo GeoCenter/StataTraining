@@ -4,7 +4,7 @@
     * Select the first country
     * Select bubble plot
     * Specify that column B (numdeaths_Africa) is the size variable.
-2. Sort Z to A on total deaths (column N)
+2. Sort A to Z on total deaths (column N)
 3. Delete legend
 4. Trick Excel into labelling the x-axis by names
     * Right click on data points and **Add data labels**
@@ -36,6 +36,18 @@
     * Lighten all fonts: y-axis title, x-axis labels, title
     * Resize the plot so it's more square
     * Adjust the size of the bubble so they aren't so big: double click on the bubbles.
-    * Scale bubble to 50%
-    * 
+    * Scale bubble by changing **scale bubble size = 50 ** (*** Note: this is an absolute size and will be a problem later)
+    * Manually click on each of the labels and move them to the bottom of the axis.  NOTE: Ideally, this plot would flip the x and y axes, so the diseases were on the y, where there's more room.  Unfortunately, Excel doesn't let us do that.
+    * And let's re-sort the total diseases, so the most prevalent one is on the left side.
+8. Create small mulitples of the other regions
+    * Copy the plot and paste 5 times, for the other regions.
+    * Select the data for the different columns (remember to change the **y** variable and the **size** variable).
+    * Change the title to reflect the different region
+    * Readjust the position of the x-labels.
+    * Egads! Those bubbles for Americas look to be HUGE-- as big as the one in the Africa plot.  It turns out that Excel scales the largest data point to be a fixed side.  Which means, we can't compare the sizes between plots.  Alas... this can't be (easily) done.
+9.  Retreate! Fix stupid Excel
+    * Edit the data points, removing the size variable.
+    * Change the size of the bubbles: double click bubbles and set **scale bubble size** to 25 so not so huge.
+    * Finish copying other regions.
+    * Reorder the small multiples by most total deaths (Africa) to least (Europe)
   
