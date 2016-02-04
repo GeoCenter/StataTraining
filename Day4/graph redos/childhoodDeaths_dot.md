@@ -45,7 +45,7 @@
     * Change the title to reflect the different region
     * Readjust the position of the x-labels.
     * Egads! Those bubbles for Americas look to be HUGE-- as big as the one in the Africa plot.  It turns out that Excel scales the largest data point to be a fixed side.  Which means, we can't compare the sizes between plots.  Alas... this can't be (easily) done.
-9.  Retreate! Fix stupid Excel
+9.  Retreat! Fix stupid Excel
     * Edit the data points, removing the size variable.
     * Change the size of the bubbles: double click bubbles and set **scale bubble size** to 20 so not so huge.
     * Finish copying other regions.
