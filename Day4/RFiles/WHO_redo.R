@@ -10,6 +10,7 @@ library(dplyr)
 library(tidyr)
 library(RColorBrewer)
 library(extrafont)
+library(stringr)
 
 loadfonts()
 
@@ -38,6 +39,14 @@ df$region = factor(df$region, levels = rev(c("Africa", "S. East Asia",
                                          "Americas", "Europe", "total")))
 
 
+dfTotals = df %>% 
+  select(region, contains("_total")) %>% 
+  gather(disease, numDeaths, -region) 
+
+dfTotals  = dfTotals %>% 
+  mutate(disease = str_replace(dfTotals$disease, "_total", ""))
+
+
 
 deathByRegion = df %>% select(region, Total) 
 
@@ -57,7 +66,7 @@ totalPneumonia = full_join(totalPneumonia, deathByRegion, by = "region")%>%
 
 # Remove goo and tidy
 df = df %>% 
-  select(-Check, -Total, -Pneumonia_total) %>% 
+  select(-Check, -Total, -contains("_total")) %>% 
   gather(disease, pct, -region)
 
 # Reorder levels
@@ -71,10 +80,26 @@ dfHeat = df %>% filter(region != "total")
 deathByDisease = df %>% filter(region == "total")
 
 
-# Plot heatmap ------------------------------------------------------------
+everything  = full_join(dfHeat, dfTotals, by =  c("region", "disease")) %>% 
+  mutate(pct = pct/100)
 
-ggplot(dfHeat, aes(y = region, x = disease, fill = pct)) +
-  geom_tile(colour = grey30K) +
+everything$disease = factor(everything$disease, levels = rev(c("Neonatal",
+                                                               "Pneumonia", "Diarrhea",
+                                                               "Other", "Malaria",
+                                                               "Measles", "Injuries", "HIV/AIDS")))
+everything$region = factor(everything$region, levels = (c("Africa", "S. East Asia",
+                                             "Middle East", "Asia/Oceania",
+                                             "Americas", "Europe", "total")))
+
+# Plot heatmap ------------------------------------------------------------
+dfHeat = dfHeat %>% 
+  mutate(colHeat = ifelse(pct > 15, "white", grey50K))
+
+
+ggplot(dfHeat, aes(y = region, x = disease, fill = pct, label = paste0(pct, "%"))) +
+  geom_tile(colour = grey30K, size = 0.35) +
+  geom_text(aes(colour = colHeat), family = "Segoe UI", size = 5) + 
+  scale_colour_identity() +
   scale_fill_gradientn(colours = brewer.pal(9, "YlGnBu"),
                       name = "percent of total deaths") +
   ggtitle("Pneumonia is the second leading cause of death of children under 5") +
@@ -210,4 +235,111 @@ ggplot(totalPneumonia, aes(x = region, y = deaths, label = pct)) +
   ylab("deaths of children under 5 (in millions)") +
   ggtitle("Child deaths from pneumonia are most common in Africa, S.E. Asia, and the Middle East") + 
   coord_flip()
+
+
+# Total -------------------------------------------------------------------
+
+
+
+ggplot(dfTotals, aes(y = numDeaths, x = region, fill = disease)) + 
+  geom_bar(position = "dodge", stat = "identity")
+
+ggplot(dfTotals%>% filter(region != "total"), aes(y = numDeaths, x = disease)) + 
+  geom_bar(position = "dodge", stat = "identity") +
+  facet_wrap(~region)
+
+
+# Dot plots ---------------------------------------------------------------
+
+
+ggplot(dfTotals, aes(x = numDeaths, y = region, colour = disease)) +
+  geom_point()
+
+
+ggplot(dfHeat, aes(x = pct, y = region, colour = disease)) +
+  geom_point()
+
+
+ggplot(dfHeat, aes(x = pct, y = disease, colour = disease)) +
+  geom_segment(aes(xend = 0, yend = disease)) + 
+  geom_point() +
+  facet_wrap(~region)
+
+ggplot(dfTotals %>% filter(region != "total"), aes(x = numDeaths, y = disease, colour = disease)) +
+  geom_point() +
+  facet_wrap(~region)
+  
+
+ggplot(everything %>% filter(region != "total"), 
+       aes(x = pct, y = disease, colour = numDeaths, size = numDeaths)) +
+  geom_segment(aes(xend = 0, yend = disease), size = 0.5) + 
+  geom_point() +
+  geom_text(aes(label = paste0(signif(numDeaths, 1), " million")),
+            family = "Segoe UI Light",
+            data = everything %>% filter(disease == "Pneumonia", region != "total"),
+            size = 4, hjust = 0,
+            position = position_nudge(x = 0.05)) +
+  scale_size(range = c(0.5, 8),
+             name = "number of deaths (millions)") + 
+  scale_color_gradientn(guide = FALSE,
+    colours = brewer.pal(9, "Blues")[5:9]) + 
+  scale_x_continuous(labels = scales::percent, 
+                     breaks = c(0, 0.20, 0.4),
+                     minor_breaks = seq(0, 0.5, 0.1),
+                     limits = c(0, 0.5)) +
+  scale_y_discrete(expand = c(0, 1.2)) +
+  xlab("share of deaths, by region") +
+  ylab("") +
+  facet_wrap(~region) +
+  theme_bw() +
+  theme(
+    text = element_text(family = 'Segoe UI Light'),
+    axis.text = element_text(size = 16, color = grey50K, family = 'Segoe UI Light'),
+    title =  element_text(size = 18, family = 'Segoe UI', hjust = 0, color = grey60K),
+    axis.title.y =  element_text(size = 20, color = grey50K, family = 'Segoe UI Semilight', hjust = 0.5, vjust = 1),
+    axis.title.x =  element_text(size = 20, color = grey50K, family = 'Segoe UI Semilight', hjust = 0.5, vjust = -0.25),
+    strip.text = element_text(size=13, color = grey50K, family = 'Segoe UI Semilight'),
+    legend.text = element_text(size = 13),
+    legend.key = element_blank(),
+    strip.background = element_blank(),
+    panel.grid.major = element_line(size = 0.2, color = grey50K),
+    panel.grid.minor = element_line(size = 0.2, color = grey30K),      panel.grid.minor.y = element_blank(),
+              panel.grid.major.y = element_blank())
+
+
+
+# Mini bar of by diseas ---------------------------------------------------
+
+deathByDisease = deathByDisease %>% 
+  mutate(colBar = ifelse(disease == "Pneumonia", brewer.pal(9,"Blues")[8], grey30K))
+
+ggplot(deathByDisease, aes(x = disease, y = pct, fill = colBar, colour = colBar)) +
+  # geom_bar(aes(x = disease, y = totalDeaths$Total), stat = "identity", fill = "#dddddd") +
+  geom_bar(stat = "identity", size = 0) +
+  geom_text(aes(label = round(pct,1)), 
+            size = 7,
+            position = position_nudge(y = 0.2),
+            family = "Segoe UI Semilight") +
+  scale_fill_identity() +
+  scale_color_identity() +
+  theme_bw() +
+  theme(
+    text = element_text(family = 'Segoe UI Light', colour = grey60K),
+    rect = element_blank(),
+    plot.background = element_blank(),
+    axis.text = element_text(size = 12,  color = grey60K),
+    axis.text.y = element_blank(),
+    title =  element_text(size = 15, family = "Segoe UI", hjust = 0, color = grey90K),
+    axis.title = element_blank(), 
+    axis.line = element_blank(),
+    # axis.line.y = element_blank(),
+    strip.text = element_text(size=14, face = 'bold', hjust = 0.05, vjust = -2.5, color = '#4D525A'),
+    legend.position = 'none',
+    strip.background = element_blank(),
+    axis.ticks = element_blank(),
+    panel.margin = unit(3, 'lines'),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(size = 0.1, color = '#bababa'))
 
