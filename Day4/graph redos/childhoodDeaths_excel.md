@@ -1,9 +1,13 @@
 ## Making a halfway decent graph in Excel
 
-First, we need data to work on.  We're going to use data from a recent chart the WHO published, which could use a little refresh
+First, we need data to work on.  We're going to use data from a recent chart the WHO published, which could use a little refresh.
 **Note: these values are read from the chart, and are at least somewhat inaccurate.
 
 I'm using Microsoft Excel 2010 for Windows, so things may look slightly different in your software.
+
+### Data
+... The maybe accurate data is located [here](/Day4/Data/raw/WHOdata.xlsx)
+
 
 ### Creating a bar graph of the total childhood deaths by disease type.
 1. Create a basic bar graph. Here, I'll use the first two columns of data, though it's not what we want in the end.
@@ -85,4 +89,4 @@ And now it looks like this:
 
 
 Et le voila!  Better.
-
+![final](/Day4/graph redos/bar_final.png)
