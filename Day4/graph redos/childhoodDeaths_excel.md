@@ -18,10 +18,10 @@ Select columns A and B, and then click **Insert** (top toolbar) --> **Column** -
 Change **Series Values** to be **=Sheet1!$N$2:$N$9**
 
 You should have something that looks like this:
-![bar_03](/Day4/graph redos/bar_03.png)
+![bar_03](/Day4/graph redos/bar_03.PNG)
 
 3. Time to clean things up.  Easy things first: let's get rid of the _legend_.  We don't need it.  Click on it, hit delete, and instantly your graph is better.
-![bar_04](/Day4/graph redos/bar_04.png)
+![bar_04](/Day4/graph redos/bar_04.PNG)
 4. Better. There's A LOT of grid lines, and they're dark.  Let's make the _grid lines less dominant_ on the graph.
     * Click on the y grid lines (horizontal lines across the graph) and double click.
     * The **Format Major Gridlines** box will come up.  Select **Solid Line** and change the color.  I like the **15% grey**
@@ -46,7 +46,7 @@ You should have something that looks like this:
     * On the **home** tab, select **Sort & Filter** --> **Sort Z to A**
 ![bar_09](/Day4/graph redos/bar_09.png)
 And now it looks like this:
-![bar_10](/Day4/graph redos/bar_10.png)
+![bar_10](/Day4/graph redos/bar_10.PNG)
 
 8.  Time to directly _label bars with values_.
     * Right click on the bars and **Add Data Labels**
