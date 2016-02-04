@@ -6,7 +6,7 @@ First, we need data to work on.  We're going to use data from a recent chart the
 I'm using Microsoft Excel 2010 for Windows, so things may look slightly different in your software.
 
 ### Data
-... The maybe accurate data is located [here](/Day4/Data/raw/WHOdata.xlsx)
+... The maybe accurate data is located [here](https://github.com/GeoCenter/StataTraining/raw/master/Day4/Data/WHOdata.xlsx)
 
 
 ### Creating a bar graph of the total childhood deaths by disease type.
@@ -89,4 +89,5 @@ And now it looks like this:
 
 
 Et le voila!  Better.
+
 ![final](/Day4/graph redos/bar_final.png)
