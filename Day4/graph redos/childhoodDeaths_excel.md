@@ -21,6 +21,7 @@ You should have something that looks like this:
 ![bar_03](/Day4/graph redos/bar_03.PNG)
 
 3. Time to clean things up.  Easy things first: let's get rid of the _legend_.  We don't need it.  Click on it, hit delete, and instantly your graph is better.
+
 ![bar_04](/Day4/graph redos/bar_04.PNG)
 4. Better. There's A LOT of grid lines, and they're dark.  Let's make the _grid lines less dominant_ on the graph.
     * Click on the y grid lines (horizontal lines across the graph) and double click.
@@ -58,13 +59,13 @@ And now it looks like this:
     * Change the font color to a grey.
     * Since we have value labels on the bars, we don't need numbers on the **y-axis**.  Click the y-axis and hit **delete**.
     * ![bar_13](/Day4/graph redos/bar_13.png)
-    * ![bar_14](/Day4/graph redos/bar_14.png)
+    * ![bar_14](/Day4/graph redos/bar_14.PNG)
     * While we're getting rid of superfluous things, there's no reason for the _x-axis tick marks_.  Double click the **x-axis** and select **none** in the **major tick mark type**
     * ![bar_15](/Day4/graph redos/bar_15.png)
     *  Lastly, let's change the title to be a description of the y-axis. Click on "Title" and type "million deaths worldwide"
     *  Change the font to be **not bold**, **14 point**, and the same grey.
     *  Click and drag the label to sit near the label for neonatal diseases.
-    *  ![bar_16](/Day4/graph redos/bar_16.png)
+    *  ![bar_16](/Day4/graph redos/bar_16.PNG)
 9.  Lastly, a bit of bar magic.  We want to highlight the pneumonia bar, since it's interesting.
     * Double click on thr bars to pull up the **Format Data Point** menu.
     * Under **Series Options** change the **Gap Width** to be **25%** to fatten the bars up.
