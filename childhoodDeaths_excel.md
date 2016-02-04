@@ -12,4 +12,7 @@ Select columns A and B, and then click **Insert** (top toolbar) --> **Column** -
 
 2. Change the data to be the **disease** (column A) as the x variable, and **total deaths** (column N) as y.
     There are a couple ways to do this.
-   * If you click on the chart, you should see a purple and blue box outlining the variables.  Your x variable is in pr
+   * If you click on the chart, you should see a purple and blue box outlining the variables.  Your x variable is in purple and y in blue.  Click and drag the blue box over to column N. 
+   * Alternatively, you can tell Excel which column to use. Click **Chart Tools** (top toolbar) --> **Select Data** --> **Edit** -->
+Change **Series Values** to be **=Sheet1!$N$2:$N$9**
+
