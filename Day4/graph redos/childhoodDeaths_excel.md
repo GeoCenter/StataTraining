@@ -58,9 +58,9 @@ And now it looks like this:
     * On the **Format Data Labels** menu, click **Number** and change from General to **Number** with **1 decimal place**
     * ![bar_12](/Day4/graph redos/bar_12.png)
     * On the **Font menu** (in **Home**) increase font size to **14 point**.
+    * ![bar_13](/Day4/graph redos/bar_13.png)
     * Change the font color to a grey.
     * Since we have value labels on the bars, we don't need numbers on the **y-axis**.  Click the y-axis and hit **delete**.
-    * ![bar_13](/Day4/graph redos/bar_13.png)
     * ![bar_14](/Day4/graph redos/bar_14.PNG)
     * While we're getting rid of superfluous things, there's no reason for the _x-axis tick marks_.  Double click the **x-axis** and select **none** in the **major tick mark type**
     * ![bar_15](/Day4/graph redos/bar_15.png)
@@ -69,12 +69,12 @@ And now it looks like this:
     *  Click and drag the label to sit near the label for neonatal diseases.
     *  ![bar_16](/Day4/graph redos/bar_16.PNG)
 9.  Lastly, a bit of bar magic.  We want to highlight the pneumonia bar, since it's interesting.
-    * Double click on thr bars to pull up the **Format Data Point** menu.
+    * Double click on the bars to pull up the **Format Data Point** menu.
     * Under **Series Options** change the **Gap Width** to be **25%** to fatten the bars up.
-    * Before you click okay, under **Fill** select **Solid Fill** and change to a grey.  Click close.
-    * To select the pneumonia bar, single click the bars, then single click again the pneumonia one.  Right click and **Format Data point**
     * ![bar_17](/Day4/graph redos/bar_17.png)
+    * Before you click okay, under **Fill** select **Solid Fill** and change to a grey.  Click close.
     * ![bar_18](/Day4/graph redos/bar_18.png)
+    * To select the pneumonia bar, single click the bars, then single click again the pneumonia one.  Right click and **Format Data point**
     * ![bar_19](/Day4/graph redos/bar_19.png)
     * Under **Fill** change to a nice blue.
     * You can do the same thing to the value label for the pneumonia bar (2.0). Select just the 2.0, and change the color to blue.
@@ -82,4 +82,7 @@ And now it looks like this:
     * Click on the graph, then the **Format** tab under **Chart Tools**
     * Change the **Shape Outline** to **No outline**
     * ![bar_20](/Day4/graph redos/bar_20.png)
-    
+
+
+Et le voila!  Better.
+
