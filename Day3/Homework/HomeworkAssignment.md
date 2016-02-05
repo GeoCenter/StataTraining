@@ -251,3 +251,4 @@ Wow, so it took quite a bit of work to get a working dataset to use for our anal
 
 Great work! You've gone through a typical process, importing raw data, appending it, reshaping it, merging it, and cleaning it and then performed some analysis on the final dataset!
 
+### [SOLUTIONS] (https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/Day3HomeworkSolutions.do)
