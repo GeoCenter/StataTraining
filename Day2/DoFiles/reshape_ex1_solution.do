@@ -3,6 +3,7 @@
 * Date: 2016.01.13
 
 * Reshape 1 solution
+webuse set "https://github.com/GeoCenter/StataTraining/raw/master/Day2/Data"
 webuse reshape_ex1.dta, clear
 
 * Look at the data 
