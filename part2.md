@@ -25,11 +25,19 @@ Unfortunately, most of the time spent doing 'data science' are the mundane, bori
 - Exercise 1: psuedocoding a task 
 - Exercise 2: reshaping messy data into tidy data  
 
+
+
 #### [Reshape Exercises](https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Reshape_Homework.do)  
+
+
 
 #### [Reshape & Merge Homework (Advanced)](https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Homework.do)  
 
+
+
 #### [Reshape Exercise Solutions](https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Reshape_exercises_lauraAnswers.do)  
+
+
 
 #### Up next...
 Now that we have a tidy dataset, we will learn how to combine data and conduct basic summary statistics and tabulations.

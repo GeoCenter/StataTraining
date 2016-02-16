@@ -24,8 +24,12 @@ For our final presentation we will cover the principles of data visualization.
 
 #### [Homework](https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup.do)   
 
-#### [Answer Key](https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup_answers.do)   
 
+
+#### [Answer Key](https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup_answers.do)  
+
+
+ 
 #### What to remember?  
 1. Identify your audience
 2. Create comparisons within the data
