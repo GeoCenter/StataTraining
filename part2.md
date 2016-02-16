@@ -23,9 +23,10 @@ Unfortunately, most of the time spent doing 'data science' are the mundane, bori
 
 ### Exercises
 - Exercise 1: psuedocoding a task 
-- Exercise 2: reshaping messy data into tidy data
+- Exercise 2: reshaping messy data into tidy data  
 
 #### [Reshape Exercises](https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Reshape_Homework.do)  
+
 #### [Reshape & Merge Homework (Advanced)](https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Homework.do)  
 
 #### [Reshape Exercise Solutions](https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Reshape_exercises_lauraAnswers.do)  

@@ -28,11 +28,11 @@ In this session you will learn the basics of data management and analysis using 
 - Exercise 2: Collapse and summarizing foreign assistance data
 - Exercise 3: Loop over household assets
 - Exercise 4: Loop over geographic zones
-- Exercise 5: Execute mathematical operations through loops
+- Exercise 5: Execute mathematical operations through loops  
 
-#### [Homework](https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/HomeworkAssignment.md)
+#### [Homework](https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/HomeworkAssignment.md)  
 
-#### [Answer Key](https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/Day3HomeworkSolutions.do)
+#### [Answer Key](https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/Day3HomeworkSolutions.do)  
 
-#### Up next...
+#### Up next...  
 Now that we have learned about the fundamentals of data munging, we will move on to some principles of data visualization.
