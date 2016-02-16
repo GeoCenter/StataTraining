@@ -22,9 +22,13 @@ For our final presentation we will cover the principles of data visualization.
 - Exercise 2: evaluating a graphic
 - Exercise 3: sketch a visualization
 
-#### [Homework](https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/HomeworkAssignment.md)
+#### [Homework](https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup.do)  
 
-#### [Answer Key](https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/Day3HomeworkSolutions.do)
+#### [Answer Key](https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup_answers.do)  
 
-#### Up next...
-Now that we have learned about the fundamentals of data munging, we will move on to some principles of data visualization.
+#### What to remember?
+1. Identify your audience
+2. Create comparisons within the data
+3. Simplify: Get it right in __black__ and __white__
+4. Provide context -- annotate
+5. Iterate, share, iterate, share...

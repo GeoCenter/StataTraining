@@ -13,31 +13,22 @@ Unfortunately, most of the time spent doing 'data science' are the mundane, bori
 
 ###  Part 2 Goals
 
-1. import data and identify inconsistencies
+1. import data and identify data inconsistencies
 2. break coding goals into small tasks
 3. document your work using a .do file (script)
 4. understand and execute routine data manipulation operations such as:  
+- transformations (gen & egen)
 - reshaping (melting & casting)
-- combining data sets
-- updating data sets
-- transforming 
-- summarizing
 5. conduct basic summaries, tabulations and visualizations on the FAD data set
 
 ### Exercises
-- Exercise 1: tidy 
-- Exercise 2: merge data sets together (add hyperlink to content below)
-- ...
+- Exercise 1: psuedocoding a task 
+- Exercise 2: reshaping messy data into tidy data
 
-#### Exercise 1
-(provide intro)   
-    `ggplot(mtcars, aes(x = mpg, y = cyl)) + geom_point()`
+#### [Reshape Exercises](https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Reshape_Homework.do)  
+#### [Reshape & Merge Homework (Advanced)](https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Homework.do)  
 
-(show output, make comments.)
-
-#### Homework
-
-#### Answer Key
+#### [Reshape Exercise Solutions](https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Reshape_exercises_lauraAnswers.do)  
 
 #### Up next...
-Now that we have a tidy dataset, we'll see what we can do with it, analyzing the data and building regressions.
+Now that we have a tidy dataset, we will learn how to combine data and conduct basic summary statistics and tabulations.
