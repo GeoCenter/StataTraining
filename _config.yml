@@ -11,7 +11,7 @@ github_username:  flaneuse
 # Build settings
 markdown: kramdown
 
-highlighter: pygments
+# highlighter: pygments
 
 # Pagination
 paginate: 15
