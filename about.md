@@ -15,16 +15,9 @@ The title (Fundamentals of Data Analysis and Visualization) is admittedly a bit 
 The materials cover:
 
 - an introduction to statistical software, coding, and reproducible analysis in Stata 
-- the fundamentals of data processing and management, 
-- exploratory data analysis and visualization
-- basic statistical and regression analysis
-- data visualization and data analysis communication.
-
-<br>
-<hr>
-<br>
-
-###the data
+- the fundamentals of data processing and management 
+- exploratory data analysis, visualization, and basic summary statistics
+- data visualization and data analysis communication
 
 <br>
 <hr>
