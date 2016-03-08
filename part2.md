@@ -7,11 +7,11 @@ permalink: /part2/
 ## Data Wrangling Basics
 <br>
 
-### Introduction
+### Introduction    
 Unfortunately, most of the time spent doing 'data science' are the mundane, boring, and occasionally frustrating bits known as data wrangling.  
 
 
-###  Part 2 Goals
+###  Part 2 Goals    
 
 1. import data and identify data inconsistencies
 2. break coding goals into small tasks
@@ -21,7 +21,7 @@ Unfortunately, most of the time spent doing 'data science' are the mundane, bori
 - reshaping (melting & casting)
 5. conduct basic summaries, tabulations and visualizations on the FAD data set
 
-### Exercises
+### Exercises   
 - Exercise 1: psuedocoding a task 
 - Exercise 2: reshaping messy data into tidy data  
 
