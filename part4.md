@@ -6,6 +6,8 @@ permalink: /part4/
 
 ## Data Visualization Basics
 <br>
+<iframe src="https://docs.google.com/presentation/d/186LxIQ8fLcmwlroeT8-z3LDm1QQ7zMFtqTH1k5i3lmw/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<br>   
 
 ### Introduction  
 For our final presentation we will cover the principles of data visualization.   
