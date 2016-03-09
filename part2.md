@@ -6,6 +6,8 @@ permalink: /part2/
 
 ## Data Wrangling Basics
 <br>
+<iframe src="https://docs.google.com/presentation/d/1WMrmG1uDxYNPXnvKPhZAtpF2HMnPrOXkWWHM2iAJMFo/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<br>   
 
 
 #### Introduction    
