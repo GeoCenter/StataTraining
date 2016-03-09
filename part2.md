@@ -29,8 +29,10 @@ Unfortunately, most of the time spent doing 'data science' are the mundane, bori
 
 #### [Reshape Exercises](https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Reshape_Homework.do)  
 <br>
+
 #### [Reshape & Merge Homework (Advanced)](https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Homework.do)  
 <br>
+
 #### [Reshape Exercise Solutions](https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Reshape_exercises_lauraAnswers.do)  
 <br>
 
