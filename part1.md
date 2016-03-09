@@ -5,6 +5,7 @@ permalink: /part1/
 ---
 
 ### Fundamentals of Stata and Data Analysis   
+<iframe src="https://docs.google.com/presentation/d/19BGniEkPaCi2WgG_psuV7N8Y98cB9h1OqfFMzpRg8bQ/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 <br>
 
 #### Introduction   
@@ -18,11 +19,11 @@ We'll spend the first day learning about the fundamental building blocks for dat
 4. Read a Stata help file and know where to find additional help online   
 
 
-####  [Homework](https://github.com/GeoCenter/StataTraining/blob/master/Day1/Homework/Day%201%20Homework%20-%20with%20answers2.docx)   
+####  <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day1/Homework/Day%201%20Homework%20-%20with%20answers2.docx" target="_blank">Homework</a>
 <br>
 
-#### [Answer Key](https://github.com/GeoCenter/StataTraining/blob/master/Day1/Homework/Day%201%20Homework%20Assignment.docx)         
 
+#### <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day1/Homework/Day%201%20Homework%20Assignment.docx" target="_blank">Answer Key</a>     
 <br>   
 
 #### Up next...   
