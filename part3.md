@@ -6,7 +6,7 @@ permalink: /part3/
 
 ## Data Analysis Basics
 <br>
-<iframe src="https://docs.google.com/presentation/d/1RCwkEHlSPrWeXoLwbRWp21Zq9oONYHx8EibAdiYFZgQ/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<iframe src="https://docs.google.com/presentation/d/1RCwkEHlSPrWeXoLwbRWp21Zq9oONYHx8EibAdiYFZgQ/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="380" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 <br>
 
 ### Introduction  
