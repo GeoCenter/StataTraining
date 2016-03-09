@@ -35,9 +35,10 @@ In this session you will learn the basics of data management and analysis using 
 
 
 #### [Homework](https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/HomeworkAssignment.md)   
+<br>   
 
-[Answer Key](https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/Day3HomeworkSolutions.do)   
-
+#### [Answer Key](https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/Day3HomeworkSolutions.do)   
+<br>   
 
 #### Up next...  
 Now that we have learned about the fundamentals of data munging, we will move on to some principles of data visualization.
