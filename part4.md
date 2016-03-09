@@ -9,17 +9,17 @@ permalink: /part4/
 <iframe src="https://docs.google.com/presentation/d/186LxIQ8fLcmwlroeT8-z3LDm1QQ7zMFtqTH1k5i3lmw/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 <br>   
 
-### Introduction  
+#### Introduction  
 For our final presentation we will cover the principles of data visualization.   
 
 
-###  Part 2 Goals  
+####  Part 2 Goals  
 1. become a critical consumer of data visualizations
 2. understand best practices and principles to convey information graphically
 3. apply these practices and principles to implement a visualization of real data   
 
 
-### Exercises   
+#### Exercises   
 - Exercise 1: 75 & 37 
 - Exercise 2: evaluating a graphic
 - Exercise 3: sketch a visualization  
