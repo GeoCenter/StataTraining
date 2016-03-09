@@ -5,7 +5,7 @@ permalink: /part1/
 ---
 
 ### Fundamentals of Stata and Data Analysis   
-<iframe src="https://docs.google.com/presentation/d/19BGniEkPaCi2WgG_psuV7N8Y98cB9h1OqfFMzpRg8bQ/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<iframe src="https://docs.google.com/presentation/d/19BGniEkPaCi2WgG_psuV7N8Y98cB9h1OqfFMzpRg8bQ/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="380" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 <br>
 
 #### Introduction   
