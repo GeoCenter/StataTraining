@@ -6,6 +6,8 @@ permalink: /part3/
 
 ## Data Analysis Basics
 <br>
+<iframe src="https://docs.google.com/presentation/d/1RCwkEHlSPrWeXoLwbRWp21Zq9oONYHx8EibAdiYFZgQ/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<br>
 
 ### Introduction  
 In this session you will learn the basics of data management and analysis using Stata. The first part of the presentation will focus on combining datasets through the `append` and `merge` commands. Section two will introduce five commands to help you summarize and tabulate your data. The final part covers data export and how to automate routine tasks using loops.
