@@ -283,3 +283,9 @@ text-align: center;
 vertical-align: middle;
 font-size: $caption_font_size;
 }
+.logo{
+    padding-left: $horizontal-spacing-unit;
+    width: 20px;
+    height: auto;
+    vertical-align: middle;
+}

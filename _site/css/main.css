@@ -410,6 +410,12 @@ pre {
   vertical-align: middle;
   font-size: 12px; }
 
+.logo {
+  padding-left: 50px;
+  width: 20px;
+  height: auto;
+  vertical-align: middle; }
+
 /**
  * Syntax highlighting styles
  */
