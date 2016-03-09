@@ -12,8 +12,7 @@ permalink: /part2/
 Unfortunately, most of the time spent doing 'data science' are the mundane, boring, and occasionally frustrating bits known as data wrangling.  
 
 
-####  Part 2 Goals    
-
+####  Part 2 Goals   
 1. import data and identify data inconsistencies
 2. break coding goals into small tasks
 3. document your work using a .do file (script)
@@ -30,15 +29,10 @@ Unfortunately, most of the time spent doing 'data science' are the mundane, bori
 
 #### [Reshape Exercises](https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Reshape_Homework.do)  
 <br>
-
-
 #### [Reshape & Merge Homework (Advanced)](https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Homework.do)  
 <br>
-
-
 #### [Reshape Exercise Solutions](https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Reshape_exercises_lauraAnswers.do)  
-
-
+<br>
 
 #### Up next...
 Now that we have a tidy dataset, we will learn how to combine data and conduct basic summary statistics and tabulations.
