@@ -6,9 +6,6 @@ permalink: /part2/
 
 ## Data Wrangling Basics
 <br>
-<iframe src="https://docs.google.com/a/usaid.gov/presentation/d/17af5Jc14as47f7RVzrgeM542rObf6izSYf6EemfI7DE/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-<br>
-
 
 
 #### Introduction    
