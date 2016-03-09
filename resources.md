@@ -7,4 +7,4 @@ permalink: /resources/
 ## Resources
 <br>
 
-### Helpful links and articles to get you started with data analysis and visualization   
+#### Helpful links and articles to get you started with data analysis and visualization   
