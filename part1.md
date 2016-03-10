@@ -43,7 +43,7 @@ We'll spend the first day learning about the fundamental building blocks for dat
 <div class="icon">
  <div class="thumbnailicon">
         <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day1/Homework/Day%201%20Homework%20-%20with%20answers2.docx" target="_blank">
-        <img class="thumbnailicon" src="/StataTraining/img/part1.png"/> 
+        <img class="thumbnailicon" src="/StataTraining/img/homework_solution.png"/> 
         <span>
             <h1>Answers</h1>
             <br/>
