@@ -19,21 +19,62 @@ For our final presentation we will cover the principles of data visualization.
 3. apply these practices and principles to implement a visualization of real data   
 
 
-#### Exercises   
-- Exercise 1: Sketch as many ways as you can think of to represent 75 & 37. Inspired by <a href = "http://blog.visual.ly/45-ways-to-communicate-two-quantities/" target = "_blank">Santiago Ortiz</a>
-- Exercise 3: sketch a visualization  
+#### Warm-up exercise   
+Sketch as many ways as you can think of to represent two numbers: 75 & 37. Inspired by <a href = "http://blog.visual.ly/45-ways-to-communicate-two-quantities/" target = "_blank">Santiago Ortiz</a>
 
-#### <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup.do" target="_blank">Homework</a>       
-<br>   
-
-
-#### <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup_answers.do" target="_blank">Answer Key</a>        
-<br>     
-
- 
 #### What to remember?  
 1. Identify your audience
 2. Create comparisons within the data
 3. Simplify: Get it right in __black__ and __white__
 4. Provide context -- annotate
 5. Iterate, share, iterate, share...
+
+
+<div class="icon">
+ <div class="thumbnailicon">
+        <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day4/DHSvisualization.md" target="_blank">
+        <img class="thumbnailicon" src="/StataTraining/img/part4.png"/> 
+        <span>
+            <h1>Exercise</h1>
+            <br/>
+            <p>Converting a table into a meaningful visualization</p>
+        </span>
+        </a>
+      </div>
+    </div>
+
+
+<div class="icon">
+ <div class="thumbnailicon">
+        <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup.do" target="_blank">
+        <img class="thumbnailicon" src="/StataTraining/img/homework.png"/> 
+        <span>
+            <h1>Homework</h1>
+            <br/>
+            <p>Exploring variation in numbers</p>
+        </span>
+        </a>
+      </div>
+    </div>
+
+<div class="icon">
+ <div class="thumbnailicon">
+        <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup_answers.do" target="_blank">
+        <img class="thumbnailicon" src="/StataTraining/img/homework_solution.png"/> 
+        <span>
+            <h1>Answers</h1>
+            <br/>
+            <p>Exploring variation in numbers</p>
+        </span>
+        </a>
+      </div>
+    </div>   
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+ 
+
