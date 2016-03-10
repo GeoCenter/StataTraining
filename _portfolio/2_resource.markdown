@@ -1,11 +1,11 @@
 ---
 layout: post
 title: Stata Cheatsheets
-description: cheatsheets for key Stata packages
+description: cheatsheets for key Stata commands
 img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 ---
 
-#### Basic Processing in Stata
+### Basic Processing in Stata
 <div class="col three caption">
 	Fundamental commands in Stata to import, explore, summarize, and create new variables.
 </div> 
@@ -19,7 +19,7 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
       
 
 
-#### Data Transformation in Stata
+### Data Transformation in Stata
 <div class="col three caption">
 	Selecting portions of datasets, replacing and lableing data, reshaping, merging, string manipulation, and saving
 </div>
@@ -32,7 +32,7 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 
 
 
-#### Creating Data Visualizations in Stata
+### Creating Data Visualizations in Stata
 <div class="col three caption">
 	Syntax and arguments for plotting functions
 </div>
@@ -46,7 +46,7 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 
 
 
-#### Customizing Data Visualizations in Stata
+### Customizing Data Visualizations in Stata
 <div class="col three caption">
 	Options to change the appearance of plots in Stata
 </div>
