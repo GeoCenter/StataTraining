@@ -9,7 +9,7 @@ permalink: /part1/
 <br>
 
 #### Introduction   
-We'll spend the first day learning about the fundamental building blocks for data analysis and dive into 
+We'll spend the first day learning about the fundamental building blocks for data analysis and dive into Stata, a statistical software package with powerful data process and analysis capabilities.
 
 
 ####  Part 1 Goals  
