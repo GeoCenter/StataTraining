@@ -25,6 +25,18 @@ In this session you will learn the basics of data management and analysis using 
 4. automate tasks through loops
 
 
+####  Key Stata functions for tidying data
+- `append`
+- `merge`
+- `summarize`
+- `tabulate`
+- `table`
+- `tabstat`
+- `collapse`
+- `forvalues`, `foreach`
+
+
+
 #### Exercises
 - Exercise 1: Merge household data into individual data 
 - Exercise 2: Collapse and summarizing foreign assistance data
@@ -32,13 +44,68 @@ In this session you will learn the basics of data management and analysis using 
 - Exercise 4: Loop over geographic zones
 - Exercise 5: Execute mathematical operations through loops  
 
+<div class="icon">
+ <div class="thumbnailicon">
+        <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Homework.do" target="_blank">
+        <img class="thumbnailicon" src="/StataTraining/img/part1.png"/> 
+        <span>
+            <h1>Exercise</h1>
+            <br/>
+            <p>Pseudocoding a task</p>
+        </span>
+        </a>
+      </div>
+    </div>
 
 
-#### <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/HomeworkAssignment.md" target="_blank">Homework</a>
-<br>   
+<div class="icon">
+ <div class="thumbnailicon">
+        <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Homework.do" target="_blank">
+        <img class="thumbnailicon" src="/StataTraining/img/part1.png"/> 
+        <span>
+            <h1>Exercise</h1>
+            <br/>
+            <p>Reshaping messy data into tidy data</p>
+        </span>
+        </a>
+      </div>
+    </div>
 
-#### <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/Day3HomeworkSolutions.do" target="_blank">Answer Key</a>   
-<br>   
+
+
+<div class="icon">
+ <div class="thumbnailicon">
+        <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/HomeworkAssignment.md" target="_blank">
+        <img class="thumbnailicon" src="/StataTraining/img/part1.png"/> 
+        <span>
+            <h1>Homework</h1>
+            <br/>
+            <p>Merging datasets and creating summary statistics</p>
+        </span>
+        </a>
+      </div>
+    </div>
+
+<div class="icon">
+ <div class="thumbnailicon">
+        <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/Day3HomeworkSolutions.do" target="_blank">
+        <img class="thumbnailicon" src="/StataTraining/img/part1.png"/> 
+        <span>
+            <h1>Answers</h1>
+            <br/>
+            <p>Merging datasets and creating summary statistics</p>
+        </span>
+        </a>
+      </div>
+    </div>   
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 
 #### Up next...  
 Now that we have learned about the fundamentals of data munging, we will move on to some principles of data visualization.
