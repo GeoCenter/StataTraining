@@ -25,7 +25,7 @@ In this session you will learn the basics of data management and analysis using 
 4. automate tasks through loops
 
 
-####  Key Stata functions for tidying data
+####  Key Stata functions for combining and summarizing data
 - `append`
 - `merge`
 - `summarize`
