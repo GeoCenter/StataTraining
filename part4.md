@@ -61,7 +61,7 @@ Sketch as many ways as you can think of to represent two numbers: 75 & 37. Inspi
 <div class="icon">
  <div class="thumbnailicon">
         <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup_answers.do" target="_blank">
-        <img class="thumbnailicon" src="/StataTraining/img/homework_solution.png"/> 
+        <img class="thumbnailicon" src="/StataTraining/img/quartet.png"/> 
         <span>
             <h1>Answers</h1>
             <br/>
