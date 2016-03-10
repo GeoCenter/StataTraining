@@ -34,10 +34,10 @@ In this session you will learn the basics of data management and analysis using 
 
 
 
-#### [Homework](https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/HomeworkAssignment.md)   
+#### <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/HomeworkAssignment.md" target="_blank">Homework</a>
 <br>   
 
-#### [Answer Key](https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/Day3HomeworkSolutions.do)   
+#### <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/Day3HomeworkSolutions.do" target="_blank">Answer Key</a>   
 <br>   
 
 #### Up next...  
