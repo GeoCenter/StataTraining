@@ -453,9 +453,9 @@ pre {
 .caption {
   height: 100%;
   color: #aaa;
-  text-align: center;
-  vertical-align: middle;
-  font-size: 12px; }
+  text-align: left;
+  vertical-align: top;
+  font-size: 15px; }
 
 .logo {
   padding-left: 50px;
