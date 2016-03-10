@@ -37,7 +37,7 @@ Unfortunately, most of the time spent doing 'data science' are the mundane, bori
 <div class="icon">
  <div class="thumbnailicon">
         <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Homework.do" target="_blank">
-        <img class="thumbnailicon" src="/StataTraining/img/Cole-Vishkin_Algorithm_Pseudo_Code.png"/> 
+        <img class="thumbnailicon" src="/StataTraining/img/Code.png"/> 
         <span>
             <h1>Exercise</h1>
             <br/>
