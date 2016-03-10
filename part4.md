@@ -13,15 +13,14 @@ permalink: /part4/
 For our final presentation we will cover the principles of data visualization.   
 
 
-####  Part 2 Goals  
+####  Part 4 Goals  
 1. become a critical consumer of data visualizations
 2. understand best practices and principles to convey information graphically
 3. apply these practices and principles to implement a visualization of real data   
 
 
 #### Exercises   
-- Exercise 1: 75 & 37 
-- Exercise 2: evaluating a graphic
+- Exercise 1: Sketch as many ways as you can think of to represent 75 & 37. Inspired by <a href = "http://blog.visual.ly/45-ways-to-communicate-two-quantities/" target = "_blank">Santiago Ortiz</a>
 - Exercise 3: sketch a visualization  
 
 #### <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup.do" target="_blank">Homework</a>       
