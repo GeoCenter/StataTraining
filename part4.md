@@ -24,12 +24,12 @@ For our final presentation we will cover the principles of data visualization.
 - Exercise 2: evaluating a graphic
 - Exercise 3: sketch a visualization  
 
-#### [Homework](https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup.do)       
+#### <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup.do" target="_blank">Homework</a>       
 <br>   
 
 
-#### [Answer Key](https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup_answers.do)      
-<br>   
+#### <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup_answers.do" target="_blank">Answer Key</a>        
+<br>     
 
  
 #### What to remember?  
