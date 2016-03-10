@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Best Practice
+title: Best Practices
 description: advice on how to do analysis and visualization
 
 ---
