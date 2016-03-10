@@ -10,7 +10,7 @@ permalink: /part4/
 <br>   
 
 #### Introduction  
-For our final presentation we will cover the principles of data visualization.   
+Now that we have data in a tidy format and have started to do some basic analysis, how can we make sense of all the information? Data visualization is a powerful way not only to communicate what you discover to other people, but also to explore and understand data yourself. We will introduce principles of data visualization common to any information design, whether it's a hand-drawn sketch or an elaborate web-based interactive tool.     
 
 
 ####  Part 4 Goals  
