@@ -1,5 +1,5 @@
 # StataTraining
-Stata & R code for course on the fundamentals of data analysis and visualization
+Stata code for course on the fundamentals of data analysis and visualization
 ##### Stata Cheat Sheets  
 ![alt text](https://github.com/GeoCenter/StataTraining/blob/master/images/cheatsheet1.PNG?raw=true "Stata Cheat Sheet 1")  
 ![alt text](https://github.com/GeoCenter/StataTraining/blob/master/images/cheatsheet2.PNG?raw=true "Stata Cheat Sheet 2")   
