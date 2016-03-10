@@ -211,6 +211,57 @@ vertical-align: middle;
 box-sizing: border-box;
 padding: 10px;
 }
+.icon {
+width: 20%;
+height: 150px;
+float: left;
+vertical-align: middle;
+box-sizing: border-box;
+padding: 10px;
+line-height: 1em;
+}
+
+.h5{
+    font-size: 8px;
+}
+
+.h6{
+    font-size: 6px;
+}
+
+.thumbnailicon{
+width: 100%;
+height: 130px;
+overflow: hidden;
+line-height: 1em;
+}
+.thumbnailicon img{
+width: 100%;
+height: 130px;
+position: relative;
+}
+.thumbnailicon a{
+float: left;
+position: relative;
+width: 100%;
+height: 130px;
+}
+.thumbnailicon a span {
+display: none;
+position: absolute;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+background: rgba(0,0,0,0.4);
+color: $grey-color-light;
+padding: 8px;
+text-align: center;
+}
+.thumbnailicon a:hover span {
+display: block;
+}
+
 .thumbnail{
 width: 100%;
 height: 230px;

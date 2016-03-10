@@ -23,20 +23,77 @@ Unfortunately, most of the time spent doing 'data science' are the mundane, bori
 - reshaping (melting & casting)
 5. conduct basic summaries, tabulations and visualizations on the FAD data set
 
-#### Exercises   
-- Exercise 1: psuedocoding a task 
-- Exercise 2: reshaping messy data into tidy data  
+####  Key Stata functions for tidying data
+- `reshape`: converting data between wide and long datasets    
+- `generate`
+- `egen`
+- `replace`
+- `rename`
+- `drop`
+- `keep`
+- `label`
+
+
+<div class="icon">
+ <div class="thumbnailicon">
+        <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Homework.do" target="_blank">
+        <img class="thumbnailicon" src="/StataTraining/img/part1.png"/> 
+        <span>
+            <h1>Exercise</h1>
+            <br/>
+            <p>Pseudocoding a task</p>
+        </span>
+        </a>
+      </div>
+    </div>
+
+
+<div class="icon">
+ <div class="thumbnailicon">
+        <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Homework.do" target="_blank">
+        <img class="thumbnailicon" src="/StataTraining/img/part1.png"/> 
+        <span>
+            <h1>Exercise</h1>
+            <br/>
+            <p>Reshaping messy data into tidy data</p>
+        </span>
+        </a>
+      </div>
+    </div>
 
 
 
-#### <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Reshape_Homework.do" target="_blank">Reshape Exercises</a>
+<div class="icon">
+ <div class="thumbnailicon">
+        <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Homework.do" target="_blank">
+        <img class="thumbnailicon" src="/StataTraining/img/part1.png"/> 
+        <span>
+            <h1>Homework</h1>
+            <br/>
+            <p>Reshaping and merging datasets</p>
+        </span>
+        </a>
+      </div>
+    </div>
+
+<div class="icon">
+ <div class="thumbnailicon">
+        <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Reshape_exercises_lauraAnswers.do" target="_blank">
+        <img class="thumbnailicon" src="/StataTraining/img/part1.png"/> 
+        <span>
+            <h1>Answers</h1>
+            <br/>
+            <p>Reshaping and merging datasets</p>
+        </span>
+        </a>
+      </div>
+    </div>   
+
 <br>
-
-
-#### <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Homework.do" target="_blank">Reshape and Merge Homework</a>   
 <br>
-
-#### <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Reshape_exercises_lauraAnswers.do" target="_blank">Reshape Exercise Solutions</a>   
+<br>
+<br>
+<br>
 <br>
 
 #### Up next...
