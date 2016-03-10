@@ -19,5 +19,6 @@ description: things to learn about Stata and R
 - Data Journ.
 - [Data Visualization Resources](http://www.cs.ubc.ca/group/infovis/resources.shtml): Matt Brehmer's list of useful visualization resources
 - [Visualization Analysis and Design talks](https://www.cs.ubc.ca/~tmm/talks.html): Tamara Munzner's slides on the theory and research of visualization analysis and design
+- [Interactive Data Visualization talks](http://ghostweather.slides.com/lynncherny/): Lynn Cherny's slides on interactive data visualization, especially applied to journalism
 - voyager / vega?
 - Chart types
