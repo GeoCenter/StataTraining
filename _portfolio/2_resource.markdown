@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Stata Cheatsheets
+title: Cheatsheets
 description: cheatsheets for key Stata commands
 img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 ---

@@ -10,7 +10,7 @@ description: useful things to read
 
 - [Visualize This, Nathan Yau](http://www.amazon.com/Visualize-This-FlowingData-Visualization-Statistics-ebook/dp/B005CCT19M/ref=dp_kinw_strp_1){:target="_blank"}
 
-- [Visualize This, Nathan Yau](http://www.amazon.com/Visualization-Analysis-Design-Peters-Series-ebook/dp/B00OGLE3XE/ref=dp_kinw_strp_1){:target="_blank"}
+- [Visualization Analysis and Design, Tamara Munzer](http://www.amazon.com/Visualization-Analysis-Design-Peters-Series-ebook/dp/B00OGLE3XE/ref=dp_kinw_strp_1){:target="_blank"}
 
 
 ### Articles
