@@ -19,14 +19,6 @@ We'll spend the first day learning about the fundamental building blocks for dat
 3. Become familiar with Stata software/ interface   
 4. Read a Stata help file and know where to find additional help online   
 
-
-####  <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day1/Homework/Day%201%20Homework%20-%20with%20answers2.docx" target="_blank">Homework</a>
-<br>
-
-
-#### <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day1/Homework/Day%201%20Homework%20Assignment.docx" target="_blank">Answer Key</a>     
-<br>   
-
 #### What to remember?  
 1. **Comment, comment, comment**: Keep notes so future you knows what past you was thinking    
 2. **Don't repeat yourself**: Instead of copying and pasting, create a program (function) to do repeated tasks
