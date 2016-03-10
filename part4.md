@@ -22,6 +22,40 @@ For our final presentation we will cover the principles of data visualization.
 #### Warm-up exercise   
 Sketch as many ways as you can think of to represent two numbers: 75 & 37. Inspired by <a href = "http://blog.visual.ly/45-ways-to-communicate-two-quantities/" target = "_blank">Santiago Ortiz</a>
 
+<<<<<<< HEAD
+=======
+<div class="icon">
+ <div class="thumbnailicon">
+        <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup.do" target="_blank">
+        <img class="thumbnailicon" src="/StataTraining/img/quartet.png"/> 
+        <span>
+            <h1>Exercise</h1>
+            <br/>
+            <p>Pseudocoding a task</p>
+        </span>
+        </a>
+      </div>
+    </div>
+
+
+<br>     
+<div class="icon">
+ <div class="thumbnailicon">
+        <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day4/DoFiles/visualizationWarmup_answers.do" target="_blank">
+        <img class="thumbnailicon" src="/StataTraining/img/quartet.png"/> 
+        <span>
+            <h1>Exercise</h1>
+            <br/>
+            <p>Pseudocoding a task</p>
+        </span>
+        </a>
+      </div>
+    </div>
+<br>
+<br>
+<br>
+ 
+>>>>>>> origin/gh-pages
 #### What to remember?  
 1. Identify your audience
 2. Create comparisons within the data
