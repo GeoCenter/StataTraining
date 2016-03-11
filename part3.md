@@ -26,14 +26,15 @@ In this session you will learn the basics of data management and analysis using 
 
 
 ####  Key Stata functions for combining and summarizing data
-- `append`
-- `merge`
-- `summarize`
-- `tabulate`
-- `table`
-- `tabstat`
-- `collapse`
-- `forvalues`, `foreach`
+- `append`: append to datasets together  
+- `merge`: merged datasets together using unique identifiers
+- `summarize`: produce summary statistics
+- `tabulate`: produce table of frequencies
+- `table`: produce flexible table of summary statistics
+- `tabstat`: produce compact table of summary statistics
+- `collapse`: create dataset of summary statistics (modifies the dataframe)
+- `forvalues`: loop over consecutive values
+- `foreach`: loop over items  
 
 
 
