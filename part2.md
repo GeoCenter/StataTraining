@@ -24,14 +24,14 @@ Unfortunately, most of the time spent doing 'data science' are the mundane, bori
 5. conduct basic summaries, tabulations and visualizations on the FAD data set
 
 ####  Key Stata functions for tidying data
-- `reshape`: converting data between wide and long datasets    
-- `generate`
-- `egen`
-- `replace`
-- `rename`
-- `drop`
-- `keep`
-- `label`
+- `reshape`: converting data between wide and long datasets     
+- `generate`: creating new variables  
+- `egen`: extensions for generate (flexible and powerful)   
+- `replace`: replace contents of an existing variable  
+- `rename`: rename a variable (see also `rename group` for more flexiblity)   
+- `drop`: drop variables or observations from a data frame   
+- `keep`: keep variables or observations from a data frame   
+- `label`: manipulate variable labels or value labels   
 
 
 <div class="icon">
