@@ -430,7 +430,8 @@ pre {
   float: left;
   object-fit: contain;
   box-sizing: border-box;
-  padding: 5px; }
+  padding: 5px;
+  padding-bottom: 40px; }
 
 .right {
   float: right; }
@@ -462,8 +463,12 @@ pre {
   text-align: center; }
 
 .resourcetext {
-  float: left;
-  margin: 0 0 10px 10px; }
+  font-size: 20px; }
+  @media screen and (max-width: 800px) {
+    .resourcetext {
+      font-size: 18px;
+      vertical-align: middle;
+      padding: 20px; } }
 
 /**
  * Syntax highlighting styles
