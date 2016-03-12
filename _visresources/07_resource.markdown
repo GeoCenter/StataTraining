@@ -2,7 +2,7 @@
 layout: post
 title: Inspiration
 description: things that we like to emulate
-
+img: /StataTraining/img/pinterest.png
 ---
 
 
