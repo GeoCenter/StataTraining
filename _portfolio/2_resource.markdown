@@ -58,5 +58,10 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 	</a>
 </div>
 
+.
+<hr>
+<hr>
+<br> 
+
 ### R Cheatsheets
 [RStudio cheatsheets](https://www.rstudio.com/resources/cheatsheets/){:target="_blank"}: Cheatsheets with functions from the most useful R packages

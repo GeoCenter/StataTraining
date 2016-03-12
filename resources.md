@@ -21,9 +21,9 @@ permalink: /resources/
         <div class="thumbnailicon blankbox"></div>
         {% endif %}    
         <span>
-            <h5>{{ resource.title }}</h5>
+            <h4>{{ resource.title }}</h4>
             <br/>
-            <h6>{{ resource.description }}</h6>
+            <h5>{{ resource.description }}</h5>
         </span>
         </a>
     </div>
@@ -39,9 +39,9 @@ permalink: /resources/
         <div class="thumbnailicon blankbox"></div>
         {% endif %}    
         <span>
-            <h5>{{ resource.title }}</h5>
+            <h4>{{ resource.title }}</h4>
             <br/>
-            <h6>{{ resource.description }}</h6>
+            <h5>{{ resource.description }}</h5>
         </span>
         </a>
     </div>
