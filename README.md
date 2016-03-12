@@ -1,4 +1,4 @@
-# StataTraining
+# [StataTraining](http://geocenter.github.io/StataTraining/)   
 Stata code for course on the fundamentals of data analysis and visualization
 ##### Stata Cheat Sheets  
 ![alt text](https://github.com/GeoCenter/StataTraining/blob/master/images/cheatsheet1.PNG?raw=true "Stata Cheat Sheet 1")  
