@@ -12,7 +12,7 @@ description: useful things to read
 
 - [Visualization Analysis and Design, Tamara Munzner](http://www.amazon.com/Visualization-Analysis-Design-Peters-Series-ebook/dp/B00OGLE3XE/ref=dp_kinw_strp_1){:target="_blank"}
 
--[Tufte]
+- [The Visual Display of Quantitative Information, Edward Tufte](http://www.amazon.com/Visual-Display-Quantitative-Information/dp/0961392142/ref=asap_bc?ie=UTF8){:target="_blank"}
 
 
 ### Articles

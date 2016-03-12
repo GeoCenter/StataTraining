@@ -457,6 +457,10 @@ pre {
   height: auto;
   vertical-align: middle; }
 
+.return {
+  font-size: 24px;
+  text-align: center; }
+
 /**
  * Syntax highlighting styles
  */
