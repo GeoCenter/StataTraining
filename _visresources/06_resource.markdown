@@ -8,6 +8,9 @@ description: nifty things people made to make your life easier
 #### Other Visualization Resource Lists
 - [Data Visualization Resources](http://www.cs.ubc.ca/group/infovis/resources.shtml){:target="_blank"}: Matt Brehmer's comprehensive list of useful visualization resources
 
+#### Plotting in Excel
+- [Stephanie Evergreen]()
+
 #### Color
 
 - <a href = "http://colorbrewer2.org/" target="_blank">ColorBrewer</a>: Cynthia Brewer's color palettes for sequential, diverging, and qualitative data. When in doubt, use Color Brewer. 
