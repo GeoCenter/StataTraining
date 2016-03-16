@@ -50,10 +50,24 @@ The materials cover:
 <br/>
 <hr/>
 <br/>
+
+#### acknowledgements
+- This site was built using <a href="http://jekyllrb.com" target="_blank">Jekyll</a> 
+  		based on <a href="https://github.com/bogoli/-folio">Folio theme</a>
+- Icons are taken from the <a href = "https://en.wikiversity.org/wiki/Wikiversity:MOOC_Interface/Related_files#Templates">Wikiversity MOOC template</a> and are used under Creative Commons 3.0
+- Where figures or content for files is taken from or inspired by others in each of the sections, attribution is supplied on the slides.
+- This content can be shared and adapted for non-commercial purposes under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>. <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a><br />
+
+<br/>
+<hr/>
+<br/>
+
 <span class="contacticon center">
 	<a href="mailto:tessam@usaid.gov"><i class="fa fa-envelope-square"></i></a>
 	<a href="https://github.com/GeoCenter/StataTraining/" target="_blank"><i class="fa fa-github-square"></i></a>
 </span>
+
+
 
 <div class="col three caption">
 	Contact us via email or Github.
