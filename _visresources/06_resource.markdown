@@ -9,7 +9,7 @@ description: nifty things people made to make your life easier
 - [Data Visualization Resources](http://www.cs.ubc.ca/group/infovis/resources.shtml){:target="_blank"}: Matt Brehmer's comprehensive list of useful visualization resources
 
 #### Plotting in Excel
-- [Stephanie Evergreen]()
+- [Stephanie Evergreen](http://stephanieevergreen.com/){:target="_blank"}
 
 #### Color
 
