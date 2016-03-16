@@ -28,7 +28,8 @@ img: /StataTraining/img/tools.svg
 - [Git cheatsheet](http://ndpsoftware.com/git-cheatsheet.html){:target="_blank"}
 - [Using R with Github](http://r-pkgs.had.co.nz/git.html){:target="_blank"}
 - [Building an automatic Github.io page](https://help.github.com/articles/creating-pages-with-the-automatic-generator/){:target="_blank"}
-- [Using Jekyll in Github Pages] (https://help.github.com/articles/using-jekyll-as-a-static-site-generator-with-github-pages/){:target="_blank"}
+- [Using Jekyll in Github Pages](https://help.github.com/articles/using-jekyll-as-a-static-site-generator-with-github-pages/){:target="_blank"}
+- [Selector Gadget to identify CSS objects](http://selectorgadget.com/){:target="_blank"}
 
 ### Useful Stata packages
 
@@ -60,8 +61,8 @@ To install any of the packages, use `install.packages("<package name>")`, as in:
 #### Visualization and Interactive plots
 - **[ggplot2](http://ggplot2.org/){:target="_blank"}: Hadley Wickham's incredibly powerful plotting library built off of the [Grammar of Graphics](http://www.amazon.com/The-Grammar-Graphics-Statistics-Computing/dp/0387245448){:target="_blank"}. So useful and well-designed it gets two asterisks.
 - [ggplot2 extension packages](http://www.ggplot2-exts.org/){:target="_blank"}: Running list of extensions to ggplot2
-- ggrepel
-- ggvis:
+- [ggrepel](https://github.com/slowkow/ggrepel): extends ggplot2 to avoid overlapping text
+- [ggvis](ggvis.rstudio.com): data visualization package 
 - htmltools
 - htmlwidgets
 - d3heatmap
@@ -76,7 +77,7 @@ To install any of the packages, use `install.packages("<package name>")`, as in:
 - latticeExtra
 
 #### Geospatial analysis and mapping
-- ggmap: geocoding and geospatial library
+- [ggmap](https://github.com/dkahle/ggmap): geocoding and geospatial library
 - [leaflet](https://rstudio.github.io/leaflet/): R wrapper to embed dynamic maps using leaflet.js
 - [choroplethr](https://github.com/trulia/choroplethr), choroplethrAdmin1: easy way to create choropleths (heatmaps for a map) at the Admin 0- (country) and Admin 1-level (states/provinces)
 
@@ -94,21 +95,21 @@ To install any of the packages, use `install.packages("<package name>")`, as in:
 
 
 #### Importing files
-- haven: imports in files from Stata, SAS, and SPSS
-- foreign: an alternative to haven to import from Stata, SAS, and SPSS.
-- readr: An advanced form of the base 'read.csv' file with some added functionality.
-- readxl: Functions to import in multiple sheets from Excel
-- googlesheets: Functions to connect to Google Drive spreadsheets.
-- rvest: Scrapes websites
-- pdftools: Scrapes pdf files
+- [haven](https://github.com/hadley/haven): imports in files from Stata, SAS, and SPSS
+- [foreign](https://cran.r-project.org/web/packages/foreign/foreign.pdf): an alternative to haven to import from Stata, SAS, and SPSS. Doesn't support Stata 14 (yet?)
+- [readr](https://github.com/hadley/readr): an advanced form of the base `read.csv` function with some added functionality.
+- [readxl](https://github.com/hadley/readxl): imports in multiple sheets from Excel
+- [googlesheets](https://github.com/jennybc/googlesheets): connects to Google Drive spreadsheets.
+- [rvest](https://github.com/hadley/rvest): scrapes websites
+- [pdftools](https://github.com/ropensci/pdftools): scrapes .pdf files
+- [jsonlite](https://cran.r-project.org/web/packages/jsonlite/vignettes/json-aaquickstart.html): converts between JSON objects and R ones
 
 #### Developer libraries
 - *[devtools](https://www.rstudio.com/products/rpackages/devtools/): makes writing and releasing R packages a breeze. For casual users, allows you to install packages directly from Github using `install_github`
-- roxygen2
-- testthat
-- jsonlite 
-- microbenchmark
-- profvis
+- [roxygen2](https://github.com/klutometis/roxygen): allows for easy commenting of functions and packages
+- [testthat](https://github.com/hadley/testthat): reproducible testing functions for package development 
+- [microbenchmark](https://cran.r-project.org/web/packages/microbenchmark/index.html): timing function to profile how long functions take to execute
+- [profvis](https://rpubs.com/wch/123888): allows visual profiling of function timing to optimize performance
 
 #### Fitting libraries
 - *[broom](https://github.com/dgrtwo/broom): cleans up results from any fitted model into something neat and organized
