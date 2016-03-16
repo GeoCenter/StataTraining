@@ -2,7 +2,7 @@
 layout: post
 title: Tools
 description: nifty things people made to make your life easier
-
+img: /StataTraining/img/tools.svg
 ---
 
 #### Other Visualization Resource Lists

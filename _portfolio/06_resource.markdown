@@ -2,7 +2,7 @@
 layout: post
 title: Useful libraries
 description: things that make Stata and R better
-
+img: /StataTraining/img/tools.svg
 ---
 
 

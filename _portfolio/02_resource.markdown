@@ -2,7 +2,7 @@
 layout: post
 title: Help
 description: where to go when you're totally flummoxed
-
+img: /StataTraining/img/help.png
 ---
 
 ### Any coding

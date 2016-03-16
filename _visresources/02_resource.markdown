@@ -2,7 +2,7 @@
 layout: post
 title: Books and Articles
 description: useful things to read
-
+img: /StataTraining/img/book.svg
 ---
 
 ### Books

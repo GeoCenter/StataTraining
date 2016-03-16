@@ -2,7 +2,7 @@
 layout: post
 title: Blogs
 description: interesting things we like to read
-
+img: /StataTraining/img/blog.svg
 ---
 
 - [Stata Blog](http://blog.stata.com/){:target="_blank"}
