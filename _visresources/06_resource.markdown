@@ -9,6 +9,23 @@ img: /StataTraining/img/tools.svg
 - [Data Visualization Resources](http://www.cs.ubc.ca/group/infovis/resources.shtml){:target="_blank"}: Matt Brehmer's comprehensive list of useful visualization resources
 - [Visualization tools](http://selection.datavisualization.ch/): gallery of software and tools to create visualizations
 
+#### Chart types
+<a href = "http://www.datavizcatalogue.com/" target="_blank">
+	<img class = "col one" src = " /StataTraining/img/charttypes.png">
+</a>
+<a href = "http://extremepresentation.typepad.com/files/choosing-a-good-chart-09.pdf" target="_blank">
+	<img class = "col one" src = " /StataTraining/img/chartchooser.png">
+</a>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 #### Plotting in Excel
 - [Stephanie Evergreen](http://stephanieevergreen.com/){:target="_blank"}
 
