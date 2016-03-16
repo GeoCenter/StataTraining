@@ -84,7 +84,7 @@ To install any of the packages, use `install.packages("<package name>")`, as in:
 - [shinythemes](https://rstudio.github.io/shinythemes/): customize appearance of Shiny apps
 
 #### Reporting, publication, and custom appearance
-- [knitr](http://yihui.name/knitr/): helper function to produce RMarkdown documents
+- *[knitr](http://yihui.name/knitr/): helper function to produce RMarkdown documents
 - [formattable](http://renkun.me/formattable/): better tables for RMarkdown documents
 - [animation](http://yihui.name/animation/): make GIFs in R
 - [RColorBrewer](https://cran.r-project.org/web/packages/RColorBrewer/index.html): imports [Cynthia Brewer's excellent color palettes](http://colorbrewer2.org/) as R objects
