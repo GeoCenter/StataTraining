@@ -6,6 +6,8 @@ img: /StataTraining/img/blog.svg
 ---
 
 - [Stata Blog](http://blog.stata.com/){:target="_blank"}
+- [R Blog](http://www.r-bloggers.com/){:target="_blank"}
+- [RStudio Blog](http://blog.rstudio.org/){:target="_blank"}
 - [Andrew Gelman](http://andrewgelman.com/){:target="_blank"}
 - [Marc Bellemare](http://marcfbellemare.com/wordpress){:target="_blank"}
 - [Dave Giles](http://davegiles.blogspot.com/){:target="_blank"}

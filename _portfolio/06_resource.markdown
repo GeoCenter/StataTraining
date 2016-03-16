@@ -6,27 +6,31 @@ img: /StataTraining/img/tools.svg
 ---
 
 
-### Stats and Data Quality Resources
+### Stats and data quality resources
 - [Statistical Test Selector](http://www.ats.ucla.edu/stat/mult_pkg/whatstat/){:target="_blank"}: UCLA's guide to what statistical test should be used, with example code in Stata, R, SPSS, and SAS
 - [Bad data and how to fix them](https://github.com/Quartz/bad-data-guide){:target="_blank"}: Encyclopedia of all the things that can and do go wrong with data, and suggestions on how to fix.
 - [DataBasic](https://www.databasic.io/en/){:target="_blank"}: Suite of web tools for beginners to work with data
 
 
 
-### R resources:
-- If you're new to R, one of the first things you should do is install RStudio.  It'll make your life a lot better.
+### R resources
+- If you're new to R, one of the first things you should do is install [RStudio](https://www.rstudio.com/products/rstudio/){:target="_blank"}.  It'll make your life a lot better.
 - [Introduction to R functions](http://adv-r.had.co.nz/Vocabulary.html){:target="_blank"}
 - [Using R with Github](http://r-pkgs.had.co.nz/git.html){:target="_blank"}
-- [RStudio cheatsheets](){:target="_blank"}
-- Stata to R
+- [RStudio cheatsheets](https://www.rstudio.com/resources/cheatsheets/){:target="_blank"}
 - [R for Matlab users](http://mathesaurus.sourceforge.net/octave-r.html){:target="_blank"}
 - [Analysis and Stats in R, Python (numpy), Matlab, and Julia](http://hyperpolyglot.org/numerical-analysis){:target="_blank"}
 - [Evaluating regressions in R](http://www.statmethods.net/stats/rdiagnostics.html){:target="_blank"}
 
 
-### Markdown 
+### Markdown and Github resources
+- [Markdown encyclopedia](http://daringfireball.net/projects/markdown/){:target="_blank"}
+- [Git cheatsheet](http://ndpsoftware.com/git-cheatsheet.html){:target="_blank"}
+- [Building an automatic Github.io page](https://help.github.com/articles/creating-pages-with-the-automatic-generator/){:target="_blank"}
+- [Using Jekyll in Github Pages] (https://help.github.com/articles/using-jekyll-as-a-static-site-generator-with-github-pages/){:target="_blank"}
 
 ### Useful Stata packages
+
 
 ### Useful R packages
 R has a long list of libraries that extend the functionality of base R and make it easier to use.
