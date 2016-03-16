@@ -78,7 +78,7 @@ To install any of the packages, use `install.packages("<package name>")`, as in:
 #### Geospatial analysis and mapping
 - ggmap: geocoding and geospatial library
 - [leaflet](https://rstudio.github.io/leaflet/): R wrapper to embed dynamic maps using leaflet.js
-- [choroplethr](https://github.com/trulia/choroplethr), choroplethrAdmin1: easy way to create choropleths (heatmaps for a map) at the Admin 0- (country) and Admin 1-level (States/Provinces)
+- [choroplethr](https://github.com/trulia/choroplethr), choroplethrAdmin1: easy way to create choropleths (heatmaps for a map) at the Admin 0- (country) and Admin 1-level (states/provinces)
 
 #### Interactivity
 - shiny
@@ -86,15 +86,11 @@ To install any of the packages, use `install.packages("<package name>")`, as in:
 - shinythemes
 
 #### Reporting, publication, and custom appearance
-- knitr: helper function to produce RMarkdown documents
-- kable: basic markdown tables
+- [knitr](http://yihui.name/knitr/): helper function to produce RMarkdown documents
 - [formattable](http://renkun.me/formattable/): better tables for RMarkdown documents
-- animation
-- gridExtra
-- grid
-- colorspace
-- RColorBrewer
-- extrafont
+- [animation](http://yihui.name/animation/): make GIFs in R
+- [RColorBrewer](https://cran.r-project.org/web/packages/RColorBrewer/index.html): imports [Cynthia Brewer's excellent color palettes](http://colorbrewer2.org/) as R objects
+- [extrafont](https://www.r-project.org/nosvn/pandoc/extrafont.html): allows you to use a font other than Helvetica in plots
 
 
 #### Importing files
