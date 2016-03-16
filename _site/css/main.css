@@ -463,6 +463,7 @@ pre {
   text-align: center; }
 
 .resourcetext {
+  width: 25%;
   font-size: 20px; }
   @media screen and (max-width: 800px) {
     .resourcetext {

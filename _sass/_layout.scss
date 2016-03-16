@@ -340,6 +340,7 @@ font-size: $caption_font_size;
 }
 
 .resourcetext {
+    width: 25%;
     font-size: 20px;
     @include media-query($on-laptop) {
     font-size: 18px;
