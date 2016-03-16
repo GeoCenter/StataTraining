@@ -2,7 +2,7 @@
 layout: post
 title: Talks & Courses
 description: slides and online courses
-
+img: /StataTraining/img/slides.png
 ---
 
 
