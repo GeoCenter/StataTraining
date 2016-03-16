@@ -15,4 +15,4 @@ img: /StataTraining/img/help.png
 
 ### R
 - [swirl](http://swirlstats.com/){:target="_blank"}: A package to learn R within R.
-- [RStudio]
+- [RStudio](https://www.rstudio.com/resources/faqs/){:target="_blank"}: Various resources, packages, and help from RStudio

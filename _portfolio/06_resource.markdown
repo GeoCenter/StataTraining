@@ -14,9 +14,9 @@ img: /StataTraining/img/tools.svg
 
 
 ### R resources
-- If you're new to R, one of the first things you should do is install [RStudio](https://www.rstudio.com/products/rstudio/){:target="_blank"}.  It'll make your life a lot better.
+- If you're new to R, one of the first things you should do is install [RStudio](https://www.rstudio.com/products/rstudio/){:target="_blank"}.  It'll make your life a whole lot better.
 - [Introduction to R functions](http://adv-r.had.co.nz/Vocabulary.html){:target="_blank"}
-- [Using R with Github](http://r-pkgs.had.co.nz/git.html){:target="_blank"}
+- [swirl](http://swirlstats.com/){:target="_blank"}: A package to learn R within R.
 - [RStudio cheatsheets](https://www.rstudio.com/resources/cheatsheets/){:target="_blank"}
 - [R for Matlab users](http://mathesaurus.sourceforge.net/octave-r.html){:target="_blank"}
 - [Analysis and Stats in R, Python (numpy), Matlab, and Julia](http://hyperpolyglot.org/numerical-analysis){:target="_blank"}
@@ -26,6 +26,7 @@ img: /StataTraining/img/tools.svg
 ### Markdown and Github resources
 - [Markdown encyclopedia](http://daringfireball.net/projects/markdown/){:target="_blank"}
 - [Git cheatsheet](http://ndpsoftware.com/git-cheatsheet.html){:target="_blank"}
+- [Using R with Github](http://r-pkgs.had.co.nz/git.html){:target="_blank"}
 - [Building an automatic Github.io page](https://help.github.com/articles/creating-pages-with-the-automatic-generator/){:target="_blank"}
 - [Using Jekyll in Github Pages] (https://help.github.com/articles/using-jekyll-as-a-static-site-generator-with-github-pages/){:target="_blank"}
 
@@ -33,12 +34,11 @@ img: /StataTraining/img/tools.svg
 
 
 ### Useful R packages
-R has a long list of libraries that extend the functionality of base R and make it easier to use.
+R has a long list of libraries that extend the functionality of base R and make it easier to use. Here's a running list of packages that we find particularly helpful. Core libraries are indicated with an asterisk, and are particularly recommended for all users.
 
-Here's a running list of packages that we find particularly helpful. Core libraries are indicated with an asterix, and are particularly recommended for all users.
+To install any of the packages, use `install.packages("<package name>")`, as in: `install.packages("ggplot2")`
 
-To install any of the packages, use `install.packages(<package name>)`
-
-
-
-- [ggplot2 extension packages](http://www.ggplot2-exts.org/)
+#### Visualization
+- **[ggplot2](http://ggplot2.org/){:target="_blank"}: Plotting package built on the Grammar of Graphics. So useful and well-designed it gets two asterisks.
+- [ggplot2 extension packages](http://www.ggplot2-exts.org/){:target="_blank"}: Running list of extensions to ggplot2.
+- [swirl](http://swirlstats.com/){:target="_blank"}: A package to learn R within R.
