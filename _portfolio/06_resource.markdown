@@ -62,29 +62,26 @@ To install any of the packages, use `install.packages("<package name>")`, as in:
 - **[ggplot2](http://ggplot2.org/){:target="_blank"}: Hadley Wickham's incredibly powerful plotting library built off of the [Grammar of Graphics](http://www.amazon.com/The-Grammar-Graphics-Statistics-Computing/dp/0387245448){:target="_blank"}. So useful and well-designed it gets two asterisks.
 - [ggplot2 extension packages](http://www.ggplot2-exts.org/){:target="_blank"}: Running list of extensions to ggplot2
 - [ggrepel](https://github.com/slowkow/ggrepel): extends ggplot2 to avoid overlapping text
-- [ggvis](ggvis.rstudio.com): data visualization package 
-- htmltools
-- htmlwidgets
-- d3heatmap
-- metricsgraphics
-- rCharts
-- DiagrammeR
-- packcircles
-- waffle
-- RgoogleMaps
-- hexbin
-- lattice
-- latticeExtra
+- [ggvis](ggvis.rstudio.com): data visualization package that enables interactive graphics
+- [d3heatmap](https://github.com/rstudio/d3heatmap): creates D3-based heatmaps in R
+- [htmlwidgets](http://www.htmlwidgets.org/): suite of packages that port javascript visualization packages into R
+- [metricsgraphics](http://hrbrmstr.github.io/metricsgraphics/): creates interactive plots based on the MetricsGraphics.js / D3 chart library
+- [rCharts](http://rcharts.io/): creates interactive plots based on several javascript charting libraries
+- [DiagrammeR](http://rich-iannone.github.io/DiagrammeR/): creates graph diagrams using a Markdown-like syntax
+- [packcircles](https://github.com/mbedward/packcircles): creates non-overlapping packed circles
+- [waffle](https://github.com/hrbrmstr/waffle): creates isotype graphs (a single object repeated N times)
+- [hexbin](https://github.com/edzer/hexbin): hexbin data
 
 #### Geospatial analysis and mapping
 - [ggmap](https://github.com/dkahle/ggmap): geocoding and geospatial library
 - [leaflet](https://rstudio.github.io/leaflet/): R wrapper to embed dynamic maps using leaflet.js
 - [choroplethr](https://github.com/trulia/choroplethr), choroplethrAdmin1: easy way to create choropleths (heatmaps for a map) at the Admin 0- (country) and Admin 1-level (states/provinces)
+- [RgoogleMaps](https://cran.r-project.org/web/packages/RgoogleMaps/RgoogleMaps.pdf): overlays plots on a Google map
 
 #### Interactivity
-- shiny
-- shinydashboard
-- shinythemes
+- [shiny](http://shiny.rstudio.com/): easy way to create custom, interactive web applications in R
+- [shinydashboard](https://rstudio.github.io/shinydashboard/): uses Shiny to create customized dashboards
+- [shinythemes](https://rstudio.github.io/shinythemes/): customize appearance of Shiny apps
 
 #### Reporting, publication, and custom appearance
 - [knitr](http://yihui.name/knitr/): helper function to produce RMarkdown documents
