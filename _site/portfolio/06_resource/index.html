@@ -108,14 +108,115 @@
 <h3 id="useful-stata-packages">Useful Stata packages</h3>
 
 <h3 id="useful-r-packages">Useful R packages</h3>
-<p>R has a long list of libraries that extend the functionality of base R and make it easier to use. Here’s a running list of packages that we find particularly helpful. Core libraries are indicated with an asterisk, and are particularly recommended for all users.</p>
+<p>R has a long list of libraries that extend the functionality of base R and make it easier to use. Here’s a running list of packages that we find particularly helpful, broken down by category. Core libraries are indicated with an asterisk, and are particularly recommended for all users.</p>
 
-<p>To install any of the packages, use <code>install.packages("&lt;package name&gt;")</code>, as in: <code>install.packages("ggplot2")</code></p>
+<p>To install any of the packages, use <code>install.packages("&lt;package name&gt;")</code>, as in: <code>install.packages("ggplot2")</code>. All packages can be found on R’s <a href="https://cran.r-project.org/" target="_blank">CRAN</a></p>
 
-<h4 id="visualization">Visualization</h4>
+<h4 id="a-lazy-way-to-install-and-load-all-these-packages">A lazy way to install and load all these packages</h4>
 <ul>
-  <li>**<a href="http://ggplot2.org/" target="_blank">ggplot2</a>: Plotting package built on the Grammar of Graphics. So useful and well-designed it gets two asterisks.</li>
-  <li><a href="http://www.ggplot2-exts.org/" target="_blank">ggplot2 extension packages</a>: Running list of extensions to ggplot2.</li>
+  <li>Laura is in the process of creating an R library called <a href="https://github.com/flaneuse/llamar" target="_blank">llamar</a> to make it easier to load the most useful libraries at once (and also to create some custom plotting themes and functions). It’s under development now, so apologies for any lack of documentation and/or anything that breaks in the future.</li>
+  <li>To load the packages listed here, copy this code into R:
+<code>install.packages("devtools")</code>
+<code>library(devtools)</code>
+<code>devtools::install_github("flaneuse/llamar")</code>
+<code>library(llamar)</code>
+<code>loadPkgs()</code></li>
+  <li>If you have any comments, feel free to <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#102;&#108;&#097;&#110;&#101;&#117;&#115;&#101;&#107;&#115;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;" target="_blank">email us</a></li>
+</ul>
+
+<h4 id="data-wrangling">Data Wrangling</h4>
+<ul>
+  <li>*<a href="https://github.com/hadley/dplyr">dplyr</a>: filter, create new variables, summarise, … Basically, anything you can think to do to a dataset</li>
+  <li>*<a href="https://github.com/hadley/tidyr">tidyr</a>: reshape and merge datasets</li>
+  <li><a href="https://github.com/Rdatatable/data.table">data.table</a>: similar to dplyr but good for large datasets; some extra functionality</li>
+  <li><a href="https://github.com/hadley/stringr">stringr</a>: string manipulation</li>
+  <li><a href="https://github.com/hadley/lubridate">lubridate</a>: better way to work with dates</li>
+  <li><a href="https://cran.r-project.org/web/packages/zoo/index.html">zoo</a>: running averages, amongst other things</li>
+</ul>
+
+<h4 id="visualization-and-interactive-plots">Visualization and Interactive plots</h4>
+<ul>
+  <li>**<a href="http://ggplot2.org/" target="_blank">ggplot2</a>: Hadley Wickham’s incredibly powerful plotting library built off of the <a href="http://www.amazon.com/The-Grammar-Graphics-Statistics-Computing/dp/0387245448" target="_blank">Grammar of Graphics</a>. So useful and well-designed it gets two asterisks.</li>
+  <li><a href="http://www.ggplot2-exts.org/" target="_blank">ggplot2 extension packages</a>: Running list of extensions to ggplot2</li>
+  <li>ggrepel</li>
+  <li>ggvis:</li>
+  <li>htmltools</li>
+  <li>htmlwidgets</li>
+  <li>d3heatmap</li>
+  <li>metricsgraphics</li>
+  <li>rCharts</li>
+  <li>DiagrammeR</li>
+  <li>packcircles</li>
+  <li>waffle</li>
+  <li>RgoogleMaps</li>
+  <li>hexbin</li>
+  <li>lattice</li>
+  <li>latticeExtra</li>
+</ul>
+
+<h4 id="geospatial-analysis-and-mapping">Geospatial analysis and mapping</h4>
+<ul>
+  <li>ggmap: geocoding and geospatial library</li>
+  <li><a href="https://rstudio.github.io/leaflet/">leaflet</a>: R wrapper to embed dynamic maps using leaflet.js</li>
+  <li><a href="https://github.com/trulia/choroplethr">choroplethr</a>, choroplethrAdmin1: easy way to create choropleths (heatmaps for a map) at the Admin 0- (country) and Admin 1-level (States/Provinces)</li>
+</ul>
+
+<h4 id="interactivity">Interactivity</h4>
+<ul>
+  <li>shiny</li>
+  <li>shinydashboard</li>
+  <li>shinythemes</li>
+</ul>
+
+<h4 id="reporting-publication-and-custom-appearance">Reporting, publication, and custom appearance</h4>
+<ul>
+  <li>knitr: helper function to produce RMarkdown documents</li>
+  <li>kable: basic markdown tables</li>
+  <li><a href="http://renkun.me/formattable/">formattable</a>: better tables for RMarkdown documents</li>
+  <li>animation</li>
+  <li>gridExtra</li>
+  <li>grid</li>
+  <li>colorspace</li>
+  <li>RColorBrewer</li>
+  <li>extrafont</li>
+</ul>
+
+<h4 id="importing-files">Importing files</h4>
+<ul>
+  <li>haven: imports in files from Stata, SAS, and SPSS</li>
+  <li>foreign: an alternative to haven to import from Stata, SAS, and SPSS.</li>
+  <li>readr: An advanced form of the base ‘read.csv’ file with some added functionality.</li>
+  <li>readxl: Functions to import in multiple sheets from Excel</li>
+  <li>googlesheets: Functions to connect to Google Drive spreadsheets.</li>
+  <li>rvest: Scrapes websites</li>
+  <li>pdftools: Scrapes pdf files</li>
+</ul>
+
+<h4 id="developer-libraries">Developer libraries</h4>
+<ul>
+  <li>*<a href="https://www.rstudio.com/products/rpackages/devtools/">devtools</a>: makes writing and releasing R packages a breeze. For casual users, allows you to install packages directly from Github using <code>install_github</code></li>
+  <li>roxygen2</li>
+  <li>testthat</li>
+  <li>jsonlite</li>
+  <li>microbenchmark</li>
+  <li>profvis</li>
+</ul>
+
+<h4 id="fitting-libraries">Fitting libraries</h4>
+<ul>
+  <li>*<a href="https://github.com/dgrtwo/broom">broom</a>: cleans up results from any fitted model into something neat and organized</li>
+  <li>MASS</li>
+  <li>sandwich</li>
+  <li>lmtest</li>
+  <li>plm</li>
+  <li>ggalt</li>
+  <li>coefplot</li>
+  <li>cluster</li>
+  <li>GWmodel</li>
+</ul>
+
+<h4 id="misc">Misc.</h4>
+<ul>
   <li><a href="http://swirlstats.com/" target="_blank">swirl</a>: A package to learn R within R.</li>
 </ul>
 
