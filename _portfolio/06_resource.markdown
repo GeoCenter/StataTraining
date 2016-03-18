@@ -50,66 +50,66 @@ To install any of the packages, use `install.packages("<package name>")`, as in:
 - If you have any comments, feel free to [email us](mailto:flaneuseks@gmail.com){:target="_blank"}
 
 #### Data Wrangling
-- *[dplyr](https://github.com/hadley/dplyr): filter, create new variables, summarise, ... Basically, anything you can think to do to a dataset
-- *[tidyr](https://github.com/hadley/tidyr): reshape and merge datasets
-- [data.table](https://github.com/Rdatatable/data.table): similar to dplyr but good for large datasets; some extra functionality
-- [stringr](https://github.com/hadley/stringr): string manipulation
-- [lubridate](https://github.com/hadley/lubridate): better way to work with dates
-- [zoo](https://cran.r-project.org/web/packages/zoo/index.html): running averages, amongst other things
+- *[dplyr](https://github.com/hadley/dplyr){:target="_blank"}: filter, create new variables, summarise, ... Basically, anything you can think to do to a dataset
+- *[tidyr](https://github.com/hadley/tidyr){:target="_blank"}: reshape and merge datasets
+- [data.table](https://github.com/Rdatatable/data.table){:target="_blank"}: similar to dplyr but good for large datasets; some extra functionality
+- [stringr](https://github.com/hadley/stringr){:target="_blank"}: string manipulation
+- [lubridate](https://github.com/hadley/lubridate){:target="_blank"}: better way to work with dates
+- [zoo](https://cran.r-project.org/web/packages/zoo/index.html){:target="_blank"}: running averages, amongst other things
 
 
 #### Visualization and Interactive plots
 - **[ggplot2](http://ggplot2.org/){:target="_blank"}: Hadley Wickham's incredibly powerful plotting library built off of the [Grammar of Graphics](http://www.amazon.com/The-Grammar-Graphics-Statistics-Computing/dp/0387245448){:target="_blank"}. So useful and well-designed it gets two asterisks.
 - [ggplot2 extension packages](http://www.ggplot2-exts.org/){:target="_blank"}: Running list of extensions to ggplot2
-- [ggrepel](https://github.com/slowkow/ggrepel): extends ggplot2 to avoid overlapping text
-- [ggvis](ggvis.rstudio.com): data visualization package that enables interactive graphics
-- [d3heatmap](https://github.com/rstudio/d3heatmap): creates D3-based heatmaps in R
-- [htmlwidgets](http://www.htmlwidgets.org/): suite of packages that port javascript visualization packages into R
-- [metricsgraphics](http://hrbrmstr.github.io/metricsgraphics/): creates interactive plots based on the MetricsGraphics.js / D3 chart library
-- [rCharts](http://rcharts.io/): creates interactive plots based on several javascript charting libraries
-- [DiagrammeR](http://rich-iannone.github.io/DiagrammeR/): creates graph diagrams using a Markdown-like syntax
-- [packcircles](https://github.com/mbedward/packcircles): creates non-overlapping packed circles
-- [waffle](https://github.com/hrbrmstr/waffle): creates isotype graphs (a single object repeated N times)
-- [hexbin](https://github.com/edzer/hexbin): hexbin data
+- [ggrepel](https://github.com/slowkow/ggrepel){:target="_blank"}: extends ggplot2 to avoid overlapping text
+- [ggvis](ggvis.rstudio.com){:target="_blank"}: data visualization package that enables interactive graphics
+- [d3heatmap](https://github.com/rstudio/d3heatmap){:target="_blank"}: creates D3-based heatmaps in R
+- [htmlwidgets](http://www.htmlwidgets.org/){:target="_blank"}: suite of packages that port javascript visualization packages into R
+- [metricsgraphics](http://hrbrmstr.github.io/metricsgraphics/){:target="_blank"}: creates interactive plots based on the MetricsGraphics.js / D3 chart library
+- [rCharts](http://rcharts.io/){:target="_blank"}: creates interactive plots based on several javascript charting libraries
+- [DiagrammeR](http://rich-iannone.github.io/DiagrammeR/){:target="_blank"}: creates graph diagrams using a Markdown-like syntax
+- [packcircles](https://github.com/mbedward/packcircles){:target="_blank"}: creates non-overlapping packed circles
+- [waffle](https://github.com/hrbrmstr/waffle){:target="_blank"}: creates isotype graphs (a single object repeated N times)
+- [hexbin](https://github.com/edzer/hexbin){:target="_blank"}: hexbin data
 
 #### Geospatial analysis and mapping
-- [ggmap](https://github.com/dkahle/ggmap): geocoding and geospatial library
-- [leaflet](https://rstudio.github.io/leaflet/): R wrapper to embed dynamic maps using leaflet.js
+- [ggmap](https://github.com/dkahle/ggmap){:target="_blank"}: geocoding and geospatial library
+- [leaflet](https://rstudio.github.io/leaflet/){:target="_blank"}: R wrapper to embed dynamic maps using leaflet.js
 - [choroplethr](https://github.com/trulia/choroplethr), choroplethrAdmin1: easy way to create choropleths (heatmaps for a map) at the Admin 0- (country) and Admin 1-level (states/provinces)
-- [RgoogleMaps](https://cran.r-project.org/web/packages/RgoogleMaps/RgoogleMaps.pdf): overlays plots on a Google map
+- [RgoogleMaps](https://cran.r-project.org/web/packages/RgoogleMaps/RgoogleMaps.pdf){:target="_blank"}: overlays plots on a Google map
 
 #### Interactivity
-- [shiny](http://shiny.rstudio.com/): easy way to create custom, interactive web applications in R
-- [shinydashboard](https://rstudio.github.io/shinydashboard/): uses Shiny to create customized dashboards
-- [shinythemes](https://rstudio.github.io/shinythemes/): customize appearance of Shiny apps
+- [shiny](http://shiny.rstudio.com/){:target="_blank"}: easy way to create custom, interactive web applications in R
+- [shinydashboard](https://rstudio.github.io/shinydashboard/){:target="_blank"}: uses Shiny to create customized dashboards
+- [shinythemes](https://rstudio.github.io/shinythemes/){:target="_blank"}: customize appearance of Shiny apps
 
 #### Reporting, publication, and custom appearance
-- *[knitr](http://yihui.name/knitr/): helper function to produce RMarkdown documents
-- [formattable](http://renkun.me/formattable/): better tables for RMarkdown documents
-- [animation](http://yihui.name/animation/): make GIFs in R
-- [RColorBrewer](https://cran.r-project.org/web/packages/RColorBrewer/index.html): imports [Cynthia Brewer's excellent color palettes](http://colorbrewer2.org/) as R objects
-- [extrafont](https://www.r-project.org/nosvn/pandoc/extrafont.html): allows you to use a font other than Helvetica in plots
+- *[knitr](http://yihui.name/knitr/){:target="_blank"}: helper function to produce RMarkdown documents
+- [formattable](http://renkun.me/formattable/){:target="_blank"}: better tables for RMarkdown documents
+- [animation](http://yihui.name/animation/){:target="_blank"}: make GIFs in R
+- [RColorBrewer](https://cran.r-project.org/web/packages/RColorBrewer/index.html){:target="_blank"}: imports [Cynthia Brewer's excellent color palettes](http://colorbrewer2.org/) as R objects
+- [extrafont](https://www.r-project.org/nosvn/pandoc/extrafont.html){:target="_blank"}: allows you to use a font other than Helvetica in plots
 
 
 #### Importing files
-- [haven](https://github.com/hadley/haven): imports in files from Stata, SAS, and SPSS
-- [foreign](https://cran.r-project.org/web/packages/foreign/foreign.pdf): an alternative to haven to import from Stata, SAS, and SPSS. Doesn't support Stata 14 (yet?)
-- [readr](https://github.com/hadley/readr): an advanced form of the base `read.csv` function with some added functionality.
-- [readxl](https://github.com/hadley/readxl): imports in multiple sheets from Excel
-- [googlesheets](https://github.com/jennybc/googlesheets): connects to Google Drive spreadsheets.
-- [rvest](https://github.com/hadley/rvest): scrapes websites
-- [pdftools](https://github.com/ropensci/pdftools): scrapes .pdf files
-- [jsonlite](https://cran.r-project.org/web/packages/jsonlite/vignettes/json-aaquickstart.html): converts between JSON objects and R ones
+- [haven](https://github.com/hadley/haven){:target="_blank"}: imports in files from Stata, SAS, and SPSS
+- [foreign](https://cran.r-project.org/web/packages/foreign/foreign.pdf){:target="_blank"}: an alternative to haven to import from Stata, SAS, and SPSS. Doesn't support Stata 14 (yet?)
+- [readr](https://github.com/hadley/readr){:target="_blank"}: an advanced form of the base `read.csv` function with some added functionality.
+- [readxl](https://github.com/hadley/readxl){:target="_blank"}: imports in multiple sheets from Excel
+- [googlesheets](https://github.com/jennybc/googlesheets){:target="_blank"}: connects to Google Drive spreadsheets.
+- [rvest](https://github.com/hadley/rvest){:target="_blank"}: scrapes websites
+- [pdftools](https://github.com/ropensci/pdftools){:target="_blank"}: scrapes .pdf files
+- [jsonlite](https://cran.r-project.org/web/packages/jsonlite/vignettes/json-aaquickstart.html){:target="_blank"}: converts between JSON objects and R ones
 
 #### Developer libraries
-- *[devtools](https://www.rstudio.com/products/rpackages/devtools/): makes writing and releasing R packages a breeze. For casual users, allows you to install packages directly from Github using `install_github`
-- [roxygen2](https://github.com/klutometis/roxygen): allows for easy commenting of functions and packages
-- [testthat](https://github.com/hadley/testthat): reproducible testing functions for package development 
-- [microbenchmark](https://cran.r-project.org/web/packages/microbenchmark/index.html): timing function to profile how long functions take to execute
-- [profvis](https://rpubs.com/wch/123888): allows visual profiling of function timing to optimize performance
+- *[devtools](https://www.rstudio.com/products/rpackages/devtools/){:target="_blank"}: makes writing and releasing R packages a breeze. For casual users, allows you to install packages directly from Github using `install_github`
+- [roxygen2](https://github.com/klutometis/roxygen){:target="_blank"}: allows for easy commenting of functions and packages
+- [testthat](https://github.com/hadley/testthat){:target="_blank"}: reproducible testing functions for package development 
+- [microbenchmark](https://cran.r-project.org/web/packages/microbenchmark/index.html){:target="_blank"}: timing function to profile how long functions take to execute
+- [profvis](https://rpubs.com/wch/123888){:target="_blank"}: allows visual profiling of function timing to optimize performance
 
 #### Fitting libraries
-- *[broom](https://github.com/dgrtwo/broom): cleans up results from any fitted model into something neat and organized
+- *[broom](https://github.com/dgrtwo/broom){:target="_blank"}: cleans up results from any fitted model into something neat and organized
 - MASS
 - sandwich 
 - lmtest
