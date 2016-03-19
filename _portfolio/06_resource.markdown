@@ -70,7 +70,6 @@ To install any of the packages, use `install.packages("<package name>")`, as in:
 - [DiagrammeR](http://rich-iannone.github.io/DiagrammeR/){:target="_blank"}: creates graph diagrams using a Markdown-like syntax
 - [packcircles](https://github.com/mbedward/packcircles){:target="_blank"}: creates non-overlapping packed circles
 - [waffle](https://github.com/hrbrmstr/waffle){:target="_blank"}: creates isotype graphs (a single object repeated N times)
-- [hexbin](https://github.com/edzer/hexbin){:target="_blank"}: hexbin data
 
 #### Geospatial analysis and mapping
 - [ggmap](https://github.com/dkahle/ggmap){:target="_blank"}: geocoding and geospatial library
