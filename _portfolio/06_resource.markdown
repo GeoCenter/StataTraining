@@ -11,7 +11,8 @@ img: /StataTraining/img/tools.svg
 - [Bad data and how to fix them](https://github.com/Quartz/bad-data-guide){:target="_blank"}: Encyclopedia of all the things that can and do go wrong with data, and suggestions on how to fix.
 - [DataBasic](https://www.databasic.io/en/){:target="_blank"}: Suite of web tools for beginners to work with data
 
-
+### Stata resources
+- If you're new to Stata, check out [UCLA's Stata Page](http://www.ats.ucla.edu/stat/stata/){:target="_blank"}. It has a wealth of resources to get you started. 
 
 ### R resources
 - If you're new to R, one of the first things you should do is install [RStudio](https://www.rstudio.com/products/rstudio/){:target="_blank"}.  It'll make your life a whole lot better.
@@ -32,10 +33,24 @@ img: /StataTraining/img/tools.svg
 - [Selector Gadget to identify CSS objects](http://selectorgadget.com/){:target="_blank"}
 
 ### Useful Stata packages
+Stata has a number of user-written commands that are housed by [RePEc](http://repec.org/){:target="_blank"} Boston College Statistical Software Components (SSC) archive. As long as you are connected to the internet, you can download and install a package by simply typing `ssc install estout` in the Stata command window. Once the package has installed, type `help estout` to view the help file associated with the package. To view trending packges from SCC type `ssc whatshot, n(25)` in Stata. This will return the top 25 packages at SSC.
+
+#### Data Wrangling
+- [egenmore](http://econpapers.repec.org/software/bocbocode/s386401.htm){:target="_blank"}: Stata's `egen` command can execute tons of useful data munging operations. If `egen` is not enough for you, check out Nicholas Cox's egenmore. The package includes various `egen` extensions.  
+- [reclink](http://econpapers.repec.org/software/bocbocode/s456876.htm){:target="_blank"}: module to probabilistically match records  
+- [jarowinkler](https://ideas.repec.org/c/boc/bocode/s457850a.html){:target="_blank"}:  module to calculate the Jaro-Winkler distance between strings
+- [carryforward](https://ideas.repec.org/c/boc/bocode/s444902.html){:target="_blank"}: module to carry forward/backward previous observations
+- [](){:target="_blank"}:
+- [](){:target="_blank"}:
+- [](){:target="_blank"}:
+- [](){:target="_blank"}:
+
+
+
 
 
 ### Useful R packages
-R has a long list of libraries that extend the functionality of base R and make it easier to use. Here's a running list of packages that we find particularly helpful, broken down by category. Core libraries are indicated with an asterisk, and are particularly recommended for all users.
+R has a long list of libraries that extend the functionality of base R and make it easier to use. Here's a running list of packages that we find particularly helpful, broken down by category. Core libraries are indicated with an asterisk, and are part.icularly recommended for all users.
 
 To install any of the packages, use `install.packages("<package name>")`, as in: `install.packages("ggplot2")`. All packages can be found on R's [CRAN](https://cran.r-project.org/){:target="_blank"}
 
