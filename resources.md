@@ -51,8 +51,17 @@ permalink: /resources/
 
 {% endfor %}   
 
-<br>
 .
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 
 <hr>
 
