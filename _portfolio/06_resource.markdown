@@ -33,7 +33,7 @@ img: /StataTraining/img/tools.svg
 - [Selector Gadget to identify CSS objects](http://selectorgadget.com/){:target="_blank"}
 
 ### Useful Stata packages
-Stata has a number of user-written commands that are housed by [RePEc](http://repec.org/){:target="_blank"} Boston College Statistical Software Components (SSC) archive. As long as you are connected to the internet, you can download and install a package by simply typing `ssc install estout` in the Stata command window. Once the package has installed, type `help estout` to view the help file associated with the package. To view trending packges from SCC type `ssc whatshot, n(25)` in Stata. This will return the top 25 packages at SSC.
+Stata has a number of user-written commands that are contributed by [RePEc](http://repec.org/){:target="_blank"} and housed at the Boston College Statistical Software Components (SSC) archive. As long as you are connected to the internet, you can download and install a package by simply typing `ssc install estout` in the Stata command window. Once the package has installed, type `help estout` to view the help file associated with the package. To view trending packges from SCC type `ssc whatshot, n(25)` in Stata. This will return the top 25 packages at SSC.
 
 #### Data Wrangling
 - [egenmore](http://econpapers.repec.org/software/bocbocode/s386401.htm){:target="_blank"}: Stata's `egen` command can execute tons of useful data munging operations. If `egen` is not enough for you, check out Nicholas Cox's egenmore. The package includes various `egen` extensions.  
