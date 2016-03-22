@@ -35,17 +35,32 @@ img: /StataTraining/img/tools.svg
 ### Useful Stata packages
 Stata has a number of user-written commands that are contributed by [RePEc](http://repec.org/){:target="_blank"} and housed at the Boston College Statistical Software Components (SSC) archive. As long as you are connected to the internet, you can download and install a package by simply typing `ssc install estout` in the Stata command window. Once the package has installed, type `help estout` to view the help file associated with the package. To view trending packges from SCC type `ssc whatshot, n(25)` in Stata. This will return the top 25 packages at SSC.
 
-#### Data Wrangling
+#### Data Wrangling/Munging
 - [egenmore](http://econpapers.repec.org/software/bocbocode/s386401.htm){:target="_blank"}: Stata's `egen` command can execute tons of useful data munging operations. If `egen` is not enough for you, check out Nicholas Cox's egenmore. The package includes various `egen` extensions.  
-- [reclink](http://econpapers.repec.org/software/bocbocode/s456876.htm){:target="_blank"}: module to probabilistically match records  
-- [jarowinkler](https://ideas.repec.org/c/boc/bocode/s457850a.html){:target="_blank"}:  module to calculate the Jaro-Winkler distance between strings
-- [carryforward](https://ideas.repec.org/c/boc/bocode/s444902.html){:target="_blank"}: module to carry forward/backward previous observations
+- [reclink](http://econpapers.repec.org/software/bocbocode/s456876.htm){:target="_blank"}: probabilistically match records  
+- [jarowinkler](https://ideas.repec.org/c/boc/bocode/s457850a.html){:target="_blank"}: calculate the Jaro-Winkler distance between strings
+- [carryforward](https://ideas.repec.org/c/boc/bocode/s444902.html){:target="_blank"}: carry forward/backward previous observations
+- [valuesof](https://ideas.repec.org/c/boc/bocode/s456705.html){:target="_blank"}: display and return in `r(values)` the varlues of a variable joined together in a single string.
+- [use13](https://ideas.repec.org/c/boc/bocode/s457667.html){:target="_blank"}: load datasets created with Stata 13 in Stata 10-12.
+- [usespss](https://ideas.repec.org/p/boc/nsug08/3.html){:target="_blank"}: load SPSS files 
+- [usesas](https://ideas.repec.org/c/boc/bocode/s435503.html){:target="_blank"}: load SAS files 
+- [insheetjson](https://ideas.repec.org/c/boc/bocode/s457407.html){:target="_blank"}: import tabular data from JSON sources on the web
+- [shp2dta](https://ideas.repec.org/c/boc/bocode/s456718.html){:target="_blank"}: converts shape boundary files (shapefiles) to Stata datasets
+- [winsor2](https://ideas.repec.org/c/boc/bocode/s457765.html){:target="_blank"}: winsorize a varlist
+- [trimmean](https://ideas.repec.org/c/boc/bocode/s457593.html){:target="_blank"}: trimmed means as descriptive or inferential statistics
+- [nearmrg](https://ideas.repec.org/c/boc/bocode/s434901.html){:target="_blank"}: provide nearest-match merging of datasets
+- [tscollap](https://ideas.repec.org/c/boc/bocode/s412101.html){:target="_blank"}: 
+- [mdesc](https://ideas.repec.org/c/boc/bocode/s457318.html){:target="_blank"}: tabulate prevalence of missing values
+- [mkcorr](https://ideas.repec.org/c/boc/bocode/s434601.html){:target="_blank"}: generate correlation table formatted for easy inclusion in articles
+- [sxpose](https://ideas.repec.org/c/boc/bocode/s446402.html){:target="_blank"}: transpose string variable dataset
+- [fs](https://ideas.repec.org/c/boc/bocode/s439201.html){:target="_blank"}: show names of files in a compact form
+- [confirmdir](https://ideas.repec.org/c/boc/bocode/s435507.html){:target="_blank"}: confirm if a directory exists
+- [extremes](https://ideas.repec.org/c/boc/bocode/s430801.html){:target="_blank"}: list extreme values of a variable
+- [nsplit](https://ideas.repec.org/c/boc/bocode/s447901.html){:target="_blank"}: split numeric variables into components
+- [kountry](https://ideas.repec.org/c/boc/bocode/s453301.html){:target="_blank"}: standardize country names across datasets
 - [](){:target="_blank"}:
 - [](){:target="_blank"}:
 - [](){:target="_blank"}:
-- [](){:target="_blank"}:
-
-
 
 
 
