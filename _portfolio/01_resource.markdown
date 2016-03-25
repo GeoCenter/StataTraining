@@ -4,9 +4,6 @@ title: Cheatsheets
 description: cheatsheets for key Stata & R commands
 img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 ---
-### _Stata Cheat Sheets_
-  
-
 
 ### Basic Processing
 <div class="col three caption">
