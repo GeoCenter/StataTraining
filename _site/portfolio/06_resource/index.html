@@ -114,13 +114,30 @@
 <h3 id="useful-stata-packages">Useful Stata packages</h3>
 <p>Stata has a number of user-written commands that are contributed by <a href="http://repec.org/" target="_blank">RePEc</a> and housed at the Boston College Statistical Software Components (SSC) archive. As long as you are connected to the internet, you can download and install a package by simply typing <code>ssc install estout</code> in the Stata command window. Once the package has installed, type <code>help estout</code> to view the help file associated with the package. To view trending packges from SCC type <code>ssc whatshot, n(25)</code> in Stata. This will return the top 25 packages at SSC.</p>
 
-<h4 id="data-wrangling">Data Wrangling</h4>
+<h4 id="data-wranglingmunging">Data Wrangling/Munging</h4>
 <ul>
   <li><a href="http://econpapers.repec.org/software/bocbocode/s386401.htm" target="_blank">egenmore</a>: Stata’s <code>egen</code> command can execute tons of useful data munging operations. If <code>egen</code> is not enough for you, check out Nicholas Cox’s egenmore. The package includes various <code>egen</code> extensions.</li>
-  <li><a href="http://econpapers.repec.org/software/bocbocode/s456876.htm" target="_blank">reclink</a>: module to probabilistically match records</li>
-  <li><a href="https://ideas.repec.org/c/boc/bocode/s457850a.html" target="_blank">jarowinkler</a>:  module to calculate the Jaro-Winkler distance between strings</li>
-  <li><a href="https://ideas.repec.org/c/boc/bocode/s444902.html" target="_blank">carryforward</a>: module to carry forward/backward previous observations</li>
-  <li>[](){:target=”_blank”}:</li>
+  <li><a href="http://econpapers.repec.org/software/bocbocode/s456876.htm" target="_blank">reclink</a>: probabilistically match records</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s457850a.html" target="_blank">jarowinkler</a>: calculate the Jaro-Winkler distance between strings</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s444902.html" target="_blank">carryforward</a>: carry forward/backward previous observations</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s456705.html" target="_blank">valuesof</a>: display and return in <code>r(values)</code> the varlues of a variable joined together in a single string.</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s457667.html" target="_blank">use13</a>: load datasets created with Stata 13 in Stata 10-12.</li>
+  <li><a href="https://ideas.repec.org/p/boc/nsug08/3.html" target="_blank">usespss</a>: load SPSS files</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s435503.html" target="_blank">usesas</a>: load SAS files</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s457407.html" target="_blank">insheetjson</a>: import tabular data from JSON sources on the web</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s456718.html" target="_blank">shp2dta</a>: converts shape boundary files (shapefiles) to Stata datasets</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s457765.html" target="_blank">winsor2</a>: winsorize a varlist</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s457593.html" target="_blank">trimmean</a>: trimmed means as descriptive or inferential statistics</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s434901.html" target="_blank">nearmrg</a>: provide nearest-match merging of datasets</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s412101.html" target="_blank">tscollap</a>:</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s457318.html" target="_blank">mdesc</a>: tabulate prevalence of missing values</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s434601.html" target="_blank">mkcorr</a>: generate correlation table formatted for easy inclusion in articles</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s446402.html" target="_blank">sxpose</a>: transpose string variable dataset</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s439201.html" target="_blank">fs</a>: show names of files in a compact form</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s435507.html" target="_blank">confirmdir</a>: confirm if a directory exists</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s430801.html" target="_blank">extremes</a>: list extreme values of a variable</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s447901.html" target="_blank">nsplit</a>: split numeric variables into components</li>
+  <li><a href="https://ideas.repec.org/c/boc/bocode/s453301.html" target="_blank">kountry</a>: standardize country names across datasets</li>
   <li>[](){:target=”_blank”}:</li>
   <li>[](){:target=”_blank”}:</li>
   <li>[](){:target=”_blank”}:</li>
@@ -143,7 +160,7 @@
   <li>If you have any comments, feel free to <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#102;&#108;&#097;&#110;&#101;&#117;&#115;&#101;&#107;&#115;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;" target="_blank">email us</a></li>
 </ul>
 
-<h4 id="data-wrangling-1">Data Wrangling</h4>
+<h4 id="data-wrangling">Data Wrangling</h4>
 <ul>
   <li>*<a href="https://github.com/hadley/dplyr" target="_blank">dplyr</a>: filter, create new variables, summarise, … Basically, anything you can think to do to a dataset</li>
   <li>*<a href="https://github.com/hadley/tidyr" target="_blank">tidyr</a>: reshape and merge datasets</li>
@@ -258,7 +275,7 @@
   		based on <a href="https://github.com/bogoli/-folio">Folio theme</a>
   		and is hosted on <a href="https://github.com" target="_blank">Github</a> &#169; 2016
       <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License"  style="border-width:0; vertical-align: middle; padding-left:10px;" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png"/>
-		<img class="logo" src="/StataTraining/img/favicon.ico"/>
+		<img class="logo" src="/StataTraining/img/geocenter.png"/>
   	</p>
 
 

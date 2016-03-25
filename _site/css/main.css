@@ -212,11 +212,11 @@ pre {
  * Site footer  **********************************************************
  */
 .site-footer {
-  border-top: 1px solid #333;
+  border-top: 1px solid #ccc;
   font-size: 10px;
-  background-color: #333;
+  background-color: #ccc;
   padding: 2px;
-  color: #aaa;
+  color: #8a8c8e;
   position: fixed;
   left: 0px;
   bottom: 0px;
@@ -454,8 +454,8 @@ pre {
 
 .logo {
   padding-left: 50px;
-  width: 20px;
-  height: auto;
+  width: auto;
+  height: 17px;
   vertical-align: middle; }
 
 .return {
