@@ -62,7 +62,7 @@ In this session you will learn the basics of data management and analysis using 
 <div class="icon">
  <div class="thumbnailicon">
         <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day2/DoFiles/Homework.do" target="_blank">
-        <img class="thumbnailicon" src="/StataTraining/img/reshape2.PNG"/> 
+        <img class="thumbnailicon" src="/StataTraining/img/reshape2.png"/> 
         <span>
             <h1>Exercise</h1>
             <br/>
@@ -77,7 +77,7 @@ In this session you will learn the basics of data management and analysis using 
 <div class="icon">
  <div class="thumbnailicon">
         <a href = "https://github.com/GeoCenter/StataTraining/blob/master/Day3/Homework/HomeworkAssignment.md" target="_blank">
-        <img class="thumbnailicon" src="/StataTraining/img/merging.PNG"/> 
+        <img class="thumbnailicon" src="/StataTraining/img/merge.png"/> 
         <span>
             <h1>Homework</h1>
             <br/>
