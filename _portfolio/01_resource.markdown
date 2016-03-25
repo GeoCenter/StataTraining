@@ -4,7 +4,9 @@ title: Cheatsheets
 description: cheatsheets for key Stata & R commands
 img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 ---
-## Stata Cheat Sheets  
+### _Stata Cheat Sheets_
+  
+
 
 ### Basic Processing
 <div class="col three caption">
@@ -67,7 +69,7 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 
 <div>
 	<a href="/StataTraining/pdf/StataCheatSheet_Analysis.pdf" target = "_blank">
-		<img class="col three" src="/StataTraining/img/StataCheatSheet_Analysis.png"/>  
+		<img class="col three" src="/StataTraining/img/StataCheatSheet_analysis.png"/>  
 	</a>
 </div>
 
