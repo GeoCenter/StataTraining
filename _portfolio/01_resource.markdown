@@ -26,7 +26,7 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 
 <div>
 	<a href="/StataTraining/pdf/StataCheatsheet_transformation.pdf" target = "_blank">
-		<img class="col three" src="/StataTraining/img/StataCheatsheets_transformation.png"/>  
+		<img class="col three" src="/StataTraining/img/StataCheatsheet_transformation.png"/>  
 	</a>
 </div>
 
