@@ -4,8 +4,9 @@ title: Cheatsheets
 description: cheatsheets for key Stata & R commands
 img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 ---
+## Stata Cheat Sheets  
 
-### Basic Processing in Stata
+### Basic Processing
 <div class="col three caption">
 	Fundamental commands in Stata to import, explore, summarize, and create new variables.
 </div> 
@@ -19,7 +20,7 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
       
 
 
-### Data Transformation in Stata
+### Data Transformation
 <div class="col three caption">
 	Selecting portions of datasets, replacing and lableing data, reshaping, merging, string manipulation, and saving
 </div>
@@ -32,7 +33,7 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 
 
 
-### Creating Data Visualizations in Stata
+### Creating Data Visualizations
 <div class="col three caption">
 	Syntax and arguments for plotting functions
 </div>
@@ -46,9 +47,9 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 
 
 
-### Customizing Data Visualizations in Stata
+### Customizing Data Visualizations
 <div class="col three caption">
-	Options to change the appearance of plots in Stata
+	Options to change the appearance of plots 
 </div>
 
 
@@ -57,6 +58,20 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 		<img class="col three" src="/StataTraining/img/StataCheatsheets_visualization2.png"/>  
 	</a>
 </div>
+
+
+### Data Analysis 
+<div class="col three caption">
+	Summarize data, declare data, conduct statistical tests, and estimate models
+</div>
+
+<div>
+	<a href="/StataTraining/pdf/StataCheatSheet_Analysis.pdf" target = "_blank">
+		<img class="col three" src="/StataTraining/img/StataCheatSheet_Analysis.png"/>  
+	</a>
+</div>
+
+
 
 .
 <hr>
