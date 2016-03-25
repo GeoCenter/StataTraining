@@ -8,8 +8,11 @@ img: /StataTraining/img/book.svg
 ### Books
 
 #### R
-- <a href = "http://r4ds.had.co.nz/" target="_blank"><img class="col one left" src="/StataTraining/img/resources/r4ds.png"></a>
-- <a href = "http://r-pkgs.had.co.nz/" target="_blank"><img class="col one left" src="/StataTraining/img/resources/rpkgs.png"></a>
+<a href = "http://r4ds.had.co.nz/" target="_blank"><img class="col one left" src="/StataTraining/img/resources/r4ds.png"></a>
+<a href = "http://r-pkgs.had.co.nz/" target="_blank"><img class="col one left" src="/StataTraining/img/resources/rpkgs.png"></a>
+<br>
+<br>
+<br>
 <br>
 <br>
 <br>
