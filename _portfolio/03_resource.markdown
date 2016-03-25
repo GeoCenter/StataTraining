@@ -6,8 +6,9 @@ img: /StataTraining/img/book.svg
 ---
 
 ### Books
-- 
-
+#### R
+- <a href = "http://r4ds.had.co.nz/" target="_blank"><img class="col one left" src="/StataTraining/img/resources/r4ds.jpg"></a>
+- <a href = "http://r-pkgs.had.co.nz/" target="_blank"><img class="col one left" src="/StataTraining/img/resources/rpkgs.jpg"></a>
 
 ### Articles
 - <a href = "http://www.bloomberg.com/graphics/2015-paul-ford-what-is-code/" target="_blank">Ford, P. (2015). "What is code?" Bloomberg.</a> 
