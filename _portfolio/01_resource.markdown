@@ -5,7 +5,7 @@ description: cheatsheets for key Stata & R commands
 img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 ---
 
-<a href ="/StataTraining/pdf/AllCheatSheets.pdf " target = "_blank">Download all</a>
+<a href ="/StataTraining/pdf/AllCheatSheets.pdf " download="AllCheatSheets.pdf">Download all</a>
 
 
 ### Basic Processing
