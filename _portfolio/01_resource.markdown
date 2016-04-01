@@ -5,6 +5,9 @@ description: cheatsheets for key Stata & R commands
 img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 ---
 
+<a href ="/StataTraining/pdf/AllCheatSheets.pdf " target = "_blank">Download all</a>
+
+
 ### Basic Processing
 <div class="col three caption">
 	Fundamental commands in Stata to import, explore, summarize, and create new variables.
