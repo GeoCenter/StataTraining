@@ -10,7 +10,7 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 
 ### Basic Processing
 <div class="col three caption">
-	Fundamental commands in Stata to import, explore, summarize, and create new variables.
+	Fundamental commands in Stata to import, explore, summarize, and create new variables
 </div> 
 
 <div>
