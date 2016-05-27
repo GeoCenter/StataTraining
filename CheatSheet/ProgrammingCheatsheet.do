@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------
 # Name:		ProgrammingCheatsheet.do
-# Purpose:	Code to reproduce examples from cheatsheet
+# Purpose:	Code to reproduce examples from cheat sheet
 # Author:	Tim Essam, Ph.D. (tessam@usaid.gov) & Laura Hughes, Ph.D (lhughes@usaid.gov)
 # Created:	2016/05/27
 # License:	MIT License
@@ -14,6 +14,7 @@ capture log close
 log using "ProgrammingCheatsheet.log", replace
 sysuse auto, clear
 
+* -----------------------------------------------------------------------------*
 *### Scalars - store numeric or string values to be called later
 /* both r- and e-class results contain scalars
    Notes: Be careful when naming scalars: if a variable and a scalar
@@ -26,7 +27,9 @@ scalar a1 = "I am a string scalar"
 * list scalars, drop scalar x1
 scalar list
 scalar drop x1
-   
+
+
+* -----------------------------------------------------------------------------*   
 *### Matrices - for more advanced matrix commands see the Mata Reference Manual
 /* e-class results matrices scalars */
 
@@ -52,6 +55,8 @@ matrix dir
 matrix list b
 matrix drop _all
 
+
+* -----------------------------------------------------------------------------*
 * ### Macros - a name that is linked to text (a pointer)
 /* GLOBAL macros have global scope, they are available throughout a Stata session (PUBLIC)
    Notes: be careful with globals because they can result in naming conflicts */
@@ -82,7 +87,7 @@ display "`varLab'"
 local varLab2 = strtoname("`varLab'")
 rename foreign `varLab2'
 
-* TEMPVARS, TEMPNAMES & TEMPFILES - assign names to specificied local macro names 
+* TEMPVARS, TEMPNAMES & TEMPFILES - assign names to specified local macro names 
 * used as temp vars, names or files.
 
 * Initialize a temp variable called temp1, save the squared value of mpg in temp1, summarize the result
@@ -99,9 +104,12 @@ tempfile myAuto
 display "`myAuto'"
 save `myAuto', replace
 
+
+
+* -----------------------------------------------------------------------------*
 * ### Access and Save stored r- and e-class Objects
 /* Many Stata commands store results in types of lists. To access these lists
-   use the return or ereturn command. Stored results can be scalars, macros, matrics
+   use the return or ereturn command. Stored results can be scalars, macros, matrices
    or functions (not covered in the cheat sheet). */
    
 * summarize the price variable in the auto data; Store the mean in the variable p_mean1
@@ -131,8 +139,11 @@ restore
 
 mean price
 
+
+
+* -----------------------------------------------------------------------------*
 /* ### RETURNING STORED RESULTS - after executing an execution command, the results of the 
-   estimates are stored in a structure that you can save, view, compare ane export. 
+   estimates are stored in a structure that you can save, view, compare and export. 
    The estout, outreg2 and putexcel commands are great tools to help you get your output
    outside of Stata. 
    */
@@ -143,7 +154,7 @@ regress price weight
 estimates store est1
 est dir
 
-* ssc install estout or adoupdate, update (be careful with the lattter, it updates everything!)
+* ssc install estout or adoupdate, update (be careful with the latter, it updates everything!)
 * Ues the estout package syntax to save estimates
 eststo est2: reg price weight mpg
 eststo est3: reg price weight mpg foreign
@@ -161,7 +172,9 @@ esttab using "auto_reg.txt", replace plain se
 outreg2 [est1 est2 est3] using "auto_reg2.txt", see replace
 
 
-/* ### LOOPS - use loops to automate repeptive tasks. 
+
+* -----------------------------------------------------------------------------*
+/* ### LOOPS - use loops to automate repetitive tasks. 
    Anatomy of a loop: Stata has three options for repeating commands over lists or values:
    foreach, forvalues and while. Though each has a different first line, the basic syntax
    is the same:
@@ -195,7 +208,7 @@ foreach x in mpg weight {
 
 *end
 
-* When using foreach of you must state the list type you are using. This declartion
+* When using foreach of you must state the list type you are using. This declaration
 * makes the loop execute slightly faster than the general foreach in loop.
 foreach x of varlist mpg weight {
 	summarize `x', detail
@@ -221,16 +234,30 @@ set trace off
 
 * PUTTING IT ALL TOGETHER:
 sysuse auto, clear
-generate car_make = word(make
+
+* Generate a 
+generate car_make = word(make, 1)
+levelsof car_make, local(cmake)
+local i = 1
+
+local cmake_len: word count `cmake'
+foreach x of local cmake{
+	display in yellow "Make group `i' is `x'"
+		if `i' == `cmake_len' {
+			display "The total number of groups is `i'"
+				}
+		local i = `++i'
+	}
+*end
 
 
-
-
-
-
+* -----------------------------------------------------------------------------*
 **** Not covered in cheat sheet but useful ****
 
-* Below is a brief example a program
+* Below is a brief example a program. If you find yourself cutting and pasting
+* your code more than 2 or 3 times, think about writing a program. For more on
+* writing programs see https://www.ssc.wisc.edu/sscc/pubs/stata_prog_old.htm or
+* check out the official Stata Blog (http://blog.stata.com/)
 
 *! VERSION 1.0.0 20016.01.28
 capture program drop drNick
@@ -238,10 +265,8 @@ program define drNick
 	display in yellow "Hi Everybody!"
 end
 
-* Call the program using it's name (drNick)
+* Call the program using its name (drNick)
 drNick
-
-
 
 * Other useful packages / links not included on our cheat sheets
 /* See https://github.com/haghish/MarkDoc for dynamic documents, slides and help files. 
