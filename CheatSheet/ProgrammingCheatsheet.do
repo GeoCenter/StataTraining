@@ -2,7 +2,7 @@
 # Name:		ProgrammingCheatsheet.do
 # Purpose:	Code to reproduce examples from cheat sheet
 # Author:	Tim Essam, Ph.D. (tessam@usaid.gov) & Laura Hughes, Ph.D (lhughes@usaid.gov)
-# Created:	2016/05/27
+# Created:	2016/05/30
 # License:	MIT License
 # Ado(s):	mat2txt, estout, outreg2, 
 #-------------------------------------------------------------------------------
@@ -21,6 +21,9 @@ sysuse auto, clear
    have the same name, Stata will assume you are calling the variable.
    (see http://www.stata-journal.com/sjpdf.html?articlenum=dm0021) */
 
+* Clear out any existing scalars
+scalar drop _all
+   
 scalar x1 = 3
 scalar a1 = "I am a string scalar"
 
@@ -32,6 +35,9 @@ scalar drop x1
 * -----------------------------------------------------------------------------*   
 *### Matrices - for more advanced matrix commands see the Mata Reference Manual
 /* e-class results matrices scalars */
+
+* Clear any pre-existing matrices
+matrix drop _all
 
 matrix a = (4 \ 5 \ 6)
 matrix b = (7 , 8 , 9) 
@@ -61,6 +67,11 @@ matrix drop _all
 /* GLOBAL macros have global scope, they are available throughout a Stata session (PUBLIC)
    Notes: be careful with globals because they can result in naming conflicts */
 
+* Display a list of existing system macros (Can see what keyboard shortcuts exist)
+* Drop any existing globals named pathdata or myGlobal
+macro dir
+macro drop pathdata myGlobal
+   
 global pathdata "C:/Users/SantasLittleHelper/Stata"
 cd $pathdata
 
