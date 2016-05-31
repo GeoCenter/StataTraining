@@ -245,7 +245,7 @@ display "`num'"
 matrix xbar=J(`num',1,.)
 local i = 1
 foreach x of local varsToSum {
-	* Calculate the mean for each global; Use the {} to loop over a global 
+	* Calculate the mean for each global
 	sum `x'
 
 	* store the transposed results in matrix xbar
