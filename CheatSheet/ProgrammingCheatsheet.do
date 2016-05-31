@@ -2,7 +2,7 @@
 # Name:		ProgrammingCheatsheet.do
 # Purpose:	Code to reproduce examples from cheat sheet
 # Author:	Tim Essam, Ph.D. (tessam@usaid.gov) & Laura Hughes, Ph.D (lhughes@usaid.gov)
-# Created:	2016/05/30
+# Created:	2016/05/27
 # License:	MIT License
 # Ado(s):	mat2txt, estout, outreg2, 
 #-------------------------------------------------------------------------------
@@ -21,9 +21,6 @@ sysuse auto, clear
    have the same name, Stata will assume you are calling the variable.
    (see http://www.stata-journal.com/sjpdf.html?articlenum=dm0021) */
 
-* Clear out any existing scalars
-scalar drop _all
-   
 scalar x1 = 3
 scalar a1 = "I am a string scalar"
 
@@ -35,9 +32,6 @@ scalar drop x1
 * -----------------------------------------------------------------------------*   
 *### Matrices - for more advanced matrix commands see the Mata Reference Manual
 /* e-class results matrices scalars */
-
-* Clear any pre-existing matrices
-matrix drop _all
 
 matrix a = (4 \ 5 \ 6)
 matrix b = (7 , 8 , 9) 
@@ -67,11 +61,6 @@ matrix drop _all
 /* GLOBAL macros have global scope, they are available throughout a Stata session (PUBLIC)
    Notes: be careful with globals because they can result in naming conflicts */
 
-* Display a list of existing system macros (Can see what keyboard shortcuts exist)
-* Drop any existing globals named pathdata or myGlobal
-macro dir
-macro drop pathdata myGlobal
-   
 global pathdata "C:/Users/SantasLittleHelper/Stata"
 cd $pathdata
 
@@ -242,7 +231,34 @@ forvalues i = 10(10)50 {
 *end
 set trace off
 	
+* Looping through globals (not covered in cheat sheet) and store results in matrix
+* (Not a great example, but you get the idea)
+capture clear matrix xbar
 
+* Initialize an empty 3 x 1 matrix called xbar; We will use this to store the results
+matrix xbar=J(3,1,.)
+
+* Define global macros vars1 and vars2
+global vars1 "price"
+global vars2 "mpg rep78"
+
+foreach x of numlist 1 2 {
+	* Calculate the mean for each global; Use the {} to loop over a global 
+	mean ${vars`x'}
+	
+	* Transpose the matrix of results and store in a matrix tmpA
+	matrix tmpA = e(b)'
+	
+	* store the transposed results in matrix xbar
+	matrix xbar[`x',1]=tmpA
+	
+	* Show the results on the 2nd loop
+	if `x' == 2 {
+		matrix list xbar
+		}
+	}
+*end
+	
 * PUTTING IT ALL TOGETHER:
 sysuse auto, clear
 
