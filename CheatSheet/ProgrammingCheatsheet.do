@@ -231,34 +231,58 @@ forvalues i = 10(10)50 {
 *end
 set trace off
 	
-* Looping through globals (not covered in cheat sheet) and store results in matrix
+* Looping through locals (not covered in cheat sheet) and store results in matrix
 * (Not a great example, but you get the idea)
 capture clear matrix xbar
 
-* Initialize an empty 3 x 1 matrix called xbar; We will use this to store the results
-matrix xbar=J(3,1,.)
-
 * Define global macros vars1 and vars2
-global vars1 "price"
-global vars2 "mpg rep78"
+local varsToSum price weight mpg
+local num : list sizeof varsToSum
+display "`num'"
 
-foreach x of numlist 1 2 {
+/* Initialize an empty matrix called xbar that has rows equal to the elements in the local macro
+; We will use this to store the results*/
+matrix xbar=J(`num',1,.)
+local i = 1
+set tr on
+foreach x of local varsToSum {
 	* Calculate the mean for each global; Use the {} to loop over a global 
-	mean ${vars`x'}
-	
-	* Transpose the matrix of results and store in a matrix tmpA
-	matrix tmpA = e(b)'
-	
+	sum `x'
+
 	* store the transposed results in matrix xbar
-	matrix xbar[`x',1]=tmpA
+	matrix xbar[`i',1]=r(mean)
 	
-	* Show the results on the 2nd loop
-	if `x' == 2 {
+		* Check that everything worked
+	if `i' == `num' {	
 		matrix list xbar
+		}
+		
+	* iterate to next row in xbar matrix
+	local i = `i' + 1
+	}
+*end
+
+* Looping through globals for a regression model (you can add globals to other globals)
+sysuse auto2, clear
+est drop _all
+global drop spec*
+
+global spec1 "mpg"
+global spec2 "$spec1 ib(3).rep78 headroom"
+global spec3 "$spec2 length turn displacement"
+
+* Loop through globals and combine regression results into a single table
+forvalues i = 1/3 {
+	* run OLS and store results
+	eststo spec`i': regress price ${spec`i'}, robust
+	
+	if `i' == 3 {
+		esttab spec*, se star(* 0.10 ** 0.05 *** 0.01) label ar2
 		}
 	}
 *end
-	
+
+* -----------------------------------------------------------------------------*	
 * PUTTING IT ALL TOGETHER:
 sysuse auto, clear
 
