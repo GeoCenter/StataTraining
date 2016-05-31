@@ -74,6 +74,17 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 </div>
 
 
+### Programming 
+<div class="col three caption">
+	A gentle introduction to programming building blocks
+</div>
+
+<div>
+	<a href="/StataTraining/pdf/StataCheatSheet_programming_2016_June.pdf" target = "_blank">
+		<img class="col three" src="/StataTraining/img/StataCheatsheet_programming.png"/>  
+	</a>
+</div>
+
 
 .
 <hr>
