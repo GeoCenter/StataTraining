@@ -9,10 +9,18 @@
   ga('create', 'UA-71487536-1', 'auto');
   ga('send', 'pageview');
 
+
+
+  var trackOutboundLink = function(url) {
+   ga('send', 'event', 'outbound', 'click', url, {
+     'transport': 'beacon',
+     'hitCallback': function(){document.location = url;}
+   });
+
 </script>
 
   <div class="wrapper">
-  	<p>This site was built using <a href="http://jekyllrb.com" target="_blank">Jekyll</a> 
+  	<p>This site was built using <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
   		based on <a href="https://github.com/bogoli/-folio">Folio theme</a>
   		and is hosted on <a href="https://github.com" target="_blank">Github</a> &#169; 2016
       <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License"  style="border-width:0; vertical-align: middle; padding-left:10px;" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png"/>
