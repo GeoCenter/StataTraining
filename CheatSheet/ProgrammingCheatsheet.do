@@ -248,7 +248,7 @@ foreach x of local varsToSum {
 	* Calculate the mean for each global
 	sum `x'
 
-	* store the transposed results in matrix xbar
+	* store the results in matrix xbar
 	matrix xbar[`i',1]=r(mean)
 	
 		* Check that everything worked
@@ -285,7 +285,7 @@ forvalues i = 1/3 {
 * PUTTING IT ALL TOGETHER:
 sysuse auto, clear
 
-* Generate a 
+* Generate a new variable called car make taking value of first word in variable make
 generate car_make = word(make, 1)
 levelsof car_make, local(cmake)
 local i = 1
