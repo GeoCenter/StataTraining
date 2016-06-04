@@ -5,13 +5,14 @@ description: cheatsheets for key Stata & R commands
 img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 ---
 
-<a href ="/StataTraining/pdf/AllCheatSheets.pdf " download="AllCheatSheets.pdf">Download all</a>
+<a href ="/StataTraining/pdf/AllCheatSheets.pdf " onclick="trackOutboundLink('AllCheatSheets.pdf'); return false;"
+download="AllCheatSheets.pdf">Download all</a>
 
 
 ### Basic Processing
 <div class="col three caption">
 	Fundamental commands in Stata to import, explore, summarize, and create new variables
-</div> 
+</div>
 
 <div>
 	<a href="/StataTraining/pdf/StataCheatsheet_processing.pdf" target = "_blank">
@@ -19,7 +20,7 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 	</a>
 </div>
 
-      
+
 
 
 ### Data Transformation
@@ -51,7 +52,7 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 
 ### Customizing Data Visualizations
 <div class="col three caption">
-	Options to change the appearance of plots 
+	Options to change the appearance of plots
 </div>
 
 
@@ -62,7 +63,7 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 </div>
 
 
-### Data Analysis 
+### Data Analysis
 <div class="col three caption">
 	Summarize data, declare data, conduct statistical tests, and estimate models
 </div>
@@ -74,7 +75,7 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 </div>
 
 
-### Programming 
+### Programming
 <div class="col three caption">
 	A gentle introduction to programming building blocks
 </div>
@@ -89,7 +90,7 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 .
 <hr>
 <hr>
-<br> 
+<br>
 
 ### R Cheatsheets
 [RStudio cheatsheets](https://www.rstudio.com/resources/cheatsheets/){:target="_blank"}: Cheatsheets with functions from the most useful R packages
