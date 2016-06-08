@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Stata Cheat sheets
+title: Stata cheat sheets
 description: cheat sheets for key Stata & R commands
 img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 ---
@@ -92,5 +92,5 @@ download="AllCheatSheets.pdf">Download all</a>
 <hr>
 <br>
 
-### R Cheatsheets
+### R cheat sheets
 [RStudio cheat sheets](https://www.rstudio.com/resources/cheatsheets/){:target="_blank"}: Cheat sheets with functions from the most useful R packages
