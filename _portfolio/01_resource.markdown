@@ -5,9 +5,9 @@ description: cheat sheets for key Stata & R commands
 img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 ---
 
-<a href ="/StataTraining/pdf/AllCheatSheets.pdf " onclick="trackOutboundLink('AllCheatSheets.pdf'); return false;"
-download="AllCheatSheets.pdf">Download all</a>
-
+<h1><a href ="/StataTraining/pdf/AllCheatSheets.pdf " onclick="trackOutboundLink('AllCheatSheets.pdf'); return false;"
+download="AllCheatSheets.pdf">Download all</a></h1>
+<br>
 
 ### Basic Processing
 <div class="col three caption">
