@@ -57,6 +57,7 @@ The materials cover:
 - Icons are taken from the <a href = "https://en.wikiversity.org/wiki/Wikiversity:MOOC_Interface/Related_files#Templates" target = "_blank">Wikiversity MOOC template</a> and are used under Creative Commons licenses, and from <a href = "http://www.unocha.org/top-stories/all-stories/ocha-launches-500-free-humanitarian-symbols" target = "_blank">UN OCHA</a>
 - Where figures or content for files is taken from or inspired by others in each of the sections, attribution is supplied on the slides.
 - This content can be shared and adapted for non-commercial purposes under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>. <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a><br />
+- Social Media Mentions from <a href ="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FStataCorp%2Fposts%2F1116958515009292&width=500">Stata<a/>
 
 <br/>
 <hr/>
