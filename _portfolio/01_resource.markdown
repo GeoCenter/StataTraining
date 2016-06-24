@@ -15,7 +15,7 @@ download="AllCheatSheets.pdf">Download all</a></h1>
 </div>
 
 <div>
-	<a href="/StataTraining/pdf/StataCheatsheet_processing.pdf" target = "_blank">
+	<a href="/StataTraining/pdf/StataCheatsheet_processing.pdf" target = "_blank" onclick="_gaq.push([‘_trackEvent’,’Download’,’PDF’,this.href]);">
 		<img class="col three" src="/StataTraining/img/StataCheatsheets_Processing.png"/>  
 	</a>
 </div>
