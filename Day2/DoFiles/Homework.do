@@ -68,7 +68,7 @@ local renlist = r(varlist)
 
 * Inside the loop below, we are taking the value of the variable
 * label for each yr variable, storing it in a new local variable (x)
-* and then converting that value into a valid variable name, which is story in y.
+* and then converting that value into a valid variable name, that is stored in y.
 * We then rename each occurence of `v' by the value held in `y'. If we turn the trace on
 * this is all much easier to see (you can also brute force this with repetitive coding).
 
