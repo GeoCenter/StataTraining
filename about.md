@@ -33,14 +33,14 @@ The materials cover:
 <br/>
 
 <img class="col one right" src="/StataTraining/img/tim.png">
-<h4>Dr. Tim Essam</h4> is an trained agricultural economist who somehow escaped the county seat of Gage County, Nebraska. He enjoys placing Easter eggs in co-worker’s presentations when offering suggestions. He also eats approximately every 45 minutes, and may have a tapeworm. He is passionate about reproducible analysis using Stata and R.  
+<h4>Dr. Tim Essam</h4> is an trained agricultural economist who somehow escaped the county seat of Gage County, Nebraska. He enjoys placing Easter eggs in co-worker’s presentations when offering suggestions. He also eats approximately every 45 minutes, and may have a tapeworm. He is passionate about reproducible analysis using Stata and R.  <a href = "https://twitter.com/StataRGIS" target = "_blank">@StataRGIS</a>
 
 <br/>
 <br/>
 <br/>
 
 <img class="col one right" src="/StataTraining/img/laura.png">
-<h4>Dr. Laura Hughes</h4> is a trained biophysical chemist who spent hours staring through a microscope at stains. We have no idea whether or not she can provide laundering tips on removing actual stains from clothing. She enjoys creating her own color schemes and custom plot functions in R. She is passionate about inculcating others with proper data visualization methods, color schemes, and occasional ballet moves.
+<h4>Dr. Laura Hughes</h4> is a trained biophysical chemist who spent hours staring through a microscope at stains. We have no idea whether or not she can provide laundering tips on removing actual stains from clothing. She enjoys creating her own color schemes and custom plot functions in R. She is passionate about inculcating others with proper data visualization methods, color schemes, and occasional ballet moves. <a href = "https://twitter.com/flaneuseks" target = "_blank">@flaneuseks</a>
 
 <br/>
 
