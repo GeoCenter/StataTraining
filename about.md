@@ -28,7 +28,7 @@ The materials cover:
 <img class="col one right" src="/StataTraining/img/aaron.png">
 
 <br/>
-<h4> Aaron Chafetz</h4> is a trained economist and self-taught data wizard. He currently writes visual basic scripts to process and manage HIV / AIDS data for PEPFAR. Aaron was a caddie at a country club in highschool. He is also an avid runner, biker and fledgling swimmer. 
+<h4> Aaron Chafetz</h4> is a trained economist and self-taught data wizard. He currently writes visual basic scripts to process and manage HIV / AIDS data for PEPFAR. Aaron was a caddie at a country club in highschool. He is also an avid runner, biker and fledgling swimmer. <a href = "https://twitter.com/achafetz" target = "_blank">@achafetz</a>
 
 <br/>
 
@@ -45,14 +45,14 @@ The materials cover:
 <br/>
 
 <img class="col one right" src="/StataTraining/img/doug.png">
-<h4>Doug Johnson</h4> is a Senior Impact Assessment Advisor in the Lab’s Office of Evaluation and Impact Assessment.  Prior to joining the Global Development Lab, Doug was an associate at Abt Associates where he served as principal investigator on several evaluations of public health programs including two randomized controlled trials.  Doug received a Master’s in Public Administration, International Development from the Harvard Kennedy School and a Bachelor’s in Political Science from Rice University.
+<h4>Doug Johnson</h4> is a Senior Impact Assessment Advisor in the Lab’s Office of Evaluation and Impact Assessment.  Prior to joining the Global Development Lab, Doug was an associate at Abt Associates where he served as principal investigator on several evaluations of public health programs including two randomized controlled trials.  Doug received a Master’s in Public Administration, International Development from the Harvard Kennedy School and a Bachelor’s in Political Science from Rice University. <a href = "https://twitter.com/dougj8921" target = "_blank">@dougj8921</a>
 
 <br/>
 <hr/>
 <br/>
 
 #### acknowledgements
-- This site was built using <a href="http://jekyllrb.com" target="_blank">Jekyll</a> 
+- This site was built using <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
   		based on <a href="https://github.com/bogoli/-folio">Folio theme</a>
 - Icons are taken from the <a href = "https://en.wikiversity.org/wiki/Wikiversity:MOOC_Interface/Related_files#Templates" target = "_blank">Wikiversity MOOC template</a> and are used under Creative Commons licenses, and from <a href = "http://www.unocha.org/top-stories/all-stories/ocha-launches-500-free-humanitarian-symbols" target = "_blank">UN OCHA</a>
 - Where figures or content for files is taken from or inspired by others in each of the sections, attribution is supplied on the slides.
@@ -73,4 +73,3 @@ The materials cover:
 <div class="col three caption">
 	Contact us via email or Github.
 </div>
-
