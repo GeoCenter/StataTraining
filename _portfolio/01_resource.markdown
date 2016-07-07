@@ -42,7 +42,7 @@ Syntax and arguments for plotting functions
 </div>
 
 <div>
-<a href="/StataTraining/pdf/StataCheatsheet_visualization1.pdf" target = "_blank">
+<a href="/StataTraining/pdf/StataCheatsheet_visualization1.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_visualization1.pdf');">
 <img class="col three" src="/StataTraining/img/StataCheatsheets_visualization1.png"/>  
 </a>
 </div>
@@ -57,7 +57,7 @@ Options to change the appearance of plots
 
 
 <div>
-<a href="/StataTraining/pdf/StataCheatsheet_visualization2.pdf" target = "_blank">
+<a href="/StataTraining/pdf/StataCheatsheet_visualization2.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_visualization2.pdf');">
 <img class="col three" src="/StataTraining/img/StataCheatsheets_visualization2.png"/>  
 </a>
 </div>
@@ -69,7 +69,7 @@ Summarize data, declare data, conduct statistical tests, and estimate models
 </div>
 
 <div>
-<a href="/StataTraining/pdf/StataCheatSheet_Analysis.pdf" target = "_blank">
+<a href="/StataTraining/pdf/StataCheatSheet_Analysis.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatSheet_Analysis.pdf');">
 <img class="col three" src="/StataTraining/img/StataCheatSheet_analysis.png"/>  
 </a>
 </div>
@@ -81,7 +81,7 @@ A gentle introduction to programming building blocks
 </div>
 
 <div>
-<a href="/StataTraining/pdf/StataCheatSheet_programming_2016_June.pdf" target = "_blank">
+<a href="/StataTraining/pdf/StataCheatSheet_programming_2016_June.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_programming_2016_June.pdf');">
 <img class="col three" src="/StataTraining/img/StataCheatsheet_programming.png"/>  
 </a>
 </div>
