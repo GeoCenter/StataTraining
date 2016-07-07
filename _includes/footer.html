@@ -10,12 +10,6 @@
   ga('create', 'UA-71487536-1', 'auto');
   ga('send', 'pageview');
 
-  ga('send', 'event', {
-    eventCategory: 'Outbound Link',
-    eventAction: 'click',
-    eventLabel: event.target.href
-  });
-
 
   var trackOutboundLink = function(url) {
   	ga("send", "event", "outbound", url, {
@@ -25,7 +19,7 @@
   		}
   	});
   };
-  
+
 </script>
 
   <div class="wrapper">
