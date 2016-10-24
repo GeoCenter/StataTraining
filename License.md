@@ -1,6 +1,12 @@
-MIT License
+## Code
+Code is licensed through an MIT license (below)
 
-Copyright (c) [2016] [USAID GeoCenter]
+## Content
+All derived content is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+## MIT License
+
+Copyright (c) 2016 Tim Essam & Laura Hughes
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
