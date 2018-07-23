@@ -5,14 +5,14 @@ description: cheat sheets for key Stata & R commands
 img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 ---
 
-<h3><a href ="/StataTraining/pdf/AllCheatSheets_Stata2015.pdf" onclick="trackOutboundLink('AllCheatSheets_Stata2015.pdf');"
+<h1><a href ="/StataTraining/pdf/AllCheatSheets_Stata2015.pdf" onclick="trackOutboundLink('AllCheatSheets_Stata2015.pdf');"
 download="AllCheatSheets_Stata2015.pdf">Updated: Download all Stata 2015 Cheatsheets</a>
 <br>
-<br></h3>
+<br></h1>
 
-<h1><a href ="/StataTraining/pdf/AllCheatSheets.pdf" onclick="trackOutboundLink('AllCheatSheets.pdf');"
+<h3><a href ="/StataTraining/pdf/AllCheatSheets.pdf" onclick="trackOutboundLink('AllCheatSheets.pdf');"
 download="AllCheatSheets.pdf">Download all Stata 2014 Cheatsheets</a>
-</h1>
+</h3>
 <br>
 
 
