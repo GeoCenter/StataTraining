@@ -10,7 +10,6 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 download="AllCheatSheets_Stata2015.pdf">Updated: Download all Stata 2015 Cheatsheets</a>
 </h1>
 <br>
-<br>
 
 ### Basic Processing
 <div class="col three caption">
