@@ -7,7 +7,7 @@ img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 
 <h1>
 <a href ="/StataTraining/pdf/AllCheatSheets_Stata2015.pdf" onclick="trackOutboundLink('AllCheatSheets_Stata2015.pdf');"
-download="AllCheatSheets_Stata2015.pdf">Updated: Download all Stata 2015 Cheatsheets</a>
+download="AllCheatSheets_Stata2015.pdf">Updated: Download all Stata 15 Cheatsheets</a>
 </h1>
 <br>
 
