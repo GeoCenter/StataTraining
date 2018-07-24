@@ -23,7 +23,7 @@ Fundamental commands in Stata to import, explore, summarize, and create new vari
 
 <div>
 <a href="/StataTraining/pdf/StataCheatsheet_processing.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_processing.pdf');">
-<img class="col three" src="/StataTraining/img/StataCheatsheets_Processing.png"/>  
+<img class="col three" src="/StataTraining/img/DataProcessing.png"/>  
 </a>
 </div>
 
@@ -37,7 +37,7 @@ Selecting portions of datasets, replacing and labeling data, reshaping, merging,
 
 <div>
 <a href="/StataTraining/pdf/StataCheatsheet_transformation.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_transformation.pdf');">
-<img class="col three" src="/StataTraining/img/StataCheatsheet_transformation.png"/>  
+<img class="col three" src="/StataTraining/img/DataTransformation.png"/>  
 </a>
 </div>
 
@@ -50,7 +50,7 @@ Syntax and arguments for plotting functions
 
 <div>
 <a href="/StataTraining/pdf/StataCheatsheet_visualization1.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_visualization1.pdf');">
-<img class="col three" src="/StataTraining/img/StataCheatsheets_visualization1.png"/>  
+<img class="col three" src="/StataTraining/img/DataVisualization_Plots.png"/>  
 </a>
 </div>
 
@@ -65,7 +65,7 @@ Options to change the appearance of plots
 
 <div>
 <a href="/StataTraining/pdf/StataCheatsheet_visualization2.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_visualization2.pdf');">
-<img class="col three" src="/StataTraining/img/StataCheatsheets_visualization2.png"/>  
+<img class="col three" src="/StataTraining/img/DataVisualization_Syntax.png"/>  
 </a>
 </div>
 
@@ -77,7 +77,7 @@ Summarize data, declare data, conduct statistical tests, and estimate models
 
 <div>
 <a href="/StataTraining/pdf/StataCheatSheet_Analysis.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatSheet_Analysis.pdf');">
-<img class="col three" src="/StataTraining/img/StataCheatSheet_analysis.png"/>  
+<img class="col three" src="/StataTraining/img/DataAnalysis.png"/>  
 </a>
 </div>
 
@@ -89,7 +89,7 @@ A gentle introduction to programming building blocks
 
 <div>
 <a href="/StataTraining/pdf/StataCheatSheet_programming_2016_June.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_programming_2016_June.pdf');">
-<img class="col three" src="/StataTraining/img/StataCheatsheet_programming.png"/>  
+<img class="col three" src="/StataTraining/img/Programming.png"/>  
 </a>
 </div>
 
