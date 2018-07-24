@@ -5,16 +5,10 @@ description: cheat sheets for key Stata & R commands
 img: "/StataTraining/img/StataCheatsheets_Transformation.png"
 ---
 
-<h1><a href ="/StataTraining/pdf/AllCheatSheets_Stata2015.pdf" onclick="trackOutboundLink('AllCheatSheets_Stata2015.pdf');"
+<h1>
+<a href ="/StataTraining/pdf/AllCheatSheets_Stata2015.pdf" onclick="trackOutboundLink('AllCheatSheets_Stata2015.pdf');"
 download="AllCheatSheets_Stata2015.pdf">Updated: Download all Stata 2015 Cheatsheets</a>
-<br>
-<br></h1>
-
-<h3><a href ="/StataTraining/pdf/AllCheatSheets.pdf" onclick="trackOutboundLink('AllCheatSheets.pdf');"
-download="AllCheatSheets.pdf">Download all Stata 2014 Cheatsheets</a>
-</h3>
-<br>
-
+</h1>
 
 ### Basic Processing
 <div class="col three caption">
@@ -22,7 +16,7 @@ Fundamental commands in Stata to import, explore, summarize, and create new vari
 </div>
 
 <div>
-<a href="/StataTraining/pdf/StataCheatsheet_processing.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_processing.pdf');">
+<a href="/StataTraining/pdf/StataCheatsheet_processing15_June_2016_TE-REV.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_processing15_June_2016_TE-REV.pdf.pdf');">
 <img class="col three" src="/StataTraining/img/DataProcessing.PNG"/>  
 </a>
 </div>
@@ -36,7 +30,7 @@ Selecting portions of datasets, replacing and labeling data, reshaping, merging,
 </div>
 
 <div>
-<a href="/StataTraining/pdf/StataCheatsheet_transformation.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_transformation.pdf');">
+<a href="/StataTraining/pdf/StataCheatsheet_Transformation15_June_2016_TE-REV.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_Transformation15_June_2016_TE-REV.pdf');">
 <img class="col three" src="/StataTraining/img/DataTransformation.PNG"/>  
 </a>
 </div>
@@ -49,7 +43,7 @@ Syntax and arguments for plotting functions
 </div>
 
 <div>
-<a href="/StataTraining/pdf/StataCheatsheet_visualization1.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_visualization1.pdf');">
+<a href="/StataTraining/pdf/StataCheatSheet_visualization15_Plots_2016_June-REV.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatSheet_visualization15_Plots_2016_June-REV.pdf');">
 <img class="col three" src="/StataTraining/img/DataVisualization_Plots.PNG"/>  
 </a>
 </div>
@@ -64,7 +58,7 @@ Options to change the appearance of plots
 
 
 <div>
-<a href="/StataTraining/pdf/StataCheatsheet_visualization2.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_visualization2.pdf');">
+<a href="/StataTraining/pdf/StataCheatSheet_visualization15_Syntax_2016_June-REV.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatSheet_visualization15_Syntax_2016_June-REV.pdf');">
 <img class="col three" src="/StataTraining/img/DataVisualization_Syntax.PNG"/>  
 </a>
 </div>
@@ -76,7 +70,7 @@ Summarize data, declare data, conduct statistical tests, and estimate models
 </div>
 
 <div>
-<a href="/StataTraining/pdf/StataCheatSheet_Analysis.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatSheet_Analysis.pdf');">
+<a href="/StataTraining/pdf/StataCheatSheet_analysis_201615_June-REV.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatSheet_analysis_201615_June-REV.pdf');">
 <img class="col three" src="/StataTraining/img/DataAnalysis.PNG"/>  
 </a>
 </div>
@@ -93,7 +87,11 @@ A gentle introduction to programming building blocks
 </a>
 </div>
 
-
+### Stata 14.1 Cheatsheets
+<div class="col three caption">
+<a href ="/StataTraining/pdf/AllCheatSheets.pdf" onclick="trackOutboundLink('AllCheatSheets.pdf');"
+download="AllCheatSheets.pdf">Download all Stata 2014 Cheatsheets</a>
+</div>
 .
 <hr>
 <hr>
