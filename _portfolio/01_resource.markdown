@@ -91,7 +91,7 @@ A gentle introduction to programming building blocks
 ### Stata 14.1 Cheatsheets
 <div class="col three caption">
 <a href ="/StataTraining/pdf/AllCheatSheets.pdf" onclick="trackOutboundLink('AllCheatSheets.pdf');"
-download="AllCheatSheets.pdf">Download all Stata 2014 Cheatsheets</a>
+download="AllCheatSheets.pdf">Download all Stata 14.1 Cheatsheets</a>
 </div>
 .
 <hr>
