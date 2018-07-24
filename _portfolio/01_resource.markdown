@@ -18,7 +18,7 @@ Fundamental commands in Stata to import, explore, summarize, and create new vari
 </div>
 
 <div>
-<a href="/StataTraining/pdf/StataCheatsheet_processing15_June_2016_TE-REV.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_processing15_June_2016_TE-REV.pdf.pdf');">
+<a href="/StataTraining/pdf/StataCheatsheet_processing_15_June_2016_TE-REV.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_processing_15_June_2016_TE-REV.pdf');">
 <img class="col three" src="/StataTraining/img/DataProcessing.PNG"/>  
 </a>
 </div>
