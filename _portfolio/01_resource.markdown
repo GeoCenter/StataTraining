@@ -84,7 +84,7 @@ A gentle introduction to programming building blocks
 </div>
 
 <div>
-<a href="/StataTraining/pdf/StataCheatSheet_programming_2016_June.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatsheet_programming_2016_June.pdf');">
+<a href="/StataTraining/pdf/StataCheatSheet_programming15_2016_June_TE-REV.pdf" target = "_blank" onclick="trackOutboundLink('StataCheatSheet_programming15_2016_June_TE-REV.pdf');">
 <img class="col three" src="/StataTraining/img/Programming.PNG"/>  
 </a>
 </div>
