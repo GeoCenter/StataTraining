@@ -1,7 +1,7 @@
 /*-------------------------------------------------------------------------------
 # Name:		ProgrammingCheatsheet.do
 # Purpose:	Code to reproduce examples from cheat sheet
-# Author:	Tim Essam, Ph.D. (tessam@usaid.gov) & Laura Hughes, Ph.D (lhughes@usaid.gov)
+# Author:	Tim Essam, Ph.D. (tessam@usaid.gov) & Laura Hughes, Ph.D (lhughes@scripps.edu
 # Created:	2016/05/27
 # License:	MIT License
 # Ado(s):	mat2txt, estout, outreg2, 
@@ -55,7 +55,6 @@ matrix dir
 matrix list b
 matrix drop _all
 
-
 * -----------------------------------------------------------------------------*
 * ### Macros - a name that is linked to text (a pointer)
 /* GLOBAL macros have global scope, they are available throughout a Stata session (PUBLIC)
@@ -104,8 +103,6 @@ tempfile myAuto
 display "`myAuto'"
 save `myAuto', replace
 
-
-
 * -----------------------------------------------------------------------------*
 * ### Access and Save stored r- and e-class Objects
 /* Many Stata commands store results in types of lists. To access these lists
@@ -137,14 +134,12 @@ preserve
 	sum price
 restore
 
-mean price
-
-
+mean price 
 
 * -----------------------------------------------------------------------------*
 /* ### RETURNING STORED RESULTS - after executing an execution command, the results of the 
    estimates are stored in a structure that you can save, view, compare and export. 
-   The estout, outreg2 and putexcel commands are great tools to help you get your output
+   etable is a great tool to help you get your estimation tables
    outside of Stata. 
    */
 
@@ -154,23 +149,23 @@ regress price weight
 estimates store est1
 est dir
 
-* ssc install estout or adoupdate, update (be careful with the latter, it updates everything!)
-* Ues the estout package syntax to save estimates
-eststo est2: reg price weight mpg
-eststo est3: reg price weight mpg foreign
+regress price weight mpg 
+estimates store est2 
+regress price weight mpg foreign 
+estimates store est3 
+* fit two regression models and store estimation results
 
-* Base Stata estimates table command produces a summary table of the regression coefficients
-estimates table est1 est2 est3
+etable, estimates(est1 est2 est3) column(index) showstars showstarsnote 
+* print a table of the three estimation results
 
-* But, the estout package provides numerous, flexible options for making output tables.
-esttab est2 est3, se star(* 0.10 ** 0.05 *** 0.01) label
-
-* Save the results to a text file
-esttab using "auto_reg.txt", replace plain se 
-
-* The outreg2 package can produce similar results (ssc install outreg2)
-outreg2 [est1 est2 est3] using "auto_reg2.txt", see replace
-
+etable, estimates(est1 est2 est3) column(index) ///
+ showstars showstarsnote export(autoreg.txt)
+* export table to a text file 
+ 
+/*
+The collect suite of commands allows further customization of tables. Also see 
+putdocx and putexcel for exporting tables, images, and text.
+*/
 
 
 * -----------------------------------------------------------------------------*
@@ -300,7 +295,6 @@ foreach x of local cmake{
 	}
 *end
 
-
 * -----------------------------------------------------------------------------*
 **** Not covered in cheat sheet but useful ****
 
@@ -321,7 +315,3 @@ drNick
 * Other useful packages / links not included on our cheat sheets
 /* See https://github.com/haghish/MarkDoc for dynamic documents, slides and help files. 
    Brewscheme - create beautiful visualizations: https://wbuchanan.github.io/brewscheme/about/
-   
-   
-   
-   
